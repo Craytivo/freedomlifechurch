@@ -10,6 +10,13 @@
 
 # production
 /build
+.next
+/.next
+next-env.d.ts
+
+# Output of next-sitemap (kept if you prefer to version, otherwise ignore)
+public/sitemap*.xml
+public/robots.txt
 
 # misc
 .DS_Store
@@ -21,3 +28,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# OS
+Thumbs.db
+ehthumbs.db
