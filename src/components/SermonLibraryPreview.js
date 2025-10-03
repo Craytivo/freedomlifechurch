@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+
+// Lazy load the modal to keep initial bundle small
+const VideoModal = dynamic(() => import('./VideoModal'), { ssr: false });
 
 // Fetches recent videos from /api/youtube/recent (playlist preferred if set)
 
@@ -11,6 +15,7 @@ const SermonLibraryPreview = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalVideo, setModalVideo] = useState(null);
 
   useEffect(() => {
     let aborted = false;
@@ -95,6 +100,7 @@ const SermonLibraryPreview = () => {
                   type="button"
                   className="absolute inset-0 flex items-center justify-center bg-black/35 group-hover:bg-black/25 transition-colors"
                   aria-label={`Play sermon: ${featured.title}`}
+                  onClick={() => setModalVideo(featured.id)}
                 >
                   <span className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/90 group-hover:bg-white shadow-md">
                     <svg className="w-10 h-10 text-flc-500" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -112,10 +118,10 @@ const SermonLibraryPreview = () => {
                 </h3>
                 <p className="text-neutral-600 text-sm md:text-base leading-relaxed mb-5 max-w-prose line-clamp-4">{featured.description}</p>
                 <div className="flex flex-wrap gap-3">
-                  <a href={`https://www.youtube.com/watch?v=${featured.id}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40">
+                  <button onClick={() => setModalVideo(featured.id)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40">
                     Watch Now
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  </a>
+                  </button>
                   <a href="#sermons" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-flc-500/30">
                     Full Series
                   </a>
@@ -129,9 +135,9 @@ const SermonLibraryPreview = () => {
             {rest.map(s => (
               <a
                 key={s.id}
-                href={`https://www.youtube.com/watch?v=${s.id}`}
-                target="_blank" rel="noopener noreferrer"
+                href="#"
                 className="group flex gap-5 p-4 md:p-5 rounded-xl border border-neutral-200 bg-white hover:border-flc-500/50 hover:shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500/30"
+                onClick={(e) => { e.preventDefault(); setModalVideo(s.id); }}
               >
                 <div className="relative w-40 shrink-0 rounded-md overflow-hidden">
                   <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
@@ -165,6 +171,7 @@ const SermonLibraryPreview = () => {
         </div>
       </div>
     </section>
+    <VideoModal open={!!modalVideo} videoId={modalVideo || ''} title="Sermon" onClose={() => setModalVideo(null)} />
   );
 };
 
