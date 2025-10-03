@@ -20,8 +20,9 @@ const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
 // Approximate coordinates for the address (can refine if needed)
 const MAP_LAT = 53.567;
 const MAP_LON = -113.59;
-// OpenStreetMap static map (no API key required). For production you may consider hosting tiles or using a provider with proper SLA.
-const STATIC_MAP_URL = `https://staticmap.openstreetmap.de/staticmap.php?center=${MAP_LAT},${MAP_LON}&zoom=14&size=800x400&markers=${MAP_LAT},${MAP_LON},red-pushpin`;
+// OpenStreetMap embed URL (interactive, no API key). Bounding box is a small area around the marker.
+const bbox = `${MAP_LON - 0.01},${MAP_LAT - 0.006},${MAP_LON + 0.01},${MAP_LAT + 0.006}`;
+const OSM_EMBED_URL = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${MAP_LAT}%2C${MAP_LON}`;
 
 const PlanVisitSection = () => {
   const [form, setForm] = useState({ name: '', email: '', date: '' });
@@ -117,13 +118,14 @@ const PlanVisitSection = () => {
                         <span className="text-[12px]">Loading map…</span>
                       </div>
                     )}
-                    <img
-                      src={STATIC_MAP_URL}
-                      alt={`Map showing location of ${ADDRESS}`}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    <iframe
+                      title={`Map showing location of ${ADDRESS}`}
+                      className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      src={OSM_EMBED_URL}
+                      style={{ border: 0 }}
                       loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
                       onLoad={() => setMapLoaded(true)}
-                      draggable={false}
                     />
                   </>
                 ) : (
@@ -133,6 +135,9 @@ const PlanVisitSection = () => {
                   </div>
                 )}
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/25" aria-hidden="true" />
+              </div>
+              <div className="mt-2 text-[12px]">
+                <a href={`https://www.openstreetmap.org/?mlat=${MAP_LAT}&mlon=${MAP_LON}#map=15/${MAP_LAT}/${MAP_LON}`} target="_blank" rel="noopener noreferrer" className="text-flc-600 hover:text-flc-700">Open in OpenStreetMap</a>
               </div>
               <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
               <p className="mt-2 text-[11px] text-neutral-400">Map imagery © OpenStreetMap contributors.</p>
