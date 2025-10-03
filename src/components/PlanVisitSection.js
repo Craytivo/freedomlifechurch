@@ -5,13 +5,13 @@ import React, { useState } from 'react';
 
 const quickFacts = [
   { label: 'Sunday Service', value: '12:00 PM MST' },
-  { label: 'Location', value: 'Edmonton, AB' },
+  { label: 'Location', value: '14970 114 Ave NW, Edmonton, Alberta T5M 4G4' },
   { label: 'Kids Ministry', value: 'Available (Check-In opens 15 min early)' },
   { label: 'Parking', value: 'Free on-site & overflow' },
 ];
 
 const nextSteps = [
-  { label: 'Get Directions', href: '#directions' },
+  { label: 'Get Directions', href: 'https://www.google.com/maps/search/?api=1&query=14970+114+Ave+NW+Edmonton+Alberta+T5M+4G4' },
   { label: 'What to Expect', href: '#expect' },
   { label: 'Message Archive', href: '#sermons' },
 ];
