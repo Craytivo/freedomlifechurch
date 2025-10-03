@@ -17,14 +17,18 @@ const nextSteps = [
 ];
 
 const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
-const MAP_EMBED_URL = 'https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=' + encodeURIComponent(ADDRESS);
-// If no API key available we will instead link out and show a placeholder; user can later inject key via env.
+// Approximate coordinates for the address (can refine if needed)
+const MAP_LAT = 53.567;
+const MAP_LON = -113.59;
+// OpenStreetMap static map (no API key required). For production you may consider hosting tiles or using a provider with proper SLA.
+const STATIC_MAP_URL = `https://staticmap.openstreetmap.de/staticmap.php?center=${MAP_LAT},${MAP_LON}&zoom=14&size=800x400&markers=${MAP_LAT},${MAP_LON},red-pushpin`;
 
 const PlanVisitSection = () => {
   const [form, setForm] = useState({ name: '', email: '', date: '' });
   const [submitted, setSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
   const [mapReady, setMapReady] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef(null);
 
   // Lazy load map when in viewport (only if API key placeholder replaced OR we decide to show no-key iframe alt)
@@ -105,32 +109,33 @@ const PlanVisitSection = () => {
                 </a>
               </div>
               <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/9] flex items-center justify-center">
-                {/* If developer adds API key, show iframe; else show placeholder */}
                 {mapReady ? (
-                  MAP_EMBED_URL.includes('YOUR_API_KEY') ? (
-                    <div className="flex flex-col items-center justify-center p-6 text-center text-neutral-500 text-sm">
-                      <p className="mb-2 font-medium text-neutral-700">Map Preview Unavailable</p>
-                      <p className="max-w-xs leading-snug">Add a Google Maps Embed API key (replace YOUR_API_KEY) or integrate a static map service to enable inline preview.</p>
-                    </div>
-                  ) : (
-                    <iframe
-                      title="Map location"
-                      src={MAP_EMBED_URL}
+                  <>
+                    {!mapLoaded && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
+                        <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map" />
+                        <span className="text-[12px]">Loading map…</span>
+                      </div>
+                    )}
+                    <img
+                      src={STATIC_MAP_URL}
+                      alt={`Map showing location of ${ADDRESS}`}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
                       loading="lazy"
-                      allowFullScreen
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="absolute inset-0 w-full h-full"
+                      onLoad={() => setMapLoaded(true)}
+                      draggable={false}
                     />
-                  )
+                  </>
                 ) : (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
-                    <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map placeholder" />
+                    <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Preparing map" />
                     <span className="text-[12px]">Preparing map…</span>
                   </div>
                 )}
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/15 via-transparent to-white/25" aria-hidden="true" />
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/25" aria-hidden="true" />
               </div>
               <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
+              <p className="mt-2 text-[11px] text-neutral-400">Map imagery © OpenStreetMap contributors.</p>
             </div>
             <div className="flex flex-wrap gap-4 mb-6">
               {nextSteps.map(s => (
