@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import altarExperienceLogo from '../assets/logos/output-onlinepngtools.png';
 
 // Base slide configuration (can be extended via props later)
@@ -321,22 +322,28 @@ const HeroCarousel = ({
                           <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0) 65%)' }} />
                           {/* Animated flame watermark */}
                           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-                            <img
+                            <Image
                               src={altarExperienceLogo}
-                              alt=""
-                              className="flame-watermark select-none opacity-15 mix-blend-multiply"
-                              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) scale(2.4)', filter: 'blur(0.5px)' }}
+                              alt="Altar Experience watermark"
+                              fill
+                              className="flame-watermark select-none opacity-15 mix-blend-multiply object-contain"
+                              style={{ transform: 'translate(-50%, -50%) scale(2.4)', top: '50%', left: '50%', position: 'absolute', filter: 'blur(0.5px)' }}
                               draggable={false}
+                              priority={false}
                             />
                           </div>
                           <div className="relative w-full max-w-md mx-auto flex flex-col items-center text-center">
                             <div className="relative -mt-1 -mb-1 select-none pointer-events-none">
-                              <img
-                                src={altarExperienceLogo}
-                                alt="Altar Experience Conference Logo"
-                                className="w-40 md:w-56 h-auto drop-shadow-md"
-                                style={{backgroundColor: 'transparent'}}
-                              />
+                              <div className="relative w-40 md:w-56 h-20 md:h-28 drop-shadow-md">
+                                <Image
+                                  src={altarExperienceLogo}
+                                  alt="Altar Experience Conference Logo"
+                                  fill
+                                  sizes="(max-width:768px) 160px, 224px"
+                                  className="object-contain"
+                                  priority={false}
+                                />
+                              </div>
                             </div>
                             <h3 className="font-heading text-lg md:text-2xl font-bold leading-snug text-primary-900 mt-1">
                               <span className="block text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
