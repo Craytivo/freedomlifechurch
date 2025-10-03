@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 // Plan a Visit section tailored for first-time guests
 // Includes quick facts, simple interest form (non-submitting placeholder), and next-step CTAs.
@@ -16,9 +16,32 @@ const nextSteps = [
   { label: 'Message Archive', href: '#sermons' },
 ];
 
+const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=' + encodeURIComponent(ADDRESS);
+// If no API key available we will instead link out and show a placeholder; user can later inject key via env.
+
 const PlanVisitSection = () => {
   const [form, setForm] = useState({ name: '', email: '', date: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [mapReady, setMapReady] = useState(false);
+  const mapRef = useRef(null);
+
+  // Lazy load map when in viewport (only if API key placeholder replaced OR we decide to show no-key iframe alt)
+  useEffect(() => {
+    const el = mapRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setMapReady(true);
+          observer.disconnect();
+        }
+      });
+    }, { rootMargin: '200px 0px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const update = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   const handleSubmit = (e) => {
@@ -52,6 +75,62 @@ const PlanVisitSection = () => {
                   <p className="text-sm text-neutral-800 font-medium leading-snug">{f.value}</p>
                 </div>
               ))}
+            </div>
+            {/* Map + Address Utilities */}
+            <div ref={mapRef} className="mb-10">
+              <div className="flex flex-wrap items-center gap-3 mb-3">
+                <h3 className="font-heading text-base font-semibold text-primary-900 m-0">Location</h3>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(ADDRESS);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2500);
+                    } catch (e) {
+                      // fallback: select text? (skipped for brevity)
+                    }
+                  }}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-neutral-300 bg-white text-[12px] font-medium text-neutral-700 hover:border-flc-500 hover:text-flc-600 focus:outline-none focus:ring-2 focus:ring-flc-500/30 transition-colors"
+                >
+                  {copied ? 'Copied!' : 'Copy Address'}
+                </button>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[12px] font-medium text-flc-600 hover:text-flc-700"
+                >
+                  View Larger Map
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+              <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/9] flex items-center justify-center">
+                {/* If developer adds API key, show iframe; else show placeholder */}
+                {mapReady ? (
+                  MAP_EMBED_URL.includes('YOUR_API_KEY') ? (
+                    <div className="flex flex-col items-center justify-center p-6 text-center text-neutral-500 text-sm">
+                      <p className="mb-2 font-medium text-neutral-700">Map Preview Unavailable</p>
+                      <p className="max-w-xs leading-snug">Add a Google Maps Embed API key (replace YOUR_API_KEY) or integrate a static map service to enable inline preview.</p>
+                    </div>
+                  ) : (
+                    <iframe
+                      title="Map location"
+                      src={MAP_EMBED_URL}
+                      loading="lazy"
+                      allowFullScreen
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  )
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
+                    <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map placeholder" />
+                    <span className="text-[12px]">Preparing map…</span>
+                  </div>
+                )}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/15 via-transparent to-white/25" aria-hidden="true" />
+              </div>
+              <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
             </div>
             <div className="flex flex-wrap gap-4 mb-6">
               {nextSteps.map(s => (
