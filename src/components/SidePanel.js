@@ -153,7 +153,7 @@ const SidePanel = ({ isOpen, onClose, navigation }) => {
 
           {!anyResults && (
             <div className="text-center text-neutral-400 text-sm pt-4">
-              No matches for "{query}".
+              No matches for &ldquo;{query}&rdquo;.
             </div>
           )}
 

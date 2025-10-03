@@ -4,7 +4,6 @@
 
 const PLAYLIST_ID = process.env.YT_PLAYLIST_ID || 'PLlZYBLQN9I9S7htHsLfnj_v9cwDCHxFp6';
 const SITE_URL = process.env.SITE_URL || 'https://www.freedomlifechurch.ca';
-const CHANNEL_TITLE = 'Freedom Life Church – Sermons';
 const FEED_TITLE = 'Freedom Life Church Sermons';
 const FEED_DESCRIPTION = 'Weekly messages from Freedom Life Church.';
 

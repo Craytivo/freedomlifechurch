@@ -337,7 +337,7 @@ const HeroCarousel = ({
                               <span className="text-primary-900">The Original Mandate</span>
                             </h3>
                             <p className="text-[10px] md:text-sm text-neutral-700 leading-snug mt-1">
-                              Bring family & friends. Expect transformation in God's presence.
+                              Bring family & friends. Expect transformation in God&apos;s presence.
                             </p>
                           </div>
                         </div>

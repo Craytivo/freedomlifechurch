@@ -225,7 +225,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
                   aria-label="Search results"
                 >
                   {filteredResults.length === 0 && (
-                    <div className="py-6 text-center text-sm text-neutral-400">No results for "{searchQuery}"</div>
+                    <div className="py-6 text-center text-sm text-neutral-400">No results for &ldquo;{searchQuery}&rdquo;</div>
                   )}
                   {Object.entries(groupedResults).map(([section, items]) => (
                     <div key={section} className="px-3 pb-2">
