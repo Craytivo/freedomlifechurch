@@ -10,6 +10,7 @@
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "18"
   YT_CHANNEL_ID = "UC58V2khGC_TrrMH_ZrYEbSw"
+  YT_PLAYLIST_ID = "PLlZYBLQN9I9S7htHsLfnj_v9cwDCHxFp6"
 
 # Redirect root sitemap if needed
 [[redirects]]
