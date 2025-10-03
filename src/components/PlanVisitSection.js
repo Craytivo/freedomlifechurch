@@ -20,8 +20,10 @@ const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
 // Approximate coordinates for the address (can refine if needed)
 const MAP_LAT = 53.567;
 const MAP_LON = -113.59;
-// OpenStreetMap embed URL (interactive, no API key). Bounding box is a small area around the marker.
-const bbox = `${MAP_LON - 0.01},${MAP_LAT - 0.006},${MAP_LON + 0.01},${MAP_LAT + 0.006}`;
+// OpenStreetMap embed URL (interactive, no API key). Use a tight bounding box for a zoomed-in view.
+const LAT_DELTA = 0.0018; // ~200m
+const LON_DELTA = 0.0024; // ~160m at this latitude
+const bbox = `${MAP_LON - LON_DELTA},${MAP_LAT - LAT_DELTA},${MAP_LON + LON_DELTA},${MAP_LAT + LAT_DELTA}`;
 const OSM_EMBED_URL = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${MAP_LAT}%2C${MAP_LON}`;
 
 const PlanVisitSection = () => {
@@ -137,7 +139,7 @@ const PlanVisitSection = () => {
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/25" aria-hidden="true" />
               </div>
               <div className="mt-2 text-[12px]">
-                <a href={`https://www.openstreetmap.org/?mlat=${MAP_LAT}&mlon=${MAP_LON}#map=15/${MAP_LAT}/${MAP_LON}`} target="_blank" rel="noopener noreferrer" className="text-flc-600 hover:text-flc-700">Open in OpenStreetMap</a>
+                <a href={`https://www.openstreetmap.org/?mlat=${MAP_LAT}&mlon=${MAP_LON}#map=17/${MAP_LAT}/${MAP_LON}`} target="_blank" rel="noopener noreferrer" className="text-flc-600 hover:text-flc-700">Open in OpenStreetMap</a>
               </div>
               <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
               <p className="mt-2 text-[11px] text-neutral-400">Map imagery © OpenStreetMap contributors.</p>
