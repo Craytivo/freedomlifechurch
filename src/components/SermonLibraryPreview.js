@@ -1,47 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-// Lightweight preview of recent sermons with a primary featured message.
-// Later this can be wired to a real API / YouTube playlist fetch.
+// Fetches recent videos from /api/youtube/recent (playlist preferred if set)
 
-const sermons = [
-  {
-    id: 'latest',
-    title: 'Revived Hearts, Renewed Mission',
-    date: '2025-09-28',
-    series: 'Awakened',
-    youtubeId: 'X5K8Wk7pBGw',
-    description: 'A call to return to first love and step boldly into Kingdom purpose.'
-  },
-  {
-    id: 'sr2',
-    title: 'Power in Stillness',
-    date: '2025-09-21',
-    series: 'Awakened',
-    youtubeId: 'Xp12abc1234',
-    description: 'Learning to cultivate holy rest that produces spiritual authority.'
-  },
-  {
-    id: 'sr3',
-    title: 'The Furnace of Formation',
-    date: '2025-09-14',
-    series: 'Awakened',
-    youtubeId: 'Yt09def5678',
-    description: 'How trials refine and position us for greater usefulness.'
-  },
-  {
-    id: 'sr4',
-    title: 'Hearing God in a Loud World',
-    date: '2025-09-07',
-    series: 'Awakened',
-    youtubeId: 'Zk45ghi9012',
-    description: 'Practices for tuning your ear to the Shepherd.'
-  }
-];
-
-const formatDate = (iso) => new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+const formatDate = (iso) => {
+  const d = new Date(iso);
+  return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'});
+};
 
 const SermonLibraryPreview = () => {
-  const [featured, ...rest] = sermons;
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let aborted = false;
+    (async () => {
+      try {
+        const resp = await fetch('/api/youtube/recent?limit=7', { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`Failed: ${resp.status}`);
+        const data = await resp.json();
+        if (!aborted && Array.isArray(data.items)) setItems(data.items);
+      } catch (e) {
+        setError(e);
+      } finally {
+        if (!aborted) setLoading(false);
+      }
+    })();
+    return () => { aborted = true; };
+  }, []);
+
+  const fallback = (
+    <div className="py-10 text-center text-neutral-500 text-sm">
+      {error ? 'Unable to load recent messages.' : 'Loading messages…'}
+    </div>
+  );
+
+  if (loading && items.length === 0) return (
+    <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '82rem' }}>
+        {fallback}
+      </div>
+    </section>
+  );
+
+  if (items.length === 0) return (
+    <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '82rem' }}>
+        <div className="py-10 text-center text-neutral-500 text-sm">No recent messages found.</div>
+      </div>
+    </section>
+  );
+
+  const [featured, ...rest] = items;
 
   return (
     <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
@@ -85,16 +95,16 @@ const SermonLibraryPreview = () => {
               </div>
               <div className="p-6 md:p-7">
                 <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wide uppercase text-flc-600 mb-2">
-                  <span>{featured.series}</span>
+                  <span>Recent</span>
                   <span className="w-1 h-1 rounded-full bg-flc-500" />
-                  <time dateTime={featured.date} className="text-neutral-500 font-medium">{formatDate(featured.date)}</time>
+                  <time dateTime={featured.published} className="text-neutral-500 font-medium">{formatDate(featured.published)}</time>
                 </div>
                 <h3 className="font-heading text-xl md:text-2xl font-bold tracking-tight text-primary-900 mb-3">
                   {featured.title}
                 </h3>
-                <p className="text-neutral-600 text-sm md:text-base leading-relaxed mb-5 max-w-prose">{featured.description}</p>
+                <p className="text-neutral-600 text-sm md:text-base leading-relaxed mb-5 max-w-prose line-clamp-4">{featured.description}</p>
                 <div className="flex flex-wrap gap-3">
-                  <a href={`https://www.youtube.com/watch?v=${featured.youtubeId}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40">
+                  <a href={`https://www.youtube.com/watch?v=${featured.id}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40">
                     Watch Now
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                   </a>
@@ -117,7 +127,7 @@ const SermonLibraryPreview = () => {
                 <div className="relative w-40 shrink-0 rounded-md overflow-hidden">
                   <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                     <img
-                      src={`https://img.youtube.com/vi/${s.youtubeId}/mqdefault.jpg`}
+                      src={`https://img.youtube.com/vi/${s.id}/mqdefault.jpg`}
                       alt={s.title}
                       className="absolute inset-0 w-full h-full object-cover group-hover:brightness-105"
                       loading="lazy"
@@ -131,9 +141,9 @@ const SermonLibraryPreview = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-flc-600 mb-1">
-                    <span>{s.series}</span>
+                    <span>Recent</span>
                     <span className="w-1 h-1 rounded-full bg-neutral-300" />
-                    <time dateTime={s.date} className="text-neutral-500 font-medium normal-case tracking-normal">{formatDate(s.date)}</time>
+                    <time dateTime={s.published} className="text-neutral-500 font-medium normal-case tracking-normal">{formatDate(s.published)}</time>
                   </div>
                   <h4 className="font-heading text-[15px] md:text-base font-semibold text-primary-900 mb-1 leading-snug line-clamp-2">
                     {s.title}
