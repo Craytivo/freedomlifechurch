@@ -16,7 +16,8 @@ const SermonLibraryPreview = () => {
     let aborted = false;
     (async () => {
       try {
-        const resp = await fetch('/api/youtube/recent?limit=7', { cache: 'no-store' });
+        // Request more than we display so we can filter out private/deleted entries
+        const resp = await fetch('/api/youtube/recent?limit=12', { cache: 'no-store' });
         if (!resp.ok) throw new Error(`Failed: ${resp.status}`);
         const data = await resp.json();
         if (!aborted && Array.isArray(data.items)) setItems(data.items);
@@ -43,7 +44,13 @@ const SermonLibraryPreview = () => {
     </section>
   );
 
-  if (items.length === 0) return (
+  // Filter out common placeholder entries from playlists
+  const visible = items.filter(v => {
+    const t = (v.title || '').toLowerCase();
+    return v.id && t !== 'private video' && t !== 'deleted video';
+  });
+
+  if (visible.length === 0) return (
     <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '82rem' }}>
         <div className="py-10 text-center text-neutral-500 text-sm">No recent messages found.</div>
@@ -51,7 +58,8 @@ const SermonLibraryPreview = () => {
     </section>
   );
 
-  const [featured, ...rest] = items;
+  const [featured, ...restAll] = visible;
+  const rest = restAll.slice(0, 4); // show only 4 in right column
 
   return (
     <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
@@ -78,7 +86,7 @@ const SermonLibraryPreview = () => {
             <div className="group relative rounded-2xl shadow-sm border border-neutral-200 overflow-hidden bg-white">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <img
-                  src={`https://img.youtube.com/vi/${featured.youtubeId}/hqdefault.jpg`}
+                  src={`https://img.youtube.com/vi/${featured.id}/hqdefault.jpg`}
                   alt={featured.title}
                   className="absolute inset-0 w-full h-full object-cover group-hover:brightness-105 transition-[filter]"
                   loading="lazy"
@@ -121,7 +129,8 @@ const SermonLibraryPreview = () => {
             {rest.map(s => (
               <a
                 key={s.id}
-                href={`https://www.youtube.com/watch?v=${s.youtubeId}`}
+                href={`https://www.youtube.com/watch?v=${s.id}`}
+                target="_blank" rel="noopener noreferrer"
                 className="group flex gap-5 p-4 md:p-5 rounded-xl border border-neutral-200 bg-white hover:border-flc-500/50 hover:shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500/30"
               >
                 <div className="relative w-40 shrink-0 rounded-md overflow-hidden">
