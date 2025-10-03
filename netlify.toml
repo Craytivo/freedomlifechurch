@@ -9,6 +9,7 @@
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "18"
+  YT_CHANNEL_ID = "UC58V2khGC_TrrMH_ZrYEbSw"
 
 # Redirect root sitemap if needed
 [[redirects]]
