@@ -270,7 +270,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           >
             <p
               ref={taglineRef}
-              className={`flex items-center gap-1 font-normal italic transition-opacity duration-500 ${fade ? 'opacity-0' : 'opacity-100'} text-[10px] tracking-tight text-neutral-500`}
+              className={`flex items-center gap-1 font-normal italic transition-opacity duration-500 ${fade ? 'opacity-0' : 'opacity-100'} text-[11px] md:text-[12px] tracking-tight text-neutral-500`}
             >
               <span
                 aria-hidden="true"

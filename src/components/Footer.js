@@ -1,4 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
+import footerLogo from '../assets/logos/FLC main logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,21 +12,8 @@ const Footer = () => {
           {/* Church Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              {/* Cross Icon */}
-              <div className="relative">
-                <div className="w-6 h-6 relative">
-                  <div className="absolute inset-x-0 top-0 bottom-0 w-0.5 bg-flc-500 mx-auto"></div>
-                  <div className="absolute inset-y-0 left-0 right-0 h-0.5 bg-flc-500 my-auto"></div>
-                </div>
-              </div>
-              {/* Logo Text */}
-              <div>
-                <div className="font-heading font-bold text-lg tracking-wider">
-                  FREEDOM
-                </div>
-                <div className="font-heading text-flc-500 text-sm tracking-wider -mt-1">
-                  LIFE CHURCH
-                </div>
+              <div className="relative w-40 h-14">
+                <Image src={footerLogo} alt="Freedom Life Church" fill className="object-contain" />
               </div>
             </div>
             <p className="font-body text-church-light text-sm leading-relaxed">

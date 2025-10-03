@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import mainLogo from '../assets/logos/cropped-FreedomLifeChurch-Logo-web-04.png';
+import mainLogo from '../assets/logos/FLC main logo.png';
 
 const Logo = ({ size = 'default' }) => {
   const sizeMap = {
