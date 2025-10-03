@@ -341,6 +341,37 @@ const HeroCarousel = ({
                             </p>
                           </div>
                         </div>
+                      ) : slide.id === 'prayer-focus' ? (
+                        <div className="rounded-xl shadow-lg overflow-hidden relative border border-neutral-200 bg-gradient-to-br from-flc-50 via-neutral-50 to-white">
+                          <div className="relative p-5 md:p-6 lg:p-7">
+                            <div className="inline-flex items-center gap-2 mb-2">
+                              <span className="px-2.5 py-1 rounded-full bg-flc-500/10 text-flc-600 text-[11px] font-semibold uppercase tracking-wide">Prayer</span>
+                            </div>
+                            <h3 className="font-heading text-lg md:text-2xl font-bold leading-snug text-primary-900">
+                              Ways to pray this week
+                            </h3>
+                            <p className="text-[13px] md:text-sm text-neutral-600 mt-2">
+                              Set a simple rhythm and agree with the prayer focuses.
+                            </p>
+                            <ul className="mt-4 space-y-2 text-sm text-neutral-700">
+                              <li className="flex items-start gap-2">
+                                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Take 10 minutes daily to pray through each focus.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Pair up with a friend or family member to agree together.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Write a short testimony when you see breakthrough.</span>
+                              </li>
+                            </ul>
+                            <div className="mt-5 p-3 rounded-lg bg-flc-500/10 border border-flc-200 text-[13px] text-flc-700">
+                              “Pray without ceasing.” — 1 Thess. 5:17
+                            </div>
+                          </div>
+                        </div>
                       ) : (
                         <div className="rounded-xl shadow-lg overflow-hidden bg-black relative group md:scale-[1.05] md:origin-center">
                           {/* Maintain true 16:9 to avoid black letterbox bars */}
