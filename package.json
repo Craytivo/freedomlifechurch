@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.20",
-    "express": "^4.19.2",
     "next": "latest",
-    "node-fetch": "^2.7.0",
     "postcss": "^8.4.41",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
@@ -15,19 +13,14 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.5.4",
     "concurrently": "^8.2.2",
-    "eslint": "^8.57.1"
+    "eslint": "^8.57.1",
+    "next-sitemap": "^4.2.3"
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next-sitemap",
     "start": "next start",
-    "lint": "next lint",
-    "proxy": "node server/proxy.js"
-  },
-  "eslintConfig": {
-    "extends": [
-      "next/core-web-vitals"
-    ]
+    "lint": "next lint"
   },
   "browserslist": {
     "production": [

@@ -1,2 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
+# *
 User-agent: *
+Allow: /
+
+# Host
+Host: https://www.freedomlifechurch.ca
+
+# Sitemaps
+Sitemap: https://www.freedomlifechurch.ca/sitemap.xml

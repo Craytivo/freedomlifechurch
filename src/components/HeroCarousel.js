@@ -76,36 +76,17 @@ const HeroCarousel = ({
 
   // Attempt to fetch latest video ID (YouTube channel feed). This may be blocked by CORS in browser.
   useEffect(() => {
-    const channelId = process.env.REACT_APP_YT_CHANNEL_ID || '';
-    if (!channelId) return;
     let aborted = false;
     (async () => {
       try {
-        // Try proxy first if running locally
-        const proxyUrl = process.env.REACT_APP_YT_FEED_PROXY || '/api/youtube/latest';
-        const proxyResp = await fetch(proxyUrl, { cache: 'no-store' });
-        if (proxyResp.ok) {
-          const data = await proxyResp.json();
-          if (!aborted && data.videoId) {
-            setLatestVideoId(data.videoId);
-            return; // success via proxy
-          }
-        }
-        // Fallback to direct (will likely fail CORS in browser, but attempt) 
-        const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-        const resp = await fetch(feedUrl);
-        if (!resp.ok) throw new Error('feed fetch failed');
-        const text = await resp.text();
-        if (aborted) return;
-        const parser = new window.DOMParser();
-        const xml = parser.parseFromString(text, 'application/xml');
-        const firstEntry = xml.querySelector('entry > yt\\:videoId, entry > videoId');
-        const vid = firstEntry?.textContent?.trim();
-        if (vid && /^[a-zA-Z0-9_-]{6,}$/.test(vid)) {
-          setLatestVideoId(vid);
+        const resp = await fetch('/api/youtube/latest', { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!aborted && data.videoId && /^[a-zA-Z0-9_-]{6,}$/.test(data.videoId)) {
+          setLatestVideoId(data.videoId);
         }
       } catch (e) {
-        // Silently handle fetch errors - no UI feedback needed
+        // ignore silently
       }
     })();
     return () => { aborted = true; };

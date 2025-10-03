@@ -1,8 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import HeroCarousel from '../src/components/HeroCarousel';
 import PlanVisitSection from '../src/components/PlanVisitSection';
-import SermonLibraryPreview from '../src/components/SermonLibraryPreview';
+const SermonLibraryPreview = dynamic(() => import('../src/components/SermonLibraryPreview'), {
+  loading: () => <div className="py-20 text-center text-neutral-500 text-sm">Loading messages…</div>,
+  ssr: false
+});
 
 export default function HomePage() {
   return (
