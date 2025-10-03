@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import SearchBar from './SearchBar';
 
-const SidePanel = ({ isOpen, onClose, navigation }) => {
+const SidePanel = ({ isOpen, onClose }) => {
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') onClose();

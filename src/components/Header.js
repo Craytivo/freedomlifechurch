@@ -284,7 +284,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           </div>
         </div>
       </div>
-      <SidePanel isOpen={isMenuOpen} onClose={onCloseMenu} navigation={navigation} />
+  <SidePanel isOpen={isMenuOpen} onClose={onCloseMenu} />
     </header>
   );
 };
