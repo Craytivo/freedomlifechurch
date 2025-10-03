@@ -3,6 +3,14 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        // Primary font families inspired by modern church websites
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'heading': ['Montserrat', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'body': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'display': ['Playfair Display', 'Georgia', 'serif'],
+        'serif': ['Merriweather', 'Georgia', 'serif'],
+      },
       colors: {
         // Primary brand colors - Based on FLC logo
         primary: {
