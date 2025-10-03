@@ -67,6 +67,7 @@ const SermonLibraryPreview = () => {
   const rest = restAll.slice(0, 4); // show only 4 in right column
 
   return (
+    <>
     <section id="sermon-library" className="relative py-20 md:py-24 bg-neutral-50/40 content-visibility-auto">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
         background: 'radial-gradient(circle at 75% 25%, rgba(235,167,62,0.07), rgba(235,167,62,0) 60%)'
@@ -172,6 +173,7 @@ const SermonLibraryPreview = () => {
       </div>
     </section>
     <VideoModal open={!!modalVideo} videoId={modalVideo || ''} title="Sermon" onClose={() => setModalVideo(null)} />
+    </>
   );
 };
 
