@@ -80,13 +80,17 @@ const HeroCarousel = ({
     (async () => {
       try {
         const resp = await fetch('/api/youtube/latest', { cache: 'no-store' });
-        if (!resp.ok) return;
+        if (!resp.ok) return; // graceful: keep default fallback id
         const data = await resp.json();
         if (!aborted && data.videoId && /^[a-zA-Z0-9_-]{6,}$/.test(data.videoId)) {
           setLatestVideoId(data.videoId);
         }
       } catch (e) {
-        // ignore silently
+        // fallback: leave default; optionally could log
+        if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
+          console.warn('Failed to load latest video ID, using fallback', e);
+        }
       }
     })();
     return () => { aborted = true; };
