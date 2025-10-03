@@ -46,6 +46,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#eba73e" />
         <script
           type="application/ld+json"
