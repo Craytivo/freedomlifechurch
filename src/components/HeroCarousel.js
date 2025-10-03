@@ -22,6 +22,23 @@ const baseSlides = [
     description: 'Join us as we dive into the Word. Be encouraged, equipped, and strengthened in your faith journey.',
     badge: 'Sermon',
     image: null
+  },
+  {
+    id: 'prayer-focus',
+    title: 'Weekly Prayer Focus',
+    subtitle: 'Join the house in united agreement',
+    ctaLabel: 'Submit a Request',
+    ctaHref: '#prayer',
+    description: 'We are setting aside this week to pray intentionally for renewal in hearts, bold witness in our city, and healing for those battling illness.',
+    badge: 'Prayer Focus',
+    focuses: [
+      'Renewed First Love',
+      'Families Strengthened',
+      'Healing & Wholeness',
+      'Salvations & Baptism',
+      'City Awakening'
+    ],
+    image: null
   }
 ];
 
@@ -239,6 +256,30 @@ const HeroCarousel = ({
                           </div>
                         </div>
                       )}
+                      {slide.id === 'prayer-focus' && (
+                        <div className="mb-6 max-w-xl">
+                          <div className="rounded-lg border border-neutral-200 bg-neutral-50/80 p-4 md:p-5">
+                            <p className="text-[13px] text-neutral-600 leading-relaxed mb-3">
+                              Focus your agreement on these themes—set a reminder, gather with someone, and lean into listening prayer.
+                            </p>
+                            <ul className="grid grid-cols-2 gap-2 text-[12px] md:text-[13px]">
+                              {slide.focuses?.map(f => (
+                                <li key={f} className="flex items-center gap-2 px-2 py-1 rounded-md bg-white border border-neutral-200 shadow-xs">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                  <span className="text-neutral-700 font-medium leading-snug">{f}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="mt-4 flex flex-wrap gap-3 items-center">
+                              <a href="#prayer-gathering" className="text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1">
+                                Weekly Prayer Gatherings
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                              </a>
+                              <span className="text-[11px] text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       <div className="flex flex-wrap items-center gap-4">
                         <a
                           href={slide.ctaHref}
@@ -257,6 +298,14 @@ const HeroCarousel = ({
                             className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
                           >
                             More Streams
+                          </a>
+                        )}
+                        {slide.id === 'prayer-focus' && (
+                          <a
+                            href="#prayer"
+                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
+                          >
+                            Prayer Resources
                           </a>
                         )}
                       </div>
