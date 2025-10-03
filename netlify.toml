@@ -1,0 +1,18 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Ensure Next.js functions and edge handlers are picked up
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "18"
+
+# Redirect root sitemap if needed
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-0.xml"
+  status = 200
+  force = true
