@@ -196,17 +196,17 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
     >
   <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
         <div className="flex flex-col">
-          <div className="flex items-center h-16 gap-4">
-          <div className="-ml-2">
+          <div className="grid grid-cols-3 items-center h-16 gap-4 md:flex">
+          <div className="-ml-2 justify-self-start">
             <MobileMenuButton isOpen={isMenuOpen} onClick={onToggleMenu} />
           </div>
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 justify-self-center md:justify-self-auto">
             <Logo size="default" />
           </div>
           {isLive && (
             <a
               href="#livestream"
-              className="flex items-center gap-1 text-[11px] font-semibold text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500"
+              className="hidden md:flex items-center gap-1 text-[11px] font-semibold text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500"
               aria-label="Live service is on. Watch livestream."
             >
               <span className="relative inline-flex w-2.5 h-2.5">

@@ -1,240 +1,392 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import SearchBar from './SearchBar';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { createPortal } from 'react-dom';
 
+// From-scratch, portal-based sidebar that reliably overlays the entire viewport
+// even when scrolled, with robust z-index and proper scroll locking.
 const SidePanel = ({ isOpen, onClose }) => {
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  // Mount guard for portals (avoids SSR mismatches)
   useEffect(() => {
-    const handleEsc = (e) => {
+    setMounted(true);
+  }, []);
+
+  // Close on Escape and lock body scroll when open
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => {
       if (e.key === 'Escape') onClose();
     };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
-
-  const [query, setQuery] = useState('');
-
-  const sectionHeading = 'uppercase tracking-wide text-[11px] font-semibold text-neutral-500 mb-2 flex items-center justify-between';
-  const linkBase = 'flex items-start gap-2 px-2 py-2 rounded-md text-sm text-neutral-700 hover:text-flc-600 hover:bg-neutral-50 transition-colors duration-150';
-  const iconCircle = 'w-5 h-5 flex items-center justify-center text-neutral-400';
-
-  // Raw data definitions for sections
-  const data = useMemo(() => ({
-    getInvolved: [
-      { label: 'Watch Online', href: '#online', desc: 'Watch messages and services' },
-      { label: 'Live Stream', href: '#livestream', desc: 'Watch live' },
-      { label: 'Groups', href: '#groups', desc: 'Get in groups to grow your faith' },
-      { label: 'Giving', href: '#giving', desc: 'Ongoing act of worship' },
-      { label: 'Volunteer', href: '#volunteer', desc: 'Join a team at your local campus' },
-      { label: 'Events', href: '#events', desc: 'Find events near you' },
-      { label: 'Salvation', href: '#salvation', desc: 'Salvation and prayer' },
-      { label: 'Next Steps', href: '#next-steps', desc: 'Grow in Next Steps' },
-      { label: 'Need Prayer?', href: '#prayer', desc: 'Support through faith' },
-    ],
-    discover: [
-      { label: 'Sermons', href: '#sermons' },
-      { label: 'Study Guides', href: '#guides' },
-      { label: 'Store', href: '#store' },
-    ],
-    ministries: [
-      { label: 'Outreach', href: '#outreach', dot: 'bg-green-600', desc: 'Volunteer in your community' },
-      { label: 'NextGen', href: '#nextgen', dot: 'bg-blue-600', desc: 'Join our kids & high schoolers' },
-      { label: 'Young Adults', href: '#young-adults', dot: 'bg-purple-600', desc: 'For adults ages 18–25' },
-    ],
-    opportunities: [
-      { label: 'Jobs', href: '#jobs' },
-      { label: 'Apprenticeships', href: '#apprenticeships' },
-      { label: 'Internship', href: '#internship' },
-    ],
-    about: [
-      { label: 'Freedom Life Church', href: '#freedom-life-church' },
-      { label: 'Beliefs & Values', href: '#beliefs-&-values' },
-    ]
-  }), []);
-
-  const lowerQuery = query.trim().toLowerCase();
-
-  const filtered = useMemo(() => {
-    if (!lowerQuery) return data;
-    const filterList = (items) => items.filter(i => (i.label.toLowerCase().includes(lowerQuery) || (i.desc && i.desc.toLowerCase().includes(lowerQuery))));
-    return {
-      getInvolved: filterList(data.getInvolved),
-      discover: filterList(data.discover),
-      ministries: filterList(data.ministries),
-      opportunities: filterList(data.opportunities),
-      about: filterList(data.about)
+    const prevOverflow = document.body.style.overflow;
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevOverflow;
     };
-  }, [lowerQuery, data]);
+  }, [isOpen, onClose]);
 
-  const anyResults = Object.values({
-    getInvolved: filtered.getInvolved,
-    discover: filtered.discover,
-    ministries: filtered.ministries,
-    opportunities: filtered.opportunities,
-    about: filtered.about
-  }).some(list => list.length > 0);
+  const navigationSections = [
+    {
+      title: 'Get Involved',
+      items: [
+        { 
+          name: 'Visit FLC', 
+          href: '/visit', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Live Stream', 
+          href: '/live', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Groups', 
+          href: '/groups', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Giving', 
+          href: '/giving', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Volunteer', 
+          href: '/volunteer', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Events', 
+          href: '/events', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Salvation', 
+          href: '/salvation', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Baptism', 
+          href: '/baptism', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Need Prayer?', 
+          href: '/prayer', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          )
+        }
+      ]
+    },
+    {
+      title: 'Discover',
+      items: [
+        { 
+          name: 'Sermons', 
+          href: '/sermons', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Study Guides', 
+          href: '/study-guides', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          )
+        },
+        { 
+          name: 'Store', 
+          href: '/store', 
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          )
+        }
+      ]
+    },
+    {
+      title: 'Ministries',
+      items: [
+        {
+          name: "Men's",
+          href: '#mens',
+          icon: (
+            <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        },
+        {
+          name: 'Womens',
+          href: '#womens',
+          icon: (
+            <svg className="w-5 h-5 text-pink-500" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        },
+        {
+          name: 'Children',
+          href: '#children',
+          icon: (
+            <svg className="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        },
+        {
+          name: 'Volunteer',
+          href: '#volunteer',
+          icon: (
+            <svg className="w-5 h-5 text-amber-500" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        },
+        {
+          name: 'Outreach',
+          href: '#outreach',
+          icon: (
+            <svg className="w-5 h-5 text-violet-500" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        },
+        {
+          name: 'Music',
+          href: '#music',
+          icon: (
+            <svg className="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="currentColor" />
+            </svg>
+          )
+        }
+      ]
+    }
+  ];
 
-  return (
-    <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/10 supports-[backdrop-filter]:backdrop-blur-[2px] backdrop-blur-[2px] transition-opacity duration-300 z-40"
-          onClick={onClose}
-          aria-hidden="true"
-        />
-      )}
-      <aside
-        className={`fixed inset-y-0 left-0 w-80 bg-brand-white shadow-xl border-r border-neutral-200 transform transition-transform duration-300 ease-out z-50 flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-        aria-hidden={!isOpen}
-        aria-label="Primary navigation"
+  // Search filter state for menu items
+  const [searchQuery, setSearchQuery] = useState('');
+  const normalized = searchQuery.trim().toLowerCase();
+  const filteredSections = normalized
+    ? navigationSections
+        .map(section => {
+          const titleMatch = section.title.toLowerCase().includes(normalized);
+          if (titleMatch) return section; // show full section when title matches
+          const items = section.items.filter(item => {
+            const nameHit = item.name.toLowerCase().includes(normalized);
+            const descHit = item.desc ? item.desc.toLowerCase().includes(normalized) : false;
+            return nameHit || descHit;
+          });
+          return items.length ? { ...section, items } : null;
+        })
+        .filter(Boolean)
+    : navigationSections;
+
+  const isActiveRoute = (href) => router.pathname === href;
+
+  if (!mounted || !isOpen) return null;
+
+  const sidebar = (
+    <div className="fixed inset-0 z-[10000]" aria-modal="true" role="dialog">
+      {/* Underlay to catch clicks anywhere and close */}
+      <div
+        className="fixed inset-0 bg-black/50"
+        style={{ zIndex: 10000 }}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div
+        className="fixed top-0 left-0 h-screen w-[320px] max-w-[85vw] bg-white shadow-2xl will-change-transform transition-transform duration-300 ease-out"
+        style={{ zIndex: 10001, transform: 'translateX(0)' }}
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Search */}
-        <div className="px-5 pt-4 pb-4 border-b border-neutral-100">
-          <SearchBar placeholder="Search menu..." value={query} onChange={setQuery} />
+        {/* Close button in the top-right of panel */}
+        <div className="flex items-center justify-between p-4 border-b border-neutral-200">
+          <h2 className="text-lg font-semibold text-neutral-900">Menu</h2>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-md text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-flc-500"
+            aria-label="Close menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
 
-        {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto px-5 py-5 space-y-8">
-          {/* Get Involved */}
-          {filtered.getInvolved.length > 0 && (
-            <div>
-              <div className={sectionHeading}>
-                <span>Get Involved</span>
-                <button className="text-neutral-400 hover:text-neutral-600" aria-label="Configure section">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.757.426 1.757 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.757-2.924 1.757-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.757-.426-1.757-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>
-                </button>
+        {/* Navigation + Footer content */}
+        <nav className="h-[calc(100vh-65px)] overflow-y-auto p-4 space-y-8">
+          {/* Search Bar */}
+          <div className="sticky top-0 z-[2] -mt-px bg-white pb-3">
+            <label htmlFor="sidebar-search" className="sr-only">Search menu</label>
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+                <svg className="w-4 h-4 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M20 20l-3.5-3.5" />
+                </svg>
               </div>
-              <nav className="space-y-1">
-                {filtered.getInvolved.map(item => (
-                  <a key={item.label} href={item.href} className={linkBase}>
-                    <span className={iconCircle}>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      <span className="block truncate">{item.label}</span>
-                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
-                    </span>
-                  </a>
-                ))}
-              </nav>
+              <input
+                id="sidebar-search"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search menu..."
+                className="w-full rounded-md border border-neutral-300 pl-9 pr-3 py-2 text-sm placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-flc-500 focus:border-flc-500"
+              />
             </div>
-          )}
-
-          {/* Discover */}
-          {filtered.discover.length > 0 && (
-            <div>
-              <div className={sectionHeading}>Discover</div>
-              <nav className="space-y-1">
-                {filtered.discover.map(item => (
-                  <a key={item.label} href={item.href} className={linkBase}>
-                    <span className={iconCircle}>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      <span className="block truncate">{item.label}</span>
-                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
-                    </span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-          )}
-
-          {/* Ministries */}
-          {filtered.ministries.length > 0 && (
-            <div>
-              <div className={sectionHeading}>Ministries</div>
-              <nav className="space-y-1">
-                {filtered.ministries.map(item => (
-                  <a key={item.label} href={item.href} className={linkBase}>
-                    <span className={`mt-1 w-2 h-2 rounded-full ${item.dot}`}></span>
-                    <span className="flex-1 min-w-0">
-                      <span className="block truncate">{item.label}</span>
-                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
-                    </span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-          )}
-
-          {/* Notice an issue? */}
-          <div>
-            <div className={sectionHeading}>Notice an issue?</div>
-            <p className="text-xs text-neutral-600 leading-relaxed mb-3">Tell us so we can fix it.</p>
-            <a href="#feedback" className="inline-flex items-center gap-2 text-sm font-medium text-flc-600 hover:text-flc-700">Send feedback
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </a>
-            </div>
-
-          {/* Opportunities */}
-          {filtered.opportunities.length > 0 && (
-            <div>
-              <div className={sectionHeading}>Opportunities</div>
-              <nav className="space-y-1">
-                {filtered.opportunities.map(item => (
-                  <a key={item.label} href={item.href} className={linkBase}>
-                    <span className={iconCircle}>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      <span className="block truncate">{item.label}</span>
-                    </span>
-                  </a>
-                ))}
-              </nav>
-            </div>
-          )}
-
-          {/* About */}
-          {filtered.about.length > 0 && (
-            <div>
-              <div className={sectionHeading}>About</div>
-              <nav className="space-y-1">
-                {filtered.about.map(item => (
-                  <a key={item.label} href={item.href} className={linkBase}>{item.label}</a>
-                ))}
-              </nav>
-            </div>
-          )}
-
-          {!anyResults && (
-            <div className="text-center text-neutral-400 text-sm pt-4">
-              No matches for &ldquo;{query}&rdquo;.
-            </div>
-          )}
-
-          {/* MyFLC Card */}
-          <div className="rounded-lg border border-neutral-200 p-4 bg-neutral-50">
-            <h4 className="font-semibold text-sm mb-1">MyFLC</h4>
-            <p className="text-xs text-neutral-600 leading-relaxed mb-3">Looking for your giving, group details, or giving history? MyFLC is our church portal for those who give and are in groups.</p>
-            <button className="w-full text-center text-sm font-medium bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md py-2 transition-colors duration-200">Access MyFLC</button>
           </div>
-        </div>
-
-        {/* Footer area */}
-        <div className="border-t border-neutral-100 px-5 py-4 space-y-3 text-[11px] text-neutral-500">
-          <div className="flex flex-wrap gap-x-3 gap-y-1">
-            {['Vision','Terms','Privacy'].map(label => (
-              <a key={label} href={`#${label.toLowerCase()}`} className="hover:text-flc-600">{label}</a>
+          <div className="space-y-8">
+            {(filteredSections.length > 0 ? filteredSections : []).map((section) => (
+              <div key={section.title}>
+                <h3 className="text-xs font-semibold text-black uppercase tracking-wider mb-3">
+                  {section.title}
+                </h3>
+                <div className="space-y-1">
+                  {section.items.map((item) => {
+                    const active = isActiveRoute(item.href);
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={onClose}
+                        className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                          active
+                            ? 'bg-amber-50 text-amber-900 border-l-4 border-amber-600 font-semibold'
+                            : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+                        }`}
+                      >
+                        <span className={`mr-3 ${active ? 'text-amber-600' : 'text-neutral-400 group-hover:text-neutral-500'}`}>
+                          {item.icon}
+                        </span>
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
+            {normalized && filteredSections.length === 0 && (
+              <div className="text-sm text-neutral-500">No matches found.</div>
+            )}
           </div>
-          <div className="text-neutral-400 text-[10px]">© {new Date().getFullYear()} Freedom Life Church. All rights reserved.</div>
-          <div className="flex items-center gap-3 pt-1">
-            {['facebook','instagram','youtube','spotify'].map(icon => (
-              <a key={icon} href={`#${icon}`} className="w-6 h-6 flex items-center justify-center rounded-full bg-neutral-200 hover:bg-flc-500 hover:text-white text-neutral-600 transition-colors duration-200 text-[10px] capitalize">
-                {icon[0]}
+
+          {/* MyFLC card */}
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+            <h3 className="text-base font-semibold text-neutral-900">MyFLC</h3>
+            <p className="mt-1 text-sm text-neutral-600">
+              Looking to view your group details or giving history? MyFLC is our church’s portal for attenders and leaders.
+            </p>
+            <Link
+              href="/myflc"
+              onClick={onClose}
+              className="mt-3 inline-flex items-center gap-2 rounded-full bg-neutral-200 px-4 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-300 transition-colors"
+            >
+              Access MyFLC
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l10-10M17 7H7m10 0v10" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Contact and Social */}
+          <div className="pt-2 pb-6 border-t border-neutral-200">
+            <address className="not-italic text-[13px] leading-5 text-neutral-600">
+              14970 114 Ave NW
+              <br />
+              Edmonton, AB T5M 4G4
+            </address>
+            <div className="mt-2 text-[13px] text-neutral-600">780-729-0399</div>
+            <div className="mt-4 flex items-center gap-3">
+              <a
+                href="https://www.youtube.com/@FLCEdmonton"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                aria-label="YouTube"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M23.5 6.2a4 4 0 00-2.8-2.8C18.9 3 12 3 12 3s-6.9 0-8.7.4A4 4 0 00.5 6.2 41.5 41.5 0 000 12a41.5 41.5 0 00.5 5.8 4 4 0 002.8 2.8C5.1 21 12 21 12 21s6.9 0 8.7-.4a4 4 0 002.8-2.8A41.5 41.5 0 0024 12a41.5 41.5 0 00-.5-5.8zM9.75 15.5v-7l6 3.5-6 3.5z" />
+                </svg>
               </a>
-            ))}
+              <a
+                href="https://www.facebook.com/FLCedmonton/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                aria-label="Facebook"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M24 12.073C24 5.446 18.627.073 12 .073 5.373.073 0 5.446 0 12.073 0 18.06 4.388 23.025 10.125 23.925v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/flcyeg/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                aria-label="Instagram"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.014 5.367 18.648.001 12.017.001zM8.449 16.988c-2.508 0-4.54-2.033-4.54-4.54s2.032-4.54 4.54-4.54c2.508 0 4.54 2.032 4.54 4.54s-2.032 4.54-4.54 4.54zm7.119 0c-2.508 0-4.54-2.033-4.54-4.54s2.032-4.54 4.54-4.54c2.508 0 4.54 2.032 4.54 4.54s-2.032 4.54-4.54 4.54z" />
+                </svg>
+              </a>
+            </div>
+            <div className="mt-4 text-[12px] text-neutral-400">© {new Date().getFullYear()} Freedom Life Church. All Rights Reserved.</div>
           </div>
-          <div className="pt-2 border-t border-neutral-100 mt-2">
-            <a href="#profile" className="block text-neutral-600 hover:text-flc-600 text-sm font-medium mb-1">My Account</a>
-            <a href="#signout" className="block text-neutral-500 hover:text-flc-600 text-sm">Sign Out</a>
-          </div>
-        </div>
-      </aside>
-    </>
+        </nav>
+      </div>
+    </div>
   );
+
+  return createPortal(sidebar, document.body);
 };
 
 export default SidePanel;

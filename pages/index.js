@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import HeroCarousel from '../src/components/HeroCarousel';
+import WaysToGetInvolved from '../src/components/WaysToGetInvolved';
 import PlanVisitSection from '../src/components/PlanVisitSection';
 const SermonLibraryPreview = dynamic(() => import('../src/components/SermonLibraryPreview'), {
   loading: () => <div className="py-20 text-center text-neutral-500 text-sm">Loading messages…</div>,
@@ -20,8 +21,9 @@ export default function HomePage() {
         <meta property="og:image" content="/og-image.png" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <HeroCarousel />
-      <PlanVisitSection />
+  <HeroCarousel />
+  <WaysToGetInvolved />
+  <PlanVisitSection />
       <SermonLibraryPreview />
     </>
   );

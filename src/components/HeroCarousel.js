@@ -169,18 +169,18 @@ const HeroCarousel = ({
       />
   <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10" style={{ maxWidth: '88rem' }}>
         <div className="relative">
-          {/* Slide Container with fixed height to prevent layout shift */}
-          <div className="relative" style={{minHeight: '520px'}}>
+          {/* Slide Container: static height on mobile, fixed/min height only on desktop */}
+          <div className="relative md:min-h-[520px]">
             {slides.map((slide, i) => {
               const active = i === index;
               return (
                 <div
                   key={slide.id}
-                  className={`absolute inset-0 transition-opacity duration-700 ${active ? 'opacity-100' : 'opacity-0 pointer-events-none'} `}
+                  className={`transition-opacity duration-700 ${active ? 'opacity-100' : 'opacity-0'} ${active ? '' : 'hidden md:block'} md:absolute md:inset-0 md:${active ? '' : 'pointer-events-none'}`}
                   aria-hidden={!active}
                   aria-live={active ? 'polite' : 'off'}
                 >
-                  <div className="h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-center">
+                  <div className="md:h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-center">
                     {/* Text Content (expanded by wider container, original span restored) */}
                     <div className="text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
                       {/* Decorative vertical accent (desktop only) */}
@@ -326,7 +326,7 @@ const HeroCarousel = ({
                                   fill
                                   sizes="(max-width:768px) 160px, 224px"
                                   className="object-contain"
-                                  priority={false}
+                                  priority
                                 />
                               </div>
                             </div>
