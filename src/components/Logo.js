@@ -1,5 +1,6 @@
 import React from 'react';
-import mainLogo from '../assets/logos/FLC main logo.png';
+import Image from 'next/image';
+import mainLogo from '../assets/logos/cropped-FreedomLifeChurch-Logo-web-04.png';
 
 const Logo = ({ size = 'default' }) => {
   const sizeMap = {
@@ -10,12 +11,17 @@ const Logo = ({ size = 'default' }) => {
 
   return (
     <a href="#home" className="flex items-center group" aria-label="Freedom Life Church Home">
-      <img
-        src={mainLogo}
-        alt="Freedom Life Church Logo"
-        className={`object-contain w-auto ${sizeMap[size]}`}
-        draggable={false}
-      />
+  <span className={`relative block w-auto ${sizeMap[size]}`} style={{ aspectRatio: '5 / 2' }}>
+        <Image
+          src={mainLogo}
+            alt="Freedom Life Church Logo"
+            fill
+            sizes="(max-width: 768px) 140px, 180px"
+            className="object-contain"
+            priority
+            draggable={false}
+        />
+      </span>
       {/* Accessible hidden text for screen readers (kept for semantics) */}
       <span className="sr-only">Freedom Life Church</span>
     </a>
