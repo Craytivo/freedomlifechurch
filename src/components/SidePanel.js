@@ -13,21 +13,21 @@ const SidePanel = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState('');
 
   const sectionHeading = 'uppercase tracking-wide text-[11px] font-semibold text-neutral-500 mb-2 flex items-center justify-between';
-  const linkBase = 'flex items-center gap-2 px-2 py-2 rounded-md text-sm text-neutral-700 hover:text-flc-600 hover:bg-neutral-50 transition-colors duration-150';
+  const linkBase = 'flex items-start gap-2 px-2 py-2 rounded-md text-sm text-neutral-700 hover:text-flc-600 hover:bg-neutral-50 transition-colors duration-150';
   const iconCircle = 'w-5 h-5 flex items-center justify-center text-neutral-400';
 
   // Raw data definitions for sections
   const data = useMemo(() => ({
     getInvolved: [
-      { label: 'Watch Church Online', href: '#online' },
-      { label: 'Live Stream', href: '#livestream' },
-      { label: 'Growth', href: '#growth' },
-      { label: 'Giving', href: '#giving' },
-      { label: 'Volunteer', href: '#volunteer' },
-      { label: 'Events', href: '#events' },
-      { label: 'Salvation', href: '#salvation' },
-      { label: 'Baptism', href: '#baptism' },
-      { label: 'Need Prayer', href: '#prayer' },
+      { label: 'Watch Online', href: '#online', desc: 'Watch messages and services' },
+      { label: 'Live Stream', href: '#livestream', desc: 'Watch live' },
+      { label: 'Groups', href: '#groups', desc: 'Get in groups to grow your faith' },
+      { label: 'Giving', href: '#giving', desc: 'Ongoing act of worship' },
+      { label: 'Volunteer', href: '#volunteer', desc: 'Join a team at your local campus' },
+      { label: 'Events', href: '#events', desc: 'Find events near you' },
+      { label: 'Salvation', href: '#salvation', desc: 'Salvation and prayer' },
+      { label: 'Next Steps', href: '#next-steps', desc: 'Grow in Next Steps' },
+      { label: 'Need Prayer?', href: '#prayer', desc: 'Support through faith' },
     ],
     discover: [
       { label: 'Sermons', href: '#sermons' },
@@ -35,11 +35,14 @@ const SidePanel = ({ isOpen, onClose }) => {
       { label: 'Store', href: '#store' },
     ],
     ministries: [
-      { label: 'Men', href: '#men', dot: 'bg-blue-600' },
-      { label: 'Women', href: '#women', dot: 'bg-pink-500' },
-      { label: 'Children', href: '#children', dot: 'bg-yellow-500' },
-      { label: 'Outreach', href: '#outreach', dot: 'bg-green-500' },
-      { label: 'Music', href: '#music', dot: 'bg-purple-500' },
+      { label: 'Outreach', href: '#outreach', dot: 'bg-green-600', desc: 'Volunteer in your community' },
+      { label: 'NextGen', href: '#nextgen', dot: 'bg-blue-600', desc: 'Join our kids & high schoolers' },
+      { label: 'Young Adults', href: '#young-adults', dot: 'bg-purple-600', desc: 'For adults ages 18–25' },
+    ],
+    opportunities: [
+      { label: 'Jobs', href: '#jobs' },
+      { label: 'Apprenticeships', href: '#apprenticeships' },
+      { label: 'Internship', href: '#internship' },
     ],
     about: [
       { label: 'Freedom Life Church', href: '#freedom-life-church' },
@@ -51,16 +54,23 @@ const SidePanel = ({ isOpen, onClose }) => {
 
   const filtered = useMemo(() => {
     if (!lowerQuery) return data;
-    const filterList = (items) => items.filter(i => i.label.toLowerCase().includes(lowerQuery));
+    const filterList = (items) => items.filter(i => (i.label.toLowerCase().includes(lowerQuery) || (i.desc && i.desc.toLowerCase().includes(lowerQuery))));
     return {
       getInvolved: filterList(data.getInvolved),
       discover: filterList(data.discover),
       ministries: filterList(data.ministries),
+      opportunities: filterList(data.opportunities),
       about: filterList(data.about)
     };
   }, [lowerQuery, data]);
 
-  const anyResults = Object.values(filtered).some(list => list.length > 0);
+  const anyResults = Object.values({
+    getInvolved: filtered.getInvolved,
+    discover: filtered.discover,
+    ministries: filtered.ministries,
+    opportunities: filtered.opportunities,
+    about: filtered.about
+  }).some(list => list.length > 0);
 
   return (
     <>
@@ -100,7 +110,10 @@ const SidePanel = ({ isOpen, onClose }) => {
                     <span className={iconCircle}>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </span>
-                    {item.label}
+                    <span className="flex-1 min-w-0">
+                      <span className="block truncate">{item.label}</span>
+                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
+                    </span>
                   </a>
                 ))}
               </nav>
@@ -117,7 +130,10 @@ const SidePanel = ({ isOpen, onClose }) => {
                     <span className={iconCircle}>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </span>
-                    {item.label}
+                    <span className="flex-1 min-w-0">
+                      <span className="block truncate">{item.label}</span>
+                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
+                    </span>
                   </a>
                 ))}
               </nav>
@@ -131,8 +147,39 @@ const SidePanel = ({ isOpen, onClose }) => {
               <nav className="space-y-1">
                 {filtered.ministries.map(item => (
                   <a key={item.label} href={item.href} className={linkBase}>
-                    <span className={`w-2 h-2 rounded-full ${item.dot}`}></span>
-                    {item.label}
+                    <span className={`mt-1 w-2 h-2 rounded-full ${item.dot}`}></span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block truncate">{item.label}</span>
+                      {item.desc && <span className="block text-[11px] text-neutral-500 truncate">{item.desc}</span>}
+                    </span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
+
+          {/* Notice an issue? */}
+          <div>
+            <div className={sectionHeading}>Notice an issue?</div>
+            <p className="text-xs text-neutral-600 leading-relaxed mb-3">Tell us so we can fix it.</p>
+            <a href="#feedback" className="inline-flex items-center gap-2 text-sm font-medium text-flc-600 hover:text-flc-700">Send feedback
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            </div>
+
+          {/* Opportunities */}
+          {filtered.opportunities.length > 0 && (
+            <div>
+              <div className={sectionHeading}>Opportunities</div>
+              <nav className="space-y-1">
+                {filtered.opportunities.map(item => (
+                  <a key={item.label} href={item.href} className={linkBase}>
+                    <span className={iconCircle}>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className="block truncate">{item.label}</span>
+                    </span>
                   </a>
                 ))}
               </nav>
@@ -157,11 +204,11 @@ const SidePanel = ({ isOpen, onClose }) => {
             </div>
           )}
 
-          {/* Church Centre Card */}
+          {/* MyFLC Card */}
           <div className="rounded-lg border border-neutral-200 p-4 bg-neutral-50">
-            <h4 className="font-semibold text-sm mb-1">Church Centre</h4>
-            <p className="text-xs text-neutral-600 leading-relaxed mb-3">Access your groups, giving history, event registrations, and more through the Church Centre portal.</p>
-            <button className="w-full text-center text-sm font-medium bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md py-2 transition-colors duration-200">Access Church Centre</button>
+            <h4 className="font-semibold text-sm mb-1">MyFLC</h4>
+            <p className="text-xs text-neutral-600 leading-relaxed mb-3">Looking for your giving, group details, or giving history? MyFLC is our church portal for those who give and are in groups.</p>
+            <button className="w-full text-center text-sm font-medium bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-md py-2 transition-colors duration-200">Access MyFLC</button>
           </div>
         </div>
 
