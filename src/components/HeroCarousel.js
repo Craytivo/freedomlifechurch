@@ -118,6 +118,15 @@ const HeroCarousel = ({
     else if (e.key === 'ArrowLeft') { prev(); }
   };
 
+  // On mobile, start with the second slide (index 1) to show “second card” first
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (isMobile && total > 1) {
+      setIndex(1);
+    }
+  }, [total]);
+
   // Inject keyframes for flame watermark only once
   useEffect(() => {
     const styleId = 'hero-flame-watermark-keyframes';
@@ -180,42 +189,51 @@ const HeroCarousel = ({
                   aria-hidden={!active}
                   aria-live={active ? 'polite' : 'off'}
                 >
+                  {/* Slide header: badge + slide index + mobile arrows (always on top) */}
+                  <div className="flex items-center justify-between mb-3 md:mb-4">
+                    <div className="inline-flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
+                      <span className="text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
+                    </div>
+                    {/* Mobile inline arrows */}
+                    <div className="flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); prev(); }}
+                        aria-label="Previous slide"
+                        disabled={total <= 1}
+                        className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => { e.stopPropagation(); next(); }}
+                        aria-label="Next slide"
+                        disabled={total <= 1}
+                        className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Title and subtitle directly under header (always below header, before grid) */}
+                  <div className="mb-3 md:mb-4">
+                    <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] text-[clamp(1.9rem,4.2vw,3.25rem)]">
+                      {slide.title}
+                    </h2>
+                    <p className="font-heading text-flc-600 mt-2 text-xs md:text-sm font-semibold tracking-[0.18em] uppercase">
+                      {slide.subtitle}
+                    </p>
+                  </div>
+
                   <div className="md:h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-center">
-                    {/* Text Content (expanded by wider container, original span restored) */}
-                    <div className="text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
+                    {/* Text Content (on mobile this comes after media) */}
+                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
                       {/* Decorative vertical accent (desktop only) */}
                       <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
-                      <div className="inline-flex items-center gap-2 mb-4">
-                        <span className="px-3 py-1 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
-                        <span className="text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
-                        {/* Inline Arrows to the right of slide number - mobile only */}
-                        <div className="flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); prev(); }}
-                            aria-label="Previous slide"
-                            disabled={total <= 1}
-                            className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={(e) => { e.stopPropagation(); next(); }}
-                            aria-label="Next slide"
-                            disabled={total <= 1}
-                            className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
-                          >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-                          </button>
-                        </div>
-                      </div>
-                      <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] mb-3 md:mb-4 text-[clamp(1.9rem,4.2vw,3.25rem)]">
-                        {slide.title}
-                      </h2>
-                      <p className="font-heading text-flc-600 mb-3 md:mb-4 text-xs md:text-sm font-semibold tracking-[0.18em] uppercase">
-                        {slide.subtitle}
-                      </p>
+                      {/* Title and subtitle moved above header section */}
                       <p className="font-body text-neutral-700 text-base md:text-lg leading-relaxed mb-5 md:mb-6 max-w-3xl">
                         {slide.description}
                       </p>
@@ -297,8 +315,8 @@ const HeroCarousel = ({
                       </div>
                     </div>
 
-                    {/* Media Area (original width retained) */}
-                    <div className="relative w-full md:col-span-3">
+                    {/* Media Area (first on mobile, right on desktop) */}
+                    <div className="order-1 md:order-2 relative w-full md:col-span-3 mb-6 md:mb-0">
                       {slide.id === 'conference' ? (
                         <div className="rounded-xl shadow-lg overflow-hidden relative flex justify-center px-2.5 md:px-3 pt-1.5 pb-3.5 md:pt-2 md:pb-5">
                           {/* Light gradient background */}
