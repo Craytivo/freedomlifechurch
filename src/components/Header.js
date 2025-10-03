@@ -20,15 +20,15 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   // Mirror side panel data for global search (keep in sync with SidePanel.js)
   const sidePanelSections = {
     'Get Involved': [
-      { name: 'Watch Church Online', href: '#online' },
-      { name: 'Live Stream', href: '#livestream' },
-      { name: 'Growth', href: '#growth' },
-      { name: 'Giving', href: '#giving' },
-      { name: 'Volunteer', href: '#volunteer' },
-      { name: 'Events', href: '#events' },
-      { name: 'Salvation', href: '#salvation' },
-      { name: 'Baptism', href: '#baptism' },
-      { name: 'Need Prayer', href: '#prayer' },
+      { name: 'Watch Online', href: '#online', desc: 'Watch messages and services' },
+      { name: 'Live Stream', href: '#livestream', desc: 'Watch live' },
+      { name: 'Groups', href: '#groups', desc: 'Get in groups to grow your faith' },
+      { name: 'Giving', href: '#giving', desc: 'Ongoing act of worship' },
+      { name: 'Volunteer', href: '#volunteer', desc: 'Join a team at your local campus' },
+      { name: 'Events', href: '#events', desc: 'Find events near you' },
+      { name: 'Salvation', href: '#salvation', desc: 'Salvation and prayer' },
+      { name: 'Next Steps', href: '#next-steps', desc: 'Grow in Next Steps' },
+      { name: 'Need Prayer?', href: '#prayer', desc: 'Support through faith' },
     ],
     'Discover': [
       { name: 'Sermons', href: '#sermons' },
@@ -36,13 +36,16 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
       { name: 'Store', href: '#store' },
     ],
     'Ministries': [
-      { name: 'Men', href: '#men' },
-      { name: 'Women', href: '#women' },
-      { name: 'Children', href: '#children' },
-      { name: 'Outreach', href: '#outreach' },
-      { name: 'Music', href: '#music' },
+      { name: 'Outreach', href: '#outreach', desc: 'Volunteer in your community' },
+      { name: 'NextGen', href: '#nextgen', desc: 'Join our kids & high schoolers' },
+      { name: 'Young Adults', href: '#young-adults', desc: 'For adults ages 18–25' },
     ],
-    'About Section': [
+    'Opportunities': [
+      { name: 'Jobs', href: '#jobs' },
+      { name: 'Apprenticeships', href: '#apprenticeships' },
+      { name: 'Internship', href: '#internship' },
+    ],
+    'About': [
       { name: 'Freedom Life Church', href: '#freedom-life-church' },
       { name: 'Beliefs & Values', href: '#beliefs-&-values' },
     ],
@@ -53,7 +56,12 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   ).concat(navigation);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const filteredResults = searchQuery.trim() ? allSearchItems.filter(item => item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())) : [];
+  const filteredResults = searchQuery.trim()
+    ? allSearchItems.filter(item => {
+        const q = searchQuery.trim().toLowerCase();
+        return item.name.toLowerCase().includes(q) || (item.desc && item.desc.toLowerCase().includes(q));
+      })
+    : [];
   const groupedResults = filteredResults.reduce((acc, item) => {
     acc[item.section] = acc[item.section] || [];
     acc[item.section].push(item);
@@ -245,7 +253,8 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
                                 onMouseLeave={() => setActiveIndex(prev => prev === globalIndex ? -1 : prev)}
                                 onClick={() => { setSearchQuery(''); setActiveIndex(-1); }}
                               >
-                                {item.name}
+                                <span className="block truncate">{item.name}</span>
+                                {item.desc && <span className={`block text-[11px] ${isActive ? 'text-white/85' : 'text-neutral-500'} truncate`}>{item.desc}</span>}
                               </a>
                             </li>
                           );
