@@ -5,7 +5,7 @@ import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
 import imgFamily from '../src/assets/images/IMG_4895webcropped-768x839.jpg';
 
 const Section = ({ children, className = '' }) => (
-  <section className={`relative py-16 md:py-20 ${className}`}>
+  <section className={`relative py-12 md:py-16 ${className}`}>
     <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
       background: 'radial-gradient(circle at 12% 8%, rgba(235,167,62,0.06), rgba(235,167,62,0) 55%)'
     }} />
@@ -24,18 +24,18 @@ export default function AboutPage() {
       </Head>
 
       {/* Hero */}
-      <Section className="bg-white pt-14 md:pt-20">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <Section className="bg-white pt-10 md:pt-14">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Who we are</span>
-            <h1 className="mt-3 font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">About Freedom Life Church</h1>
-            <p className="mt-4 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
+            <h1 className="mt-2 font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">About Freedom Life Church</h1>
+            <p className="mt-3 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
               We are a church that believes that freedom, life and grace are given and experienced in Jesus Christ alone (John 8:36). Believing the entire Word of Jesus Christ, and that salvation is given only by His grace alone! (Titus 3:5-7).
             </p>
-            <p className="mt-4 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
+            <p className="mt-3 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
               Our desire is to see people encounter His presence and be transformed for a life on mission.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-5 flex flex-wrap gap-3">
               <a href="#mission" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40">
                 Our Mission
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -64,6 +64,34 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      {/* Quick Facts strip */}
+      <Section className="bg-neutral-50 py-8 md:py-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          {[
+            { label: 'Sunday Service', value: '12:00 PM MST', icon: (
+              <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z"/></svg>
+            ) },
+            { label: 'Location', value: '14970 114 Ave NW, Edmonton', icon: (
+              <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100-6 3 3 0 000 6z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.5-7.5 10.5-7.5 10.5S4.5 18 4.5 10.5A7.5 7.5 0 1119.5 10.5z"/></svg>
+            ) },
+            { label: 'Kids Ministry', value: 'Check‑in opens 15 min early', icon: (
+              <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7a4 4 0 108 0 4 4 0 00-8 0zm0 0v10a2 2 0 002 2h4a2 2 0 002-2V7"/></svg>
+            ) },
+            { label: 'Parking', value: 'Free on‑site & overflow', icon: (
+              <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 6h8a3 3 0 010 6H5V6zm0 0v12M5 12h8"/></svg>
+            ) },
+          ].map(f => (
+            <div key={f.label} className="flex items-start gap-3 p-3 md:p-4 rounded-lg border border-neutral-200 bg-white">
+              <span className="inline-flex w-8 h-8 items-center justify-center rounded-md bg-flc-500/10">{f.icon}</span>
+              <div className="min-w-0">
+                <p className="text-[11px] uppercase tracking-wide text-neutral-500 font-semibold">{f.label}</p>
+                <p className="text-sm text-neutral-800 font-medium truncate">{f.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       {/* Mission */}
       <Section className="bg-neutral-50" id="mission">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -87,6 +115,27 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* Beliefs & Values cards */}
+      <Section className="bg-white">
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Beliefs & Values</span>
+          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">How we think and live</h2>
+          <p className="mt-2 text-neutral-600">God’s Word shapes what we believe and how we love our city.</p>
+        </div>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            { title: 'Scripture', desc: 'The Bible is our authority for life and faith.' },
+            { title: 'Grace', desc: 'We’re justified by grace through faith in Jesus.' },
+            { title: 'Mission', desc: 'Presence that leads to transformation and sending.' },
+          ].map(c => (
+            <div key={c.title} className="rounded-xl border border-neutral-200 bg-white p-5 md:p-6 shadow-sm">
+              <h3 className="font-heading text-lg font-semibold text-primary-900 mb-1">{c.title}</h3>
+              <p className="text-sm text-neutral-600 leading-relaxed">{c.desc}</p>
+            </div>
+          ))}
         </div>
       </Section>
 
@@ -148,10 +197,10 @@ export default function AboutPage() {
 
       {/* Family highlight */}
       <Section className="bg-white">
-        <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
           <div>
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">For your family</span>
-            <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">We’ve got something for everyone</h2>
+            <h2 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">We’ve got something for everyone</h2>
             <p className="mt-2 text-neutral-700">From kids to youth and young adults—your family will find a place to belong, grow, and serve together.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a href="#nextgen" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">NextGen</a>
