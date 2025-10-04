@@ -14,7 +14,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
     { name: 'Groups', href: '#groups', section: 'Primary' },
     { name: 'Serve', href: '#serve', section: 'Primary' },
     { name: 'Events', href: '#events', section: 'Primary' },
-    { name: 'About', href: '#about', section: 'Primary' },
+  { name: 'About', href: '/about', section: 'Primary' },
   ];
 
   // Mirror side panel data for global search (keep in sync with SidePanel.js)
@@ -46,8 +46,8 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
       { name: 'Internship', href: '#internship' },
     ],
     'About': [
-      { name: 'Freedom Life Church', href: '#freedom-life-church' },
-      { name: 'Beliefs & Values', href: '#beliefs-&-values' },
+      { name: 'Freedom Life Church', href: '/about' },
+      { name: 'Beliefs & Values', href: '/about#mission' },
     ],
   };
 
