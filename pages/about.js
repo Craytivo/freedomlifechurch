@@ -260,6 +260,48 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      {/* FAQs */}
+      <Section className="bg-neutral-50" id="faq">
+        <div className="text-center max-w-3xl mx-auto">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Questions</span>
+          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">What to know before you come</h2>
+          <p className="mt-2 text-neutral-600">Here are answers to common questions as you plan your visit.</p>
+        </div>
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          {[
+            { q: 'What time should I arrive?', a: 'Arrive 10–15 minutes early to park, check in kids, and find a seat. Service starts at 12:00 PM MST.' },
+            { q: 'Where do I park?', a: 'We have free on‑site parking with overflow available nearby. Look for our team and signage.' },
+            { q: 'What should I wear?', a: 'Come as you are—most people dress casually. You’ll fit right in.' },
+            { q: 'What about my kids?', a: 'Kids ministry is available. Check‑in opens 15 minutes before service and our team will help you get set up.' },
+            { q: 'How long is the service?', a: 'Services typically run 75–90 minutes and include worship and Biblical teaching.' },
+            { q: 'How do I get connected?', a: 'Start with Groups or Serving. Visit the Connect area after service and we’ll help with next steps.' },
+          ].map((item, idx) => (
+            <div key={idx} className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
+              <details className="group">
+                <summary className="list-none flex items-center justify-between gap-3 py-3.5 px-4 cursor-pointer">
+                  <span className="text-sm font-semibold text-primary-900">{item.q}</span>
+                  <svg className="w-4 h-4 text-neutral-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <div className="px-4 pb-4 text-sm text-neutral-700 leading-relaxed">
+                  {item.a}
+                </div>
+              </details>
+            </div>
+          ))}
+        </div>
+
+        {/* Connect strip */}
+        <div className="mt-8 p-4 md:p-5 rounded-xl border border-neutral-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <p className="text-sm text-neutral-700">Still have questions? We’d love to help you plan your first visit.</p>
+          <div className="flex items-center gap-3">
+            <a href="#plan-visit" className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40">Plan Your Visit
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#prayer" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Contact & Prayer</a>
+          </div>
+        </div>
+      </Section>
+
       {/* CTA removed by request */}
     </>
   );
