@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import footerLogo from '../assets/logos/cropped-FreedomLifeChurch-Logo-web-04.png';
+import footerLogo from '../assets/logos/cropped-FreedomLifeChurch-site-icon-11.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -40,8 +40,12 @@ const Footer = () => {
           {/* Church Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-44 h-16">
+              <div className="relative w-20 h-20">
                 <Image src={footerLogo} alt="Freedom Life Church" fill className="object-contain" />
+              </div>
+              <div>
+                <p className="font-heading text-lg font-bold text-primary-900 leading-tight">Freedom Life Church</p>
+                <p className="text-[12px] text-neutral-500">Edmonton, Alberta</p>
               </div>
             </div>
             <p className="text-neutral-600 text-sm leading-relaxed max-w-sm">

@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/api/youtube/latest": "pages/api/youtube/latest.js",
-  "/api/youtube/recent": "pages/api/youtube/recent.js"
+  "/": "pages/index.js"
 }
