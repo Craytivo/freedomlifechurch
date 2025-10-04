@@ -30,8 +30,10 @@ export default function AboutPage() {
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Who we are</span>
             <h1 className="mt-3 font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">About Freedom Life Church</h1>
             <p className="mt-4 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
-              We are a church that believes freedom, life, and grace are found in Jesus Christ alone (John 8:36). Our
-              desire is to see people encounter His presence and be transformed for a life on mission.
+              We are a church that believes that freedom, life and grace are given and experienced in Jesus Christ alone (John 8:36). Believing the entire Word of Jesus Christ, and that salvation is given only by His grace alone! (Titus 3:5-7).
+            </p>
+            <p className="mt-4 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
+              Our desire is to see people encounter His presence and be transformed for a life on mission.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="#mission" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40">
