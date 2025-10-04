@@ -57,10 +57,31 @@ export default function AboutPage() {
                 }}
               />
               <div className="relative rounded-2xl overflow-hidden shadow-md md:shadow-lg md:hover:shadow-xl transition-shadow md:transition-transform md:hover:-translate-y-0.5">
-                <Image src={imgHero} alt="Freedom Life Church community" className="w-full h-auto" priority />
+                <Image
+                  src={imgHero}
+                  alt="Freedom Life Church community"
+                  className="w-full h-auto"
+                  priority
+                  style={{ WebkitMaskImage: 'radial-gradient(circle at center, black 80%, transparent 103%)', maskImage: 'radial-gradient(circle at center, black 80%, transparent 103%)' }}
+                />
+                <div className="absolute top-3 left-3 inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/90 text-[11px] font-semibold uppercase tracking-wide text-flc-700 shadow-sm">
+                  Sundays 12:00 PM
+                  <span className="w-1 h-1 rounded-full bg-neutral-300" />
+                  Edmonton
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* Scripture highlight */}
+      <Section className="bg-neutral-50">
+        <div className="text-center max-w-4xl mx-auto">
+          <blockquote className="font-heading text-xl md:text-2xl text-primary-900 leading-relaxed">
+            “So if the Son sets you free, you will be free indeed.”
+          </blockquote>
+          <p className="mt-1 text-[12px] uppercase tracking-wide text-neutral-500 font-semibold">John 8:36 · Titus 3:5–7</p>
         </div>
       </Section>
 
@@ -219,8 +240,14 @@ export default function AboutPage() {
                 }}
               />
               <div className="relative rounded-2xl overflow-hidden shadow-md md:shadow-lg md:hover:shadow-xl transition-shadow md:transition-transform md:hover:-translate-y-0.5">
-                <Image src={imgFamily} alt="Family at Freedom Life Church" className="w-full h-auto" />
+                <Image
+                  src={imgFamily}
+                  alt="Family at Freedom Life Church"
+                  className="w-full h-auto"
+                  style={{ WebkitMaskImage: 'radial-gradient(circle at center, black 80%, transparent 103%)', maskImage: 'radial-gradient(circle at center, black 80%, transparent 103%)' }}
+                />
               </div>
+              <p className="mt-2 text-[12px] text-neutral-500">Together at Freedom Life Church</p>
             </div>
           </div>
         </div>
