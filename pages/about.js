@@ -46,9 +46,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/10]">
-              <Image src={imgHero} alt="Freedom Life Church community" fill className="object-contain" priority />
-            </div>
+            <Image src={imgHero} alt="Freedom Life Church community" className="w-full h-auto" priority />
           </div>
         </div>
       </Section>
@@ -148,9 +146,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div>
-            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/10]">
-              <Image src={imgFamily} alt="Family at Freedom Life Church" fill className="object-contain" />
-            </div>
+            <Image src={imgFamily} alt="Family at Freedom Life Church" className="w-full h-auto" />
           </div>
         </div>
       </Section>
