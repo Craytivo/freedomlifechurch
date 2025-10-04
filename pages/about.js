@@ -223,6 +223,13 @@ export default function AboutPage() {
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">For your family</span>
             <h2 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">We’ve got something for everyone</h2>
             <p className="mt-2 text-neutral-700">From kids to youth and young adults—your family will find a place to belong, grow, and serve together.</p>
+            <p className="mt-3 text-neutral-700">Kids experience Jesus in age‑appropriate, engaging environments with a secure check‑in process. Youth gather to build real friendships, grow in the Word, and discover God’s purpose for their lives. We also equip parents with simple tools to lead faith at home.</p>
+            <ul className="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
+              <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" />Nursery through elementary with safe check‑in</li>
+              <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" />Weekly rhythms for middle & high school students</li>
+              <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" />Young adults finding community and purpose</li>
+              <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" />Parent resources to disciple your family</li>
+            </ul>
             <div className="mt-5 flex flex-wrap gap-3">
               <a href="#nextgen" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">NextGen</a>
               <a href="#groups" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Groups</a>
