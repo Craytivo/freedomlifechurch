@@ -290,16 +290,6 @@ export default function AboutPage() {
           ))}
         </div>
 
-        {/* Connect strip */}
-        <div className="mt-8 p-4 md:p-5 rounded-xl border border-neutral-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm text-neutral-700">Still have questions? We’d love to help you plan your first visit.</p>
-          <div className="flex items-center gap-3">
-            <a href="#plan-visit" className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40">Plan Your Visit
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#prayer" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Contact & Prayer</a>
-          </div>
-        </div>
       </Section>
 
       {/* CTA removed by request */}
