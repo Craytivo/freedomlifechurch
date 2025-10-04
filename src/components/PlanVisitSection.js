@@ -187,33 +187,6 @@ const PlanVisitSection = () => {
                 </a>
               ))}
             </div>
-            {/* Quick FAQ */}
-            <div className="mb-6">
-              <h3 className="font-heading text-base font-semibold text-primary-900 mb-2">FAQs</h3>
-              <div className="divide-y divide-neutral-200 rounded-lg border border-neutral-200 bg-white">
-                <details className="group p-4">
-                  <summary className="list-none flex items-center justify-between cursor-pointer">
-                    <span className="text-sm font-medium text-neutral-800">What should I wear?</span>
-                    <svg className="w-4 h-4 text-neutral-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </summary>
-                  <p className="mt-2 text-[13px] text-neutral-600">Come as you are—most people dress casually.</p>
-                </details>
-                <details className="group p-4">
-                  <summary className="list-none flex items-center justify-between cursor-pointer">
-                    <span className="text-sm font-medium text-neutral-800">Where do I park?</span>
-                    <svg className="w-4 h-4 text-neutral-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </summary>
-                  <p className="mt-2 text-[13px] text-neutral-600">We have free on‑site parking with overflow available nearby.</p>
-                </details>
-                <details className="group p-4">
-                  <summary className="list-none flex items-center justify-between cursor-pointer">
-                    <span className="text-sm font-medium text-neutral-800">What about my kids?</span>
-                    <svg className="w-4 h-4 text-neutral-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                  </summary>
-                  <p className="mt-2 text-[13px] text-neutral-600">Kids ministry is available; check‑in opens 15 minutes before service.</p>
-                </details>
-              </div>
-            </div>
             <div className="text-[13px] text-neutral-500">
               Prefer to just show up? That’s perfect too—come say hi at the Connect area after service.
             </div>

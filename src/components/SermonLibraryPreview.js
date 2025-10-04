@@ -72,16 +72,22 @@ const SermonLibraryPreview = () => {
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
         background: 'radial-gradient(circle at 75% 25%, rgba(235,167,62,0.07), rgba(235,167,62,0) 60%)'
       }} />
+      <div className="absolute -inset-x-10 top-0 h-40 bg-gradient-to-b from-white/60 to-transparent pointer-events-none" aria-hidden="true" />
       <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '82rem' }}>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
           <div>
-            <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900 mb-3">Recent Messages</h2>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Stay encouraged</div>
+            <h2 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900 mb-3">Recent Messages</h2>
             <p className="text-neutral-600 text-base md:text-lg max-w-xl leading-relaxed">Catch up on the latest teaching and explore past messages to keep growing mid‑week.</p>
           </div>
           <div className="flex items-center gap-4">
             <a href="#sermons" className="inline-flex items-center gap-2 text-sm font-medium text-flc-600 hover:text-flc-700">
               View Full Library
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </a>
+            <a href="https://www.youtube.com/@FLCEdmonton?sub_confirmation=1" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700">
+              Subscribe
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
             </a>
           </div>
         </div>
@@ -97,6 +103,9 @@ const SermonLibraryPreview = () => {
                   className="absolute inset-0 w-full h-full object-cover group-hover:brightness-105 transition-[filter]"
                   loading="lazy"
                 />
+                <div className="absolute left-3 top-3 inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/90 text-[11px] font-semibold uppercase tracking-wide text-flc-700 shadow-sm">
+                  New
+                </div>
                 <button
                   type="button"
                   className="absolute inset-0 flex items-center justify-center bg-black/35 group-hover:bg-black/25 transition-colors"
