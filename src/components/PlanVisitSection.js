@@ -17,14 +17,8 @@ const nextSteps = [
 ];
 
 const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
-// Approximate coordinates for the address (can refine if needed)
-const MAP_LAT = 53.567;
-const MAP_LON = -113.59;
-// OpenStreetMap embed URL (interactive, no API key). Use a tight bounding box for a zoomed-in view.
-const LAT_DELTA = 0.0018; // ~200m
-const LON_DELTA = 0.0024; // ~160m at this latitude
-const bbox = `${MAP_LON - LON_DELTA},${MAP_LAT - LAT_DELTA},${MAP_LON + LON_DELTA},${MAP_LAT + LAT_DELTA}`;
-const OSM_EMBED_URL = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik&marker=${MAP_LAT}%2C${MAP_LON}`;
+// Use Google Maps embed with address query to ensure the pin is correct without manual lat/lon
+const GOOGLE_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`;
 
 const PlanVisitSection = () => {
   const [form, setForm] = useState({ name: '', email: '', date: '' });
@@ -33,6 +27,26 @@ const PlanVisitSection = () => {
   const [mapReady, setMapReady] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
   const mapRef = useRef(null);
+
+  // Build a list of upcoming Sundays (next 12)
+  const upcomingSundays = React.useMemo(() => {
+    const out = [];
+    const today = new Date();
+    const start = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const day = start.getDay(); // 0 = Sunday
+    const daysUntilNextSunday = (7 - day) % 7; // 0 if today Sunday, else days left
+    const firstSunday = new Date(start);
+    firstSunday.setDate(firstSunday.getDate() + daysUntilNextSunday);
+    for (let i = 0; i < 12; i++) {
+      const s = new Date(firstSunday);
+      s.setDate(firstSunday.getDate() + i * 7);
+      // ISO date (YYYY-MM-DD) in local time
+      const value = s.toLocaleDateString('en-CA');
+      const label = s.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+      out.push({ value, label });
+    }
+    return out;
+  }, []);
 
   // Lazy load map when in viewport (only if API key placeholder replaced OR we decide to show no-key iframe alt)
   useEffect(() => {
@@ -123,7 +137,7 @@ const PlanVisitSection = () => {
                     <iframe
                       title={`Map showing location of ${ADDRESS}`}
                       className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      src={OSM_EMBED_URL}
+                      src={GOOGLE_EMBED_URL}
                       style={{ border: 0 }}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
@@ -138,11 +152,8 @@ const PlanVisitSection = () => {
                 )}
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/25" aria-hidden="true" />
               </div>
-              <div className="mt-2 text-[12px]">
-                <a href={`https://www.openstreetmap.org/?mlat=${MAP_LAT}&mlon=${MAP_LON}#map=17/${MAP_LAT}/${MAP_LON}`} target="_blank" rel="noopener noreferrer" className="text-flc-600 hover:text-flc-700">Open in OpenStreetMap</a>
-              </div>
               <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
-              <p className="mt-2 text-[11px] text-neutral-400">Map imagery © OpenStreetMap contributors.</p>
+              {/* Google Maps embed includes built-in attribution */}
             </div>
             <div className="flex flex-wrap gap-4 mb-6">
               {nextSteps.map(s => (
@@ -175,8 +186,19 @@ const PlanVisitSection = () => {
                   <input type="email" name="email" value={form.email} onChange={update} required className="w-full rounded-md border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/30 text-sm px-3 py-2 bg-neutral-50 focus:bg-white transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-1">Approx. Date Visiting</label>
-                  <input type="date" name="date" value={form.date} onChange={update} className="w-full rounded-md border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/30 text-sm px-3 py-2 bg-neutral-50 focus:bg-white transition-colors" />
+                  <label className="block text-xs font-semibold uppercase tracking-wide text-neutral-500 mb-1">Sunday You’re Visiting</label>
+                  <select
+                    name="date"
+                    value={form.date}
+                    onChange={update}
+                    required
+                    className="w-full rounded-md border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/30 text-sm px-3 py-2 bg-neutral-50 focus:bg-white transition-colors"
+                  >
+                    <option value="" disabled>Select a Sunday</option>
+                    {upcomingSundays.map(d => (
+                      <option key={d.value} value={d.value}>{d.label}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <button type="submit" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-md bg-flc-500 hover:bg-flc-600 text-white font-semibold text-sm tracking-wide shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition-colors">

@@ -178,8 +178,8 @@ const HeroCarousel = ({
       />
   <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10" style={{ maxWidth: '88rem' }}>
         <div className="relative">
-          {/* Slide Container: static height on mobile, fixed/min height only on desktop */}
-          <div className="relative md:min-h-[520px]">
+          {/* Slide Container: static height on mobile, fixed/min height only on desktop; reserve space for bottom controls */}
+          <div className="relative md:min-h-[520px] md:pb-16 lg:pb-20">
             {slides.map((slide, i) => {
               const active = i === index;
               return (
@@ -190,16 +190,16 @@ const HeroCarousel = ({
                   aria-live={active ? 'polite' : 'off'}
                 >
                   {/* Slide header: badge + slide index + mobile arrows (always on top) */}
-                  <div className="flex items-center justify-between mb-3 md:mb-4">
+                  <div className="relative z-20 flex items-center justify-between mb-2 md:mb-3">
                     <div className="inline-flex items-center gap-2">
                       <span className="px-3 py-1 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
                       <span className="text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
                     </div>
                     {/* Mobile inline arrows */}
-                    <div className="flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
+                    <div className="flex-none flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
                       <button
                         type="button"
-                        onClick={(e) => { e.stopPropagation(); prev(); }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }}
                         aria-label="Previous slide"
                         disabled={total <= 1}
                         className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
@@ -208,7 +208,7 @@ const HeroCarousel = ({
                       </button>
                       <button
                         type="button"
-                        onClick={(e) => { e.stopPropagation(); next(); }}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }}
                         aria-label="Next slide"
                         disabled={total <= 1}
                         className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
@@ -219,7 +219,7 @@ const HeroCarousel = ({
                   </div>
 
                   {/* Title and subtitle directly under header (always below header, before grid) */}
-                  <div className="mb-3 md:mb-4">
+                  <div className="mb-3 md:mb-5">
                     <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] text-[clamp(1.9rem,4.2vw,3.25rem)]">
                       {slide.title}
                     </h2>
@@ -228,7 +228,7 @@ const HeroCarousel = ({
                     </p>
                   </div>
 
-                  <div className="md:h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-center">
+                  <div className="md:h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-start">
                     {/* Text Content (on mobile this comes after media) */}
                     <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
                       {/* Decorative vertical accent (desktop only) */}
@@ -256,7 +256,27 @@ const HeroCarousel = ({
                         <div className="mb-6 max-w-xl">
                           <div className="p-3 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start gap-3">
                             <span className="inline-flex w-6 h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-[11px] font-semibold">NEW</span>
-                            <p className="text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to go deeper mid-week.</p>
+                            <div className="space-y-1.5">
+                              <p className="text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing mid‑week.</p>
+                              <p className="text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 10:30 AM or on‑demand anytime.</p>
+                            </div>
+                          </div>
+                          <div className="mt-4 rounded-lg border border-neutral-200 bg-neutral-50/80 p-4">
+                            <p className="text-[12px] text-neutral-500 uppercase font-semibold tracking-wide mb-2">Highlights</p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[13px] text-neutral-700">
+                              <li className="flex items-start gap-2">
+                                <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Biblical teaching that builds strong disciples.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Practical application for everyday life.</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+                                <span>Spirit‑led ministry and moments of prayer.</span>
+                              </li>
+                            </ul>
                           </div>
                         </div>
                       )}
@@ -304,6 +324,17 @@ const HeroCarousel = ({
                             More Streams
                           </a>
                         )}
+                        {slide.id === 'sermon' && (
+                          <a
+                            href="https://www.youtube.com/@FLCEdmonton?sub_confirmation=1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm"
+                          >
+                            Subscribe on YouTube
+                            <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+                          </a>
+                        )}
                         {slide.id === 'prayer-focus' && (
                           <a
                             href="#prayer"
@@ -316,7 +347,7 @@ const HeroCarousel = ({
                     </div>
 
                     {/* Media Area (first on mobile, right on desktop) */}
-                    <div className="order-1 md:order-2 relative w-full md:col-span-3 mb-6 md:mb-0">
+                    <div className="order-1 md:order-2 relative z-10 md:z-0 w-full md:col-span-3 mb-6 md:mb-0">
                       {slide.id === 'conference' ? (
                         <div className="rounded-xl shadow-lg overflow-hidden relative flex justify-center px-2.5 md:px-3 pt-1.5 pb-3.5 md:pt-2 md:pb-5">
                           {/* Light gradient background */}
@@ -449,12 +480,12 @@ const HeroCarousel = ({
           </div>
 
           {/* Controls */}
-          <div className="flex items-center justify-between mt-10">
+          <div className="relative z-20 flex items-center justify-between mt-10">
             <div className="hidden md:flex gap-3">
-              <button onClick={prev} aria-label="Previous slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
+              <button onClick={(e)=>{ e.preventDefault(); e.stopPropagation(); prev(); }} aria-label="Previous slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
               </button>
-              <button onClick={next} aria-label="Next slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
+              <button onClick={(e)=>{ e.preventDefault(); e.stopPropagation(); next(); }} aria-label="Next slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
               </button>
             </div>
