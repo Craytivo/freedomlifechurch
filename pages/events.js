@@ -1,61 +1,33 @@
 import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
+import { loadEventsFromICS } from '../src/lib/icsEvents';
 
-// Example events data (replace with CMS/API when ready)
-const baseEvents = [
-  {
-    id: 'sun-service',
-    title: 'Sunday Worship Experience',
-    date: '2025-10-05', // YYYY-MM-DD
-    time: '12:00 PM',
-    location: 'FLC Campus',
-    category: 'Church-wide',
-    href: '#plan-visit',
-    blurb: 'Join us for worship, teaching, and community.'
-  },
-  {
-    id: 'prayer-friday',
-    title: 'Friday Prayer Gathering',
-    date: '2025-10-10',
-    time: '7:00 AM & 7:00 PM',
-    location: 'FLC Campus',
-    category: 'Prayer',
-    href: '#prayer',
-    blurb: 'Start and end your Friday in agreement with the house.'
-  },
-  {
-    id: 'youth-night',
-    title: 'Youth Night',
-    date: '2025-10-11',
-    time: '6:30 PM',
-    location: 'FLC Campus',
-    category: 'NextGen',
-    href: '#nextgen',
-    blurb: 'A high-energy night for grades 6–12 to grow in faith and friendships.'
-  },
-  {
-    id: 'groups-week',
-    title: 'Groups Week',
-    date: '2025-10-14',
-    time: 'Various',
-    location: 'Across the City',
-    category: 'Groups',
-    href: '#groups',
-    blurb: 'Find your people and grow spiritually together.'
-  },
-  {
-    id: 'serve-day',
-    title: 'Serve Day: Community Outreach',
-    date: '2025-10-18',
-    time: '9:00 AM',
-    location: 'TBA',
-    category: 'Outreach',
-    href: '#outreach',
-    blurb: 'Be the hands and feet of Jesus in our city.'
-  }
-];
+// Build relevant filters dynamically from event data
+function classifyEvent(e) {
+  const tags = new Set();
+  const title = (e.title || '').toLowerCase();
+  const blurb = (e.blurb || '').toLowerCase();
+  const text = `${title} ${blurb}`;
 
-const categories = ['All', 'Church-wide', 'Prayer', 'Groups', 'NextGen', 'Outreach'];
+  if (/\b(sunday\s+service|service)\b/.test(text)) tags.add('Services');
+  if (/\bprayer\b/.test(text)) tags.add('Prayer');
+  if (/(small\s*group|\bgroups?\b|bible)/.test(text)) tags.add('Groups');
+  if (/(women|women\'s|ladies)/.test(text)) tags.add('Women');
+  if (/(men|men\'s)/.test(text)) tags.add('Men');
+  if (/(child|children|kids|youth|vbs|vacation\s*bible)/.test(text)) tags.add('Kids & Youth');
+  if (tags.size === 0) tags.add('Special');
+
+  try {
+    const d = new Date(e.date);
+    if (!isNaN(d)) {
+      const dayName = d.toLocaleString(undefined, { weekday: 'long' });
+      tags.add(dayName);
+    }
+  } catch {}
+
+  return Array.from(tags);
+}
 
 function classNames(...a) { return a.filter(Boolean).join(' '); }
 
@@ -76,8 +48,8 @@ function buildCalendar(baseDate) {
   return { start, end, days };
 }
 
-export default function EventsPage() {
-  const [activeCat, setActiveCat] = useState('All');
+export default function EventsPage({ initialEvents }) {
+  const [activeFilter, setActiveFilter] = useState('All');
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -87,8 +59,36 @@ export default function EventsPage() {
   const { start, end, days } = useMemo(() => buildCalendar(cursor), [cursor]);
   const monthKeyStr = monthKey(cursor);
 
-  const events = baseEvents; // swap with fetched data later
-  const filtered = events.filter(e => activeCat === 'All' || e.category === activeCat);
+  const events = initialEvents;
+  const { tagIndex, filters } = useMemo(() => {
+    const tagIndex = new Map(); // id -> tags[]
+    const counts = new Map();
+    for (const e of events) {
+      const tags = classifyEvent(e);
+      tagIndex.set(e.id, tags);
+      for (const t of tags) counts.set(t, (counts.get(t) || 0) + 1);
+    }
+    // Order filters by a sensible priority then by count
+    const priority = new Map([
+      ['Services', 1],
+      ['Prayer', 2],
+      ['Groups', 3],
+      ['Kids & Youth', 4],
+      ['Women', 5],
+      ['Men', 6],
+      ['Special', 7],
+      ['Sunday', 10], ['Wednesday', 11], ['Friday', 12], ['Saturday', 13], ['Monday', 14], ['Tuesday', 15], ['Thursday', 16],
+    ]);
+    const filters = Array.from(counts.entries())
+      .sort((a, b) => (priority.get(a[0]) ?? 100) - (priority.get(b[0]) ?? 100) || b[1] - a[1])
+      .map(([name]) => name);
+    return { tagIndex, filters };
+  }, [events]);
+
+  const filtered = useMemo(() => {
+    if (activeFilter === 'All') return events;
+    return events.filter(e => (tagIndex.get(e.id) || []).includes(activeFilter));
+  }, [events, tagIndex, activeFilter]);
   const byDate = useMemo(() => {
     const map = new Map();
     for (const e of filtered) {
@@ -127,18 +127,30 @@ export default function EventsPage() {
               <p className="mt-2 text-neutral-700 max-w-2xl">Find opportunities to connect, serve, and grow. Filter by category or browse the calendar.</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              {categories.map(cat => (
+              <button
+                key="All"
+                type="button"
+                onClick={() => { setActiveFilter('All'); setSelectedDate(null); }}
+                className={classNames(
+                  'px-3 py-1.5 rounded-full text-sm font-semibold border transition-colors',
+                  activeFilter === 'All' ? 'bg-flc-500 text-white border-flc-500' : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600'
+                )}
+                aria-pressed={activeFilter === 'All'}
+              >
+                All
+              </button>
+              {filters.map(f => (
                 <button
-                  key={cat}
+                  key={f}
                   type="button"
-                  onClick={() => { setActiveCat(cat); setSelectedDate(null); }}
+                  onClick={() => { setActiveFilter(f); setSelectedDate(null); }}
                   className={classNames(
                     'px-3 py-1.5 rounded-full text-sm font-semibold border transition-colors',
-                    activeCat === cat ? 'bg-flc-500 text-white border-flc-500' : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600'
+                    activeFilter === f ? 'bg-flc-500 text-white border-flc-500' : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600'
                   )}
-                  aria-pressed={activeCat === cat}
+                  aria-pressed={activeFilter === f}
                 >
-                  {cat}
+                  {f}
                 </button>
               ))}
             </div>
@@ -203,12 +215,14 @@ export default function EventsPage() {
                   ) : (
                     <ul className="space-y-3">
                       {dayEvents.map(e => (
-                        <li key={e.id} className="flex items-start gap-3">
-                          <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-flc-500" />
-                          <div>
-                            <div className="text-sm font-semibold text-primary-900">{e.title}</div>
-                            <div className="text-[12px] text-neutral-600">{e.time} · {e.location}</div>
-                          </div>
+                        <li key={e.id}>
+                          <Link href={`/events/${e.id}`} className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
+                            <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-flc-500" />
+                            <div>
+                              <div className="text-sm font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</div>
+                              <div className="text-[12px] text-neutral-600">{e.time} · {e.locationName}</div>
+                            </div>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -223,7 +237,7 @@ export default function EventsPage() {
                 {visibleList.length === 0 ? (
                   <div className="col-span-full text-neutral-500 text-sm">No events found for this month.</div>
                 ) : visibleList.map(e => (
-                  <a key={e.id} href={e.href} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
+                  <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="text-[11px] uppercase tracking-wide text-flc-600 font-semibold">{e.category}</div>
@@ -238,7 +252,7 @@ export default function EventsPage() {
                         <div className="mt-1 text-[12px] text-neutral-500">{e.time}</div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -247,4 +261,12 @@ export default function EventsPage() {
       </section>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const initialEvents = await loadEventsFromICS();
+  return {
+    props: { initialEvents },
+    revalidate: 60 * 60 // revalidate hourly
+  };
 }
