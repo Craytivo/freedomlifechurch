@@ -1,5 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
+import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
+import imgFamily from '../src/assets/images/IMG_4895webcropped-768x839.jpg';
 
 const Section = ({ children, className = '' }) => (
   <section className={`relative py-16 md:py-20 ${className}`}>
@@ -41,10 +44,8 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-gradient-to-br from-neutral-50 to-white aspect-[16/10]">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-24 h-24 rounded-full bg-flc-500/15" />
-              </div>
+            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/10]">
+              <Image src={imgHero} alt="Freedom Life Church community" fill className="object-cover" priority />
             </div>
           </div>
         </div>
@@ -145,26 +146,14 @@ export default function AboutPage() {
             </div>
           </div>
           <div>
-            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-50 aspect-[16/10]" />
+            <div className="relative rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/10]">
+              <Image src={imgFamily} alt="Family at Freedom Life Church" fill className="object-cover" />
+            </div>
           </div>
         </div>
       </Section>
 
-      {/* CTA */}
-      <Section className="bg-neutral-50">
-        <div className="rounded-2xl border border-neutral-200 bg-white p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div>
-            <h3 className="font-heading text-xl md:text-2xl font-bold text-primary-900">Ready to plan your visit?</h3>
-            <p className="text-neutral-600">Make plans to join us this Sunday at 12:00 PM MST.</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href="#plan-visit" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40">Plan a Visit
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#sermons" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Watch Online</a>
-          </div>
-        </div>
-      </Section>
+      {/* CTA removed by request */}
     </>
   );
 }
