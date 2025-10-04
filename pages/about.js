@@ -46,7 +46,20 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <Image src={imgHero} alt="Freedom Life Church community" className="w-full h-auto" priority />
+            <div className="relative">
+              <div
+                className="absolute -inset-4 md:-inset-6 rounded-[1.75rem] pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  background:
+                    'radial-gradient(circle at 12% 16%, rgba(235,167,62,0.14), rgba(235,167,62,0) 55%), radial-gradient(circle at 88% 12%, rgba(235,167,62,0.08), rgba(235,167,62,0) 55%)',
+                  filter: 'blur(6px)'
+                }}
+              />
+              <div className="relative rounded-2xl overflow-hidden shadow-md md:shadow-lg md:hover:shadow-xl transition-shadow md:transition-transform md:hover:-translate-y-0.5">
+                <Image src={imgHero} alt="Freedom Life Church community" className="w-full h-auto" priority />
+              </div>
+            </div>
           </div>
         </div>
       </Section>
@@ -146,7 +159,20 @@ export default function AboutPage() {
             </div>
           </div>
           <div>
-            <Image src={imgFamily} alt="Family at Freedom Life Church" className="w-full h-auto" />
+            <div className="relative">
+              <div
+                className="absolute -inset-4 md:-inset-6 rounded-[1.75rem] pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  background:
+                    'radial-gradient(circle at 85% 12%, rgba(235,167,62,0.14), rgba(235,167,62,0) 55%), radial-gradient(circle at 8% 18%, rgba(235,167,62,0.08), rgba(235,167,62,0) 55%)',
+                  filter: 'blur(6px)'
+                }}
+              />
+              <div className="relative rounded-2xl overflow-hidden shadow-md md:shadow-lg md:hover:shadow-xl transition-shadow md:transition-transform md:hover:-translate-y-0.5">
+                <Image src={imgFamily} alt="Family at Freedom Life Church" className="w-full h-auto" />
+              </div>
+            </div>
           </div>
         </div>
       </Section>
