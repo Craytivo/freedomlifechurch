@@ -1,3 +1,4 @@
+/* global Map Set */
 import fs from 'fs';
 import path from 'path';
 
@@ -189,7 +190,7 @@ function expandRecurring(master, overrides) {
     const freq = parts['FREQ'];
     const until = parts['UNTIL'] ? parseICSTimestamp(parts['UNTIL']) : null;
     const byday = parts['BYDAY'] ? parts['BYDAY'].split(',') : [];
-    const wkst = parts['WKST'] || 'MO';
+  // const wkst = parts['WKST'] || 'MO'; // not used currently
 
     const endLimit = until && until < windowEnd ? until : windowEnd;
 

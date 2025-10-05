@@ -1,3 +1,4 @@
+/* global Map Set */
 import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -13,8 +14,8 @@ function classifyEvent(e) {
   if (/\b(sunday\s+service|service)\b/.test(text)) tags.add('Services');
   if (/\bprayer\b/.test(text)) tags.add('Prayer');
   if (/(small\s*group|\bgroups?\b|bible)/.test(text)) tags.add('Groups');
-  if (/(women|women\'s|ladies)/.test(text)) tags.add('Women');
-  if (/(men|men\'s)/.test(text)) tags.add('Men');
+  if (/(women|women's|ladies)/.test(text)) tags.add('Women');
+  if (/(men|men's)/.test(text)) tags.add('Men');
   if (/(child|children|kids|youth|vbs|vacation\s*bible)/.test(text)) tags.add('Kids & Youth');
   if (tags.size === 0) tags.add('Special');
 
@@ -56,7 +57,7 @@ export default function EventsPage({ initialEvents }) {
   });
   const [selectedDate, setSelectedDate] = useState(null);
 
-  const { start, end, days } = useMemo(() => buildCalendar(cursor), [cursor]);
+  const { start, days } = useMemo(() => buildCalendar(cursor), [cursor]);
   const monthKeyStr = monthKey(cursor);
 
   const events = initialEvents;
