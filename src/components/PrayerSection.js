@@ -2,15 +2,23 @@ import React from 'react';
 
 export default function PrayerSection() {
   return (
-    <section id="prayer" className="relative py-10 sm:py-14 md:py-16 bg-neutral-50">
+    <section id="prayer" className="relative py-10 sm:py-14 md:py-16 bg-gradient-to-b from-neutral-50 via-white to-neutral-50">
+      {/* Enhanced premium background */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
-        background: 'radial-gradient(circle at 85% 20%, rgba(235,167,62,0.08), rgba(235,167,62,0) 55%)'
+        background: [
+          'radial-gradient(circle at 85% 20%, rgba(235,167,62,0.09), rgba(235,167,62,0) 55%)',
+          'radial-gradient(circle at 15% 80%, rgba(235,167,62,0.05), rgba(235,167,62,0) 45%)',
+          'linear-gradient(45deg, rgba(235,167,62,0.02) 0%, rgba(235,167,62,0) 40%)'
+        ].join(', ')
       }} />
-      <div className="relative mx-auto px-3 sm:px-4 lg:px-8" style={{ maxWidth: '78rem' }}>
+      
+      {/* True full-width container for mobile */}
+      <div className="relative w-full px-0 sm:px-4 lg:px-8">
+        <div className="px-3 sm:px-0 mx-auto" style={{ maxWidth: '78rem' }}>
         <div className="max-w-3xl">
           <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Prayer</span>
-          <h2 className="mt-1.5 sm:mt-2 font-heading text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-primary-900">We would love to pray with you</h2>
-          <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-neutral-700">Share a request or a testimony. Our team prays throughout the week and at gatherings.</p>
+          <h2 className="mt-1.5 sm:mt-2 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 drop-shadow-md leading-[1.1]">We would love to pray with you</h2>
+          <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-neutral-700 font-medium tracking-wide leading-relaxed">Share a request or a testimony. Our team prays throughout the week and at gatherings.</p>
         </div>
 
         <div className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -42,6 +50,7 @@ export default function PrayerSection() {
                 <p className="mt-1 text-xs sm:text-sm text-neutral-600">Join us as we agree in prayer for our church and city.</p>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

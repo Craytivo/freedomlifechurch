@@ -188,8 +188,10 @@ const HeroCarousel = ({
           maskComposite: 'intersect'
         }}
       />
-  <div className="mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-10" style={{ maxWidth: '88rem' }}>
-        <div className="relative">
+      
+      {/* Enhanced container with true full-width mobile and premium desktop spacing */}
+      <div className="w-full px-0 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-10">
+        <div className="relative px-3 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
           {/* Slide Container: optimized height for mobile, fixed/min height only on desktop; reserve space for bottom controls */}
           <div className="relative pb-12 sm:pb-14 md:min-h-[520px] md:pb-16 lg:pb-20">
             {slides.map((slide, i) => {
@@ -232,10 +234,10 @@ const HeroCarousel = ({
 
                   {/* Title and subtitle directly under header (always below header, before grid) */}
                   <div className="mb-4 sm:mb-6 md:mb-5">
-                    <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] text-[clamp(1.5rem,6vw,3.25rem)] sm:text-[clamp(1.9rem,4.2vw,3.25rem)]">
+                    <h2 className="font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] text-[clamp(1.75rem,7vw,3.5rem)] sm:text-[clamp(2rem,4.5vw,3.5rem)] drop-shadow-sm">
                       {slide.title}
                     </h2>
-                    <p className="font-heading text-flc-600 mt-2 text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.16em] sm:tracking-[0.18em] uppercase">
+                    <p className="font-heading text-flc-600 mt-3 text-[11px] sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase drop-shadow-sm">
                       {slide.subtitle}
                     </p>
                   </div>

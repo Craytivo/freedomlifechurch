@@ -126,22 +126,26 @@ const Card = ({ item, spanClass = '' }) => (
 const WaysToGetInvolved = () => {
   return (
     <section className="relative bg-gradient-to-b from-neutral-50 via-white to-neutral-50/40 py-8 sm:py-12 md:py-16 overflow-hidden">
-      {/* Premium background elements */}
+      {/* Enhanced premium background elements */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-flc-500/[0.03] rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-400/[0.04] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-flc-500/[0.04] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-400/[0.05] rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-flc-500/[0.01] via-transparent to-amber-400/[0.01] rounded-full blur-3xl" />
       </div>
-      <div className="relative mx-auto px-3 sm:px-4 lg:px-8" style={{ maxWidth: '88rem' }}>
+      
+      {/* True full-width container for mobile with premium desktop spacing */}
+      <div className="relative w-full px-0 sm:px-4 lg:px-8">
+        <div className="px-3 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
         <div className="text-center max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
             For every age & season
           </div>
-          <h2 className="mt-5 sm:mt-6 font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.1]">
+          <h2 className="mt-5 sm:mt-6 font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] drop-shadow-lg">
             A place for you
-            <span className="block text-flc-600 mt-1">and your family</span>
+            <span className="block bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 bg-clip-text text-transparent mt-2">and your family</span>
           </h2>
-          <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto">
+          <p className="mt-6 sm:mt-8 text-lg sm:text-xl md:text-2xl text-neutral-600 leading-relaxed font-semibold max-w-4xl mx-auto tracking-wide">
             Discover belonging for every season of life: vibrant kids & youth ministries, authentic community for adults, and meaningful ways to serve together as a family.
           </p>
         </div>
@@ -161,6 +165,7 @@ const WaysToGetInvolved = () => {
             Explore All Next Steps
             <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2.5 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-flc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
           </Link>
+        </div>
         </div>
       </div>
     </section>
