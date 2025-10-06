@@ -1,4 +1,4 @@
-/* global Map Set */
+/* global Map Set Promise */
 import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -318,7 +318,10 @@ export async function getStaticProps() {
     if (Array.isArray(initialEvents) && initialEvents.length > 0) {
       return { props: { initialEvents }, revalidate: 60 * 5 };
     }
-  } catch {}
+  } catch (e) {
+    // Log and fall back to client hydration
+    console.warn('getStaticProps: ICS fetch failed at build time', e);
+  }
   // As a fallback, return empty and let client hydrate below.
   return { props: { initialEvents: [] }, revalidate: 60 * 5 };
 }
