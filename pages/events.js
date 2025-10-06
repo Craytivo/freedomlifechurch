@@ -3,9 +3,6 @@ import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { loadEventsFromICS } from '../src/lib/icsEvents';
-import dynamic from 'next/dynamic';
-
-const EventsMap = dynamic(() => import('../src/components/EventsMap'), { ssr: false });
 
 // Build relevant filters dynamically from event data
 function classifyEvent(e) {
@@ -70,10 +67,10 @@ export default function EventsPage({ initialEvents }) {
   // Use client-fetched events if available; otherwise fall back to SSG-provided events
   const events = clientEvents ?? initialEvents;
 
-  // Client-side hydrate if SSG failed to load any events (e.g., ICS blocked at build time)
+  // Client-side hydrate: fetch from API to ensure live site matches local even if SSG missed events
   React.useEffect(() => {
     let abort = false;
-    const shouldFetch = !initialEvents || initialEvents.length === 0;
+    const shouldFetch = process.env.NODE_ENV === 'production' ? true : (!initialEvents || initialEvents.length === 0);
     if (!shouldFetch) return;
     setLoadingLive(true);
     (async () => {
@@ -83,6 +80,15 @@ export default function EventsPage({ initialEvents }) {
         const data = await resp.json();
         if (!abort && Array.isArray(data.events) && data.events.length) {
           setClientEvents(data.events);
+        }
+        // If still empty, retry once after a short delay in case of cold starts
+        if (!abort && (!data.events || data.events.length === 0)) {
+          await new Promise(r => setTimeout(r, 800));
+          const r2 = await fetch('/api/events', { cache: 'no-store' });
+          if (r2.ok) {
+            const d2 = await r2.json();
+            if (Array.isArray(d2.events) && d2.events.length) setClientEvents(d2.events);
+          }
         }
       } catch (e) {
         // ignore; fallback embed will handle UI
@@ -275,12 +281,7 @@ export default function EventsPage({ initialEvents }) {
                       <div>No events found for this month.</div>
                     )}
                     {/* Graceful fallback to embedded Google Calendar when no events render in production */}
-                    {!loadingLive && (
-                      <div className="mt-2">
-                        <div className="text-neutral-600 mb-2">Map view</div>
-                        <EventsMap events={events} height={420} />
-                      </div>
-                    )}
+                    {/* No additional fallback UI */}
                   </div>
                 ) : visibleList.map(e => (
                   <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
@@ -301,13 +302,7 @@ export default function EventsPage({ initialEvents }) {
                   </Link>
                 ))}
               </div>
-              {/* Always show map under list when there are events */}
-              {visibleList.length > 0 && (
-                <div className="mt-6">
-                  <div className="text-neutral-700 mb-2">Map view</div>
-                  <EventsMap events={filtered} height={420} />
-                </div>
-              )}
+              {/* Map view removed as requested */}
             </div>
           </div>
         </div>
@@ -317,9 +312,25 @@ export default function EventsPage({ initialEvents }) {
 }
 
 export async function getStaticProps() {
-  const initialEvents = await loadEventsFromICS();
-  return {
-    props: { initialEvents },
-    revalidate: 60 * 5 // revalidate every 5 minutes
-  };
+  try {
+    const initialEvents = await loadEventsFromICS();
+    // If SSG was able to load events, ship with ISR
+    if (Array.isArray(initialEvents) && initialEvents.length > 0) {
+      return { props: { initialEvents }, revalidate: 60 * 5 };
+    }
+  } catch {}
+  // As a fallback, return empty and let client hydrate below.
+  return { props: { initialEvents: [] }, revalidate: 60 * 5 };
 }
+
+// Extra safety: server-side runtime fallback for platforms blocking ICS at build
+// Expose /events-ssr route by switching to SSR if env flag is set; otherwise rely on ISR + client hydrate.
+// If you want guaranteed server fetching at request time, uncomment below and comment getStaticProps.
+// export async function getServerSideProps() {
+//   try {
+//     const initialEvents = await loadEventsFromICS();
+//     return { props: { initialEvents } };
+//   } catch {
+//     return { props: { initialEvents: [] } };
+//   }
+// }
