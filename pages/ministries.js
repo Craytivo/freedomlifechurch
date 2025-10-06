@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Heading from '../src/components/Heading';
 import Link from 'next/link';
 
 const MINISTRIES = [
@@ -24,7 +25,7 @@ export default function MinistriesPage() {
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
           <div className="mb-8">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Get Involved</span>
-            <h1 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">Ministries</h1>
+            <Heading as="h1" size="md" className="mt-2">Ministries</Heading>
             <p className="mt-2 text-neutral-700 max-w-2xl">Find the ministry that fits you best—connect, grow, and serve with others at FLC.</p>
           </div>
 
