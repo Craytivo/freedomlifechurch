@@ -2,6 +2,16 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/about": "pages/about.js"
+  "/404": "pages/404.html",
+  "/about": "pages/about.html",
+  "/api/events": "pages/api/events.js",
+  "/api/youtube/latest": "pages/api/youtube/latest.js",
+  "/api/youtube/recent": "pages/api/youtube/recent.js",
+  "/": "pages/index.html",
+  "/ministries": "pages/ministries.html",
+  "/events/[id]": "pages/events/[id].js",
+  "/groups": "pages/groups.js",
+  "/events": "pages/events.js",
+  "/groups/[group]": "pages/groups/[group].js",
+  "/sermons.xml": "pages/sermons.xml.js"
 }
