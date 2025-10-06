@@ -4,3 +4,14 @@
 
 html, body { height: 100%; }
 body { font-family: theme('fontFamily.body'); }
+
+/* Smooth scrolling for in‑page anchors */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Prevent sticky header from covering anchor targets */
+/* Apply a default scroll margin; components can override with utility classes. */
+*:target {
+	scroll-margin-top: 5.25rem; /* header ~64px + small gap */
+}
