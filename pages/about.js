@@ -1,5 +1,6 @@
 import React from 'react';
 import SEO from '../src/components/seo/SEO';
+import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 import SectionHeader from '../src/components/SectionHeader';
 import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
@@ -16,10 +17,31 @@ const Section = ({ children, className = '' }) => (
   </section>
 );
 
+const visitFaq = [
+  { q: 'What time should I arrive?', a: 'Arrive 10–15 minutes early to park, check in kids, and find a seat. Service starts at 12:00 PM MST.' },
+  { q: 'Where do I park?', a: 'We have free on‑site parking with overflow available nearby. Look for our team and signage.' },
+  { q: 'What should I wear?', a: 'Come as you are—most people dress casually. You’ll fit right in.' },
+  { q: 'What about my kids?', a: 'Kids ministry is available. Check‑in opens 15 minutes before service and our team will help you get set up.' },
+  { q: 'How long is the service?', a: 'Services typically run about 2 hours and include worship and Biblical teaching.' },
+  { q: 'How do I get connected?', a: 'Start with Groups or Serving. Visit the Connect area after service and we’ll help with next steps.' },
+];
+
 export default function AboutPage() {
   return (
     <>
-      <SEO title="About Freedom Life Church" description="Learn about Freedom Life Church: mission, story, and how to get connected." />
+      <SEO 
+        title="About Freedom Life Church" 
+        description="Learn about Freedom Life Church: mission, story, and how to get connected."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: visitFaq.map(item => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+          }))
+        }}
+      />
 
       {/* Hero */}
       <Section className="bg-white pt-10 md:pt-14">
@@ -304,8 +326,10 @@ export default function AboutPage() {
         {/* Beliefs FAQ Section */}
         <div className="max-w-4xl mx-auto">
           <h3 className="font-heading text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">Common Questions About Our Beliefs</h3>
-          <div className="space-y-4">
-            {[
+          <Accordion
+            className="space-y-4"
+            tone="white"
+            items={[
               {
                 question: 'What does it mean to be Spirit-led?',
                 answer: 'Being Spirit-led means we rely on the Holy Spirit to guide our decisions, ministry, and daily lives. We believe the Spirit gives gifts, guidance, and power for living as followers of Jesus.'
@@ -330,20 +354,8 @@ export default function AboutPage() {
                 question: 'How do you balance grace and holiness?',
                 answer: 'We believe grace empowers holy living, not the other way around. God\'s grace transforms us from the inside out, enabling us to live lives that honor Him and love others well.'
               }
-            ].map((faq, index) => (
-              <details key={index} className="group rounded-xl border border-neutral-200 bg-white overflow-hidden hover:border-flc-500/30 transition-colors">
-                <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-50 transition-colors">
-                  <span className="font-semibold text-primary-900">{faq.question}</span>
-                  <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </summary>
-                <div className="px-6 pb-4 border-t border-neutral-100">
-                  <p className="text-neutral-600 leading-relaxed pt-3">{faq.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
+            ].map(f => ({ title: f.question, content: f.answer }))}
+          />
         </div>
       </Section>
 
@@ -355,26 +367,12 @@ export default function AboutPage() {
           <p className="mt-2 text-neutral-600">Here are answers to common questions as you plan your visit.</p>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
-          {[
-            { q: 'What time should I arrive?', a: 'Arrive 10–15 minutes early to park, check in kids, and find a seat. Service starts at 12:00 PM MST.' },
-            { q: 'Where do I park?', a: 'We have free on‑site parking with overflow available nearby. Look for our team and signage.' },
-            { q: 'What should I wear?', a: 'Come as you are—most people dress casually. You’ll fit right in.' },
-            { q: 'What about my kids?', a: 'Kids ministry is available. Check‑in opens 15 minutes before service and our team will help you get set up.' },
-            { q: 'How long is the service?', a: 'Services typically run about 2 hours and include worship and Biblical teaching.' },
-            { q: 'How do I get connected?', a: 'Start with Groups or Serving. Visit the Connect area after service and we’ll help with next steps.' },
-          ].map((item, idx) => (
-            <div key={idx} className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
-              <details className="group">
-                <summary className="list-none flex items-center justify-between gap-3 py-3.5 px-4 cursor-pointer">
-                  <span className="text-sm font-semibold text-primary-900">{item.q}</span>
-                  <svg className="w-4 h-4 text-neutral-400 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7"/></svg>
-                </summary>
-                <div className="px-4 pb-4 text-sm text-neutral-700 leading-relaxed">
-                  {item.a}
-                </div>
-              </details>
-            </div>
-          ))}
+          <div className="lg:col-span-2">
+            <Accordion 
+              tone="white" 
+              items={visitFaq.map(item => ({ title: item.q, content: item.a }))}
+            />
+          </div>
         </div>
 
       </Section>

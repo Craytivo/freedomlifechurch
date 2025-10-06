@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SEO from '../src/components/seo/SEO';
+import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 
 // Visit page - comprehensive guide for first-time visitors
@@ -175,6 +176,18 @@ export default function VisitPage() {
       <SEO
         title="Plan Your Visit – Freedom Life Church"
         description="Planning your first visit to Freedom Life Church? Find service times, what to expect, directions, and answers to common questions."
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: commonQuestions.map(q => ({
+            '@type': 'Question',
+            name: q.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: q.answer,
+            },
+          })),
+        }}
       />
 
       {/* Premium Hero Section with Integrated Timeline */}
@@ -372,21 +385,8 @@ export default function VisitPage() {
                 We've answered the questions we hear most from first-time visitors
               </p>
             </div>
-            
-            <div className="max-w-4xl mx-auto space-y-4">
-              {commonQuestions.map((item, index) => (
-                <details key={index} className="group rounded-xl border border-neutral-200 bg-white overflow-hidden">
-                  <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-50">
-                    <span className="font-semibold text-primary-900">{item.question}</span>
-                    <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </summary>
-                  <div className="px-6 pb-4">
-                    <p className="text-neutral-600 leading-relaxed">{item.answer}</p>
-                  </div>
-                </details>
-              ))}
+            <div className="max-w-4xl mx-auto">
+              <Accordion tone="white" items={commonQuestions.map(q => ({ title: q.question, content: q.answer }))} />
             </div>
           </div>
         </div>

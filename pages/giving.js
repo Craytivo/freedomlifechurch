@@ -1,5 +1,6 @@
 import React from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
+import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 
 // Premium Giving page - emphasizing the heart and purpose behind giving
@@ -75,16 +76,44 @@ const GivingPage = () => {
     }
   ];
 
+  const faqItems = [
+    {
+      question: 'Is online giving secure?',
+      answer: "Yes, absolutely. We use Church Center's secure platform which employs bank-level encryption and security measures to protect your personal and financial information.",
+    },
+    {
+      question: 'How much should I give?',
+      answer: "The Bible speaks of the tithe (10%) as a starting point, but ultimately giving should be done cheerfully and according to what God has laid on your heart. We encourage you to pray about what God is calling you to give.",
+    },
+    {
+      question: 'Can I get a tax receipt?',
+      answer: 'Yes, Freedom Life Church provides official tax receipts for all donations. Receipts are automatically generated through Church Center and can be accessed in your giving history.',
+    },
+    {
+      question: "What if I'm new to giving?",
+      answer: "We're here to help! Start where you feel comfortable, whether that's a small monthly amount or a one-time gift. The important thing is taking the first step in generosity. Our pastoral team is always available to discuss biblical stewardship.",
+    },
+  ];
+
   return (
     <>
-      <Head>
-        <title>Giving | Freedom Life Church</title>
-        <meta name="description" content="Join us in advancing God's kingdom through generous giving. Discover the heart behind biblical stewardship and make a lasting impact in our community." />
-        <meta name="keywords" content="giving, tithing, offering, donation, stewardship, Freedom Life Church Edmonton" />
-        <meta property="og:title" content="Giving | Freedom Life Church" />
-        <meta property="og:description" content="Join us in advancing God's kingdom through generous giving. Discover the heart behind biblical stewardship and make a lasting impact in our community." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Giving | Freedom Life Church"
+        description="Join us in advancing God's kingdom through generous giving. Discover the heart behind biblical stewardship and make a lasting impact in our community."
+        keywords={[ 'giving','tithing','offering','donation','stewardship','Freedom Life Church Edmonton' ]}
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqItems.map(q => ({
+            '@type': 'Question',
+            name: q.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: q.answer,
+            },
+          })),
+        }}
+      />
 
       {/* Premium Hero Section */}
       <section className="relative py-20 md:py-28 bg-white overflow-hidden">
@@ -255,55 +284,8 @@ const GivingPage = () => {
               Common questions about biblical stewardship and giving
             </p>
           </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            <details className="group rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
-              <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-100">
-                <span className="font-semibold text-primary-900">Is online giving secure?</span>
-                <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </summary>
-              <div className="px-6 pb-4">
-                <p className="text-neutral-600 leading-relaxed">Yes, absolutely. We use Church Center's secure platform which employs bank-level encryption and security measures to protect your personal and financial information.</p>
-              </div>
-            </details>
-
-            <details className="group rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
-              <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-100">
-                <span className="font-semibold text-primary-900">How much should I give?</span>
-                <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </summary>
-              <div className="px-6 pb-4">
-                <p className="text-neutral-600 leading-relaxed">The Bible speaks of the tithe (10%) as a starting point, but ultimately giving should be done cheerfully and according to what God has laid on your heart. We encourage you to pray about what God is calling you to give.</p>
-              </div>
-            </details>
-
-            <details className="group rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
-              <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-100">
-                <span className="font-semibold text-primary-900">Can I get a tax receipt?</span>
-                <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </summary>
-              <div className="px-6 pb-4">
-                <p className="text-neutral-600 leading-relaxed">Yes, Freedom Life Church provides official tax receipts for all donations. Receipts are automatically generated through Church Center and can be accessed in your giving history.</p>
-              </div>
-            </details>
-
-            <details className="group rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
-              <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-100">
-                <span className="font-semibold text-primary-900">What if I'm new to giving?</span>
-                <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </summary>
-              <div className="px-6 pb-4">
-                <p className="text-neutral-600 leading-relaxed">We're here to help! Start where you feel comfortable, whether that's a small monthly amount or a one-time gift. The important thing is taking the first step in generosity. Our pastoral team is always available to discuss biblical stewardship.</p>
-              </div>
-            </details>
+          <div className="max-w-3xl mx-auto">
+            <Accordion tone="neutral" items={faqItems.map(i => ({ title: i.question, content: i.answer }))} />
           </div>
         </div>
       </section>

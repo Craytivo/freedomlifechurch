@@ -10,7 +10,7 @@ const defaultMeta = {
   image: '/favicon.ico',
 };
 
-const SEO = ({ title, description, keywords, type, image, url, noIndex }) => {
+const SEO = ({ title, description, keywords, type, image, url, noIndex, jsonLd }) => {
   const meta = {
     ...defaultMeta,
     title: title || defaultMeta.title,
@@ -21,6 +21,29 @@ const SEO = ({ title, description, keywords, type, image, url, noIndex }) => {
   };
 
   const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+
+  // Build default Organization schema
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Freedom Life Church',
+    url: meta.url,
+    logo: `${meta.url}/logo512.png`,
+  };
+
+  // Normalize optional jsonLd prop (object | array | stringified)
+  const normalizedJsonLd = (() => {
+    if (!jsonLd) return [];
+    if (typeof jsonLd === 'string') {
+      try {
+        const parsed = JSON.parse(jsonLd);
+        return Array.isArray(parsed) ? parsed : [parsed];
+      } catch {
+        return [];
+      }
+    }
+    return Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+  })();
 
   return (
     <Head>
@@ -38,6 +61,21 @@ const SEO = ({ title, description, keywords, type, image, url, noIndex }) => {
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
       <meta name="twitter:image" content={meta.image} />
+      {/* Default Organization JSON-LD */}
+      <script
+        key="ld-org"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      {/* Page-level JSON-LD injections */}
+      {normalizedJsonLd.map((schema, idx) => (
+        <script
+          // eslint-disable-next-line react/no-array-index-key
+          key={`ld-${idx}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
     </Head>
   );
 };
