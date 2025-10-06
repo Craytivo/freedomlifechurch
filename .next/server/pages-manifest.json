@@ -1,18 +1,18 @@
 {
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/404": "pages/404.html",
-  "/_document": "pages/_document.js",
-  "/api/events": "pages/api/events.js",
   "/about": "pages/about.html",
-  "/api/youtube/recent": "pages/api/youtube/recent.js",
+  "/_app": "pages/_app.js",
+  "/404": "pages/404.html",
+  "/api/events": "pages/api/events.js",
+  "/_document": "pages/_document.js",
   "/api/youtube/latest": "pages/api/youtube/latest.js",
+  "/_error": "pages/_error.js",
   "/": "pages/index.html",
-  "/ministries": "pages/ministries.html",
   "/visit": "pages/visit.html",
+  "/api/youtube/recent": "pages/api/youtube/recent.js",
+  "/ministries": "pages/ministries.html",
+  "/sermons.xml": "pages/sermons.xml.js",
   "/groups": "pages/groups.js",
-  "/events/[id]": "pages/events/[id].js",
   "/events": "pages/events.js",
   "/groups/[group]": "pages/groups/[group].js",
-  "/sermons.xml": "pages/sermons.xml.js"
+  "/events/[id]": "pages/events/[id].js"
 }

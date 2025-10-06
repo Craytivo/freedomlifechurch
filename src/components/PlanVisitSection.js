@@ -124,7 +124,7 @@ const PlanVisitSection = () => {
                   <h3 className="font-heading text-base font-semibold text-primary-900 mb-3">What to Expect</h3>
                   <ul className="grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
                     <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" /><span>Friendly team to welcome and guide you.</span></li>
-                    <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" /><span>Service is about 75–90 minutes.</span></li>
+                    <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" /><span>Service is about 2 hours.</span></li>
                     <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" /><span>Modern worship and practical Bible teaching.</span></li>
                     <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" /><span>Kids check‑in opens 15 minutes before service.</span></li>
                   </ul>

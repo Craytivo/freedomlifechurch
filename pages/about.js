@@ -273,7 +273,7 @@ export default function AboutPage() {
             { q: 'Where do I park?', a: 'We have free on‑site parking with overflow available nearby. Look for our team and signage.' },
             { q: 'What should I wear?', a: 'Come as you are—most people dress casually. You’ll fit right in.' },
             { q: 'What about my kids?', a: 'Kids ministry is available. Check‑in opens 15 minutes before service and our team will help you get set up.' },
-            { q: 'How long is the service?', a: 'Services typically run 75–90 minutes and include worship and Biblical teaching.' },
+            { q: 'How long is the service?', a: 'Services typically run about 2 hours and include worship and Biblical teaching.' },
             { q: 'How do I get connected?', a: 'Start with Groups or Serving. Visit the Connect area after service and we’ll help with next steps.' },
           ].map((item, idx) => (
             <div key={idx} className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
