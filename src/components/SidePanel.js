@@ -71,14 +71,22 @@ const SidePanel = ({ isOpen, onClose }) => {
           )
         },
         { 
-          name: 'Give', 
-          href: 'https://flcedmonton.churchcenter.com/giving', 
+          name: 'Giving', 
+          href: 'https://freedomlifechurch.netlify.app/giving', 
           external: true,
           icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
-          )
+          ),
+          subItems: [
+            {
+              name: 'Give',
+              href: 'https://flcedmonton.churchcenter.com/giving',
+              external: true,
+              description: 'Make a donation through Church Center'
+            }
+          ]
         },
         { 
           name: 'Volunteer', 
@@ -304,43 +312,76 @@ const SidePanel = ({ isOpen, onClose }) => {
                     const active = isActiveRoute(item.href);
                     const isExternal = item.external || item.href.startsWith('http');
                     
-                    if (isExternal) {
-                      return (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={onClose}
-                          className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900`}
-                        >
-                          <span className={`mr-3 text-neutral-400 group-hover:text-neutral-500`}>
-                            {item.icon}
-                          </span>
-                          {item.name}
-                          <svg className="ml-auto w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                          </svg>
-                        </a>
-                      );
-                    }
-                    
                     return (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        onClick={onClose}
-                        className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                          active
-                            ? 'bg-amber-50 text-amber-900 border-l-4 border-amber-600 font-semibold'
-                            : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
-                        }`}
-                      >
-                        <span className={`mr-3 ${active ? 'text-amber-600' : 'text-neutral-400 group-hover:text-neutral-500'}`}>
-                          {item.icon}
-                        </span>
-                        {item.name}
-                      </Link>
+                      <div key={item.name}>
+                        {isExternal ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={onClose}
+                            className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900`}
+                          >
+                            <span className={`mr-3 text-neutral-400 group-hover:text-neutral-500`}>
+                              {item.icon}
+                            </span>
+                            {item.name}
+                            <svg className="ml-auto w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                            </svg>
+                          </a>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            onClick={onClose}
+                            className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                              active
+                                ? 'bg-amber-50 text-amber-900 border-l-4 border-amber-600 font-semibold'
+                                : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+                            }`}
+                          >
+                            <span className={`mr-3 ${active ? 'text-amber-600' : 'text-neutral-400 group-hover:text-neutral-500'}`}>
+                              {item.icon}
+                            </span>
+                            {item.name}
+                          </Link>
+                        )}
+                        
+                        {/* Sub-items */}
+                        {item.subItems && item.subItems.length > 0 && (
+                          <div className="ml-8 mt-1 space-y-1">
+                            {item.subItems.map((subItem) => {
+                              const subIsExternal = subItem.external || subItem.href.startsWith('http');
+                              return subIsExternal ? (
+                                <a
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onClick={onClose}
+                                  className="group flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-colors text-neutral-600 hover:bg-neutral-50 hover:text-neutral-800"
+                                >
+                                  <span className="mr-2 w-1.5 h-1.5 bg-neutral-300 rounded-full group-hover:bg-neutral-400" />
+                                  {subItem.name}
+                                  <svg className="ml-auto w-2.5 h-2.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                  </svg>
+                                </a>
+                              ) : (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={onClose}
+                                  className="group flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-colors text-neutral-600 hover:bg-neutral-50 hover:text-neutral-800"
+                                >
+                                  <span className="mr-2 w-1.5 h-1.5 bg-neutral-300 rounded-full group-hover:bg-neutral-400" />
+                                  {subItem.name}
+                                </Link>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
                 </div>
