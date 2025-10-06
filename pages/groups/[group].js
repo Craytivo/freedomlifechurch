@@ -87,7 +87,6 @@ export default function GroupDetail({ group, nextEvent }) {
                 <h3 className="text-sm font-semibold text-primary-900">Quick links</h3>
                 <ul className="mt-3 space-y-2 text-sm">
                   <li><Link href={`/groups#${group.id}`} className="text-flc-600 hover:text-flc-700">{group.name} overview section</Link></li>
-                  <li><Link href="/ministries" className="text-flc-600 hover:text-flc-700">All ministries</Link></li>
                   <li><Link href="/events" className="text-flc-600 hover:text-flc-700">Upcoming events</Link></li>
                 </ul>
               </div>

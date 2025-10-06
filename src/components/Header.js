@@ -11,7 +11,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Groups', href: '/ministries', section: 'Primary' },
+    { name: 'Groups', href: '/groups', section: 'Primary' },
   { name: 'Events', href: '/events', section: 'Primary' },
   { name: 'About', href: '/about', section: 'Primary' },
   ];

@@ -96,7 +96,7 @@ const Footer = () => {
             <h3 className="font-heading text-sm font-semibold uppercase tracking-wide text-neutral-500">Quick Links</h3>
             <div className="grid grid-cols-1 gap-2 text-sm">
               <a href="#about" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">About Us</a>
-              <a href="#ministries" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Ministries</a>
+              {/* Ministries page removed; keep core links only */}
               <a href="#events" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Events</a>
               <a href="#prayer" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Prayer Requests</a>
               <a href="https://flcedmonton.churchcenter.com/giving" target="_blank" rel="noopener noreferrer" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Give</a>
