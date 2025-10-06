@@ -87,24 +87,24 @@ const Card = ({ item, spanClass = '' }) => (
   <div className={`relative rounded-xl overflow-hidden shadow-sm border border-neutral-200 bg-white group ${spanClass} transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-flc-500/30 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-flc-500/30 focus-within:ring-2 focus-within:ring-flc-500/30`}>
     {/* Soft background mark */}
     <div className={`absolute -right-10 -top-10 w-48 h-48 rounded-full ${item.bgMark}`} aria-hidden="true" />
-    <div className="relative p-5 md:p-6 lg:p-7 flex flex-col h-[236px] md:h-[256px]">
+    <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col h-[200px] sm:h-[220px] md:h-[256px]">
       {/* Icon */}
-      <div className={`inline-flex items-center justify-center w-9 h-9 rounded-md bg-white/90 border border-neutral-200 shadow-sm ${item.color}`}>
+      <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-md bg-white/90 border border-neutral-200 shadow-sm ${item.color}`}>
         {item.icon}
       </div>
-      <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-500 mb-2">{item.title}</div>
-      <h3 className="text-xl md:text-2xl font-extrabold text-neutral-900 leading-snug">
+      <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-neutral-500 mb-1.5 sm:mb-2">{item.title}</div>
+      <h3 className="text-lg sm:text-xl md:text-2xl font-extrabold text-neutral-900 leading-snug">
         <span className="bg-gradient-to-br text-transparent bg-clip-text from-neutral-900 to-neutral-700">{item.blurb}</span>
       </h3>
-      <div className="mt-auto pt-4">
+      <div className="mt-auto pt-3 sm:pt-4">
         <Link
           href={item.href}
           {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          className="inline-flex items-center text-sm font-semibold text-neutral-900 hover:text-flc-600 focus:outline-none"
+          className="inline-flex items-center text-xs sm:text-sm font-semibold text-neutral-900 hover:text-flc-600 focus:outline-none"
           aria-label={`Learn more about ${item.title}`}
         >
           Learn more
-          <svg className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
         </Link>
       </div>
     </div>
@@ -113,15 +113,15 @@ const Card = ({ item, spanClass = '' }) => (
 
 const WaysToGetInvolved = () => {
   return (
-    <section className="bg-neutral-50 py-12 md:py-16">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
+    <section className="bg-neutral-50 py-8 sm:py-12 md:py-16">
+      <div className="mx-auto px-3 sm:px-4 lg:px-8" style={{ maxWidth: '88rem' }}>
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">For every age</div>
-          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-neutral-900">A place for you and your family</h2>
-          <p className="mt-2 text-neutral-600">Find belonging for every season: vibrant kids & youth, authentic community for adults, and meaningful ways to serve together.</p>
+          <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">For every age</div>
+          <h2 className="mt-2 sm:mt-3 font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-neutral-900">A place for you and your family</h2>
+          <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-neutral-600">Find belonging for every season: vibrant kids & youth, authentic community for adults, and meaningful ways to serve together.</p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 sm:mt-8 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item, idx) => {
             const isLast = idx === items.length - 1;
             const singleInLastRowLg = items.length % 3 === 1 && isLast; // span full width on lg
@@ -131,10 +131,10 @@ const WaysToGetInvolved = () => {
           })}
         </div>
 
-        <div className="mt-8 flex justify-center">
-          <Link href="#next-steps" className="inline-flex items-center px-5 py-2.5 rounded-md border border-neutral-300 bg-white text-neutral-800 hover:border-flc-500 hover:text-flc-600 font-medium focus:outline-none focus:ring-2 focus:ring-flc-500/30">
+        <div className="mt-6 sm:mt-8 flex justify-center">
+          <Link href="#next-steps" className="inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-md border border-neutral-300 bg-white text-neutral-800 hover:border-flc-500 hover:text-flc-600 font-medium focus:outline-none focus:ring-2 focus:ring-flc-500/30 text-sm sm:text-base">
             See all Next Steps
-            <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
           </Link>
         </div>
       </div>
