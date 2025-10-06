@@ -54,7 +54,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         { 
           name: 'Groups', 
-          href: '/groups', 
+          href: '/ministries', 
           icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -154,7 +154,7 @@ const SidePanel = ({ isOpen, onClose }) => {
       items: [
         {
           name: "Men's",
-          href: '#mens',
+          href: '/groups#mens',
           icon: (
             <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -163,7 +163,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Womens',
-          href: '#womens',
+          href: '/groups#womens',
           icon: (
             <svg className="w-5 h-5 text-pink-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -172,7 +172,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Children',
-          href: '#children',
+          href: '/groups#children',
           icon: (
             <svg className="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -181,7 +181,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Volunteer',
-          href: '#volunteer',
+          href: '/groups#volunteer',
           icon: (
             <svg className="w-5 h-5 text-amber-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -190,7 +190,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Outreach',
-          href: '#outreach',
+          href: '/groups#outreach',
           icon: (
             <svg className="w-5 h-5 text-violet-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -199,7 +199,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Music',
-          href: '#music',
+          href: '/groups#music',
           icon: (
             <svg className="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />

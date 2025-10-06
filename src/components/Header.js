@@ -11,8 +11,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Groups', href: '#groups', section: 'Primary' },
-    { name: 'Serve', href: '#serve', section: 'Primary' },
+    { name: 'Groups', href: '/ministries', section: 'Primary' },
   { name: 'Events', href: '/events', section: 'Primary' },
   { name: 'About', href: '/about', section: 'Primary' },
   ];
@@ -23,6 +22,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
       { name: 'Watch Online', href: '#online', desc: 'Watch messages and services' },
       { name: 'Live Stream', href: '#livestream', desc: 'Watch live' },
       { name: 'Groups', href: '#groups', desc: 'Get in groups to grow your faith' },
+  // Serve removed from desktop nav; keep volunteers under Get Involved
       { name: 'Giving', href: '#giving', desc: 'Ongoing act of worship' },
       { name: 'Volunteer', href: '#volunteer', desc: 'Join a team at your local campus' },
       { name: 'Events', href: '#events', desc: 'Find events near you' },
