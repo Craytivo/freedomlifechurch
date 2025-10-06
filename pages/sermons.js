@@ -12,14 +12,14 @@ const SermonsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const sermonsPerPage = 12;
 
-  // Fetch sermons from YouTube API
+  // Fetch sermons from server-side YouTube feed proxy
   useEffect(() => {
     const fetchSermons = async () => {
       try {
         setLoading(true);
         
-        // Using the same YouTube API endpoint pattern from your live page
-        const response = await fetch('/api/youtube-videos');
+        // Use internal recent videos endpoint (Atom feed proxy)
+        const response = await fetch('/api/youtube/recent?limit=36');
         
         if (!response.ok) {
           throw new Error('Failed to fetch sermons');
@@ -27,19 +27,19 @@ const SermonsPage = () => {
         
         const data = await response.json();
         
-        // Transform YouTube data into sermon format
-        const sermonsData = data.items?.map(video => ({
-          id: video.id?.videoId || video.id,
-          title: video.snippet?.title || 'Untitled Sermon',
-          description: video.snippet?.description || '',
-          date: new Date(video.snippet?.publishedAt || Date.now()),
-          speaker: extractSpeaker(video.snippet?.title || ''),
-          series: extractSeries(video.snippet?.title || ''),
-          category: categorizeSermon(video.snippet?.title || '', video.snippet?.description || ''),
-          thumbnail: video.snippet?.thumbnails?.high?.url || video.snippet?.thumbnails?.default?.url,
-          duration: video.contentDetails?.duration || 'Unknown',
-          viewCount: video.statistics?.viewCount || 0,
-          tags: video.snippet?.tags || []
+        // Transform Atom feed entries into sermon format
+        const sermonsData = data.items?.map(entry => ({
+          id: entry.id,
+          title: entry.title || 'Untitled Sermon',
+          description: entry.description || '',
+          date: new Date(entry.published || Date.now()),
+          speaker: extractSpeaker(entry.title || ''),
+          series: extractSeries(entry.title || ''),
+          category: categorizeSermon(entry.title || '', entry.description || ''),
+          thumbnail: entry.thumbnail || `https://img.youtube.com/vi/${entry.id}/hqdefault.jpg`,
+          duration: 'Unknown',
+          viewCount: 0,
+          tags: []
         })) || [];
         
         setSermons(sermonsData);
