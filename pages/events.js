@@ -25,7 +25,9 @@ function classifyEvent(e) {
       const dayName = d.toLocaleString(undefined, { weekday: 'long' });
       tags.add(dayName);
     }
-  } catch {}
+  } catch (err) {
+    // ignore parse errors; tags remain as derived from text
+  }
 
   return Array.from(tags);
 }

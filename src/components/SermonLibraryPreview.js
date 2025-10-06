@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 // Lazy load the modal to keep initial bundle small
@@ -97,11 +98,13 @@ const SermonLibraryPreview = () => {
           <div className="lg:col-span-6">
             <div className="group relative rounded-2xl shadow-sm border border-neutral-200 overflow-hidden bg-white">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                <img
+                <Image
                   src={`https://img.youtube.com/vi/${featured.id}/hqdefault.jpg`}
                   alt={featured.title}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:brightness-105 transition-[filter]"
-                  loading="lazy"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover group-hover:brightness-105 transition-[filter]"
+                  priority={false}
                 />
                 <div className="absolute left-3 top-3 inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/90 text-[11px] font-semibold uppercase tracking-wide text-flc-700 shadow-sm">
                   New
@@ -151,11 +154,13 @@ const SermonLibraryPreview = () => {
               >
                 <div className="relative w-40 shrink-0 rounded-md overflow-hidden">
                   <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                    <img
+                    <Image
                       src={`https://img.youtube.com/vi/${s.id}/mqdefault.jpg`}
                       alt={s.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:brightness-105"
-                      loading="lazy"
+                      fill
+                      sizes="(max-width: 1024px) 160px, 160px"
+                      className="object-cover group-hover:brightness-105"
+                      priority={false}
                     />
                     <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/25 transition-colors">
                       <span className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-white/90 group-hover:bg-white shadow-sm">
