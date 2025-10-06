@@ -3,6 +3,7 @@ import SermonGrid from '../src/components/sermons/SermonGrid';
 import VideoModal from '../src/components/VideoModal';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 
 const SermonsPage = () => {
   const [sermons, setSermons] = useState([]);
@@ -164,14 +165,17 @@ const SermonsPage = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader
-            badge="Messages"
-            title="Sermons & Teachings"
-            subtitle="Discover life-changing messages from God's Word. Access our complete library of sermons, teachings, and worship services to grow in your faith journey."
-            alignment="center"
-            size="large"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-700 border border-blue-200/40 text-xs font-semibold uppercase tracking-wide">Messages</span>
+            </div>
+            <Heading as="h1" align="center" size="xl" gradient>
+              Sermons & Teachings
+            </Heading>
+            <p className="font-heading text-blue-700/80 mt-3 text-xs sm:text-sm md:text-base font-semibold tracking-widest uppercase">
+              Discover life-changing messages from God's Word. Access our complete library of sermons, teachings, and worship services to grow in your faith journey.
+            </p>
+          </div>
 
           {error && (
             <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">

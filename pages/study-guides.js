@@ -1,6 +1,7 @@
 import React from 'react';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 
 const StudyGuidesPage = () => {
   return (
@@ -30,13 +31,14 @@ const StudyGuidesPage = () => {
             Coming Soon
           </div>
 
-          <SectionHeader
-            title="Study Guides & Resources"
-            subtitle="We're preparing comprehensive Bible study guides, small group materials, and spiritual growth resources to help you dive deeper into God's Word."
-            alignment="center"
-            size="large"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h1" align="center" size="xl" gradient>
+              Study Guides & Resources
+            </Heading>
+            <p className="mt-3 text-neutral-700">
+              We're preparing comprehensive Bible study guides, small group materials, and spiritual growth resources to help you dive deeper into God's Word.
+            </p>
+          </div>
 
           {/* Main Illustration */}
           <div className="max-w-md mx-auto mb-12">
@@ -56,7 +58,7 @@ const StudyGuidesPage = () => {
 
           {/* What's Coming */}
           <div className="max-w-4xl mx-auto mb-12">
-            <h3 className="font-heading text-2xl font-bold text-primary-900 mb-8">What We're Preparing</h3>
+            <Heading as="h3" className="mb-8">What We're Preparing</Heading>
             
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -94,7 +96,7 @@ const StudyGuidesPage = () => {
           {/* Timeline */}
           <div className="max-w-2xl mx-auto mb-12">
             <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-emerald-500/5 via-white/50 to-teal-500/5 border border-emerald-200/30 backdrop-blur-sm shadow-xl">
-              <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Expected Launch</h3>
+              <Heading as="h3" className="mb-4">Expected Launch</Heading>
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="text-3xl md:text-4xl font-bold text-emerald-600">Q1 2026</div>
               </div>
@@ -107,7 +109,7 @@ const StudyGuidesPage = () => {
 
           {/* Notification Signup */}
           <div className="max-w-md mx-auto">
-            <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Get Notified</h3>
+            <Heading as="h3" className="mb-4">Get Notified</Heading>
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"

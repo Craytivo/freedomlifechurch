@@ -237,7 +237,22 @@ const CarouselSlide = ({
                   const end = slide.endDate ? new Date(slide.endDate) : null;
                   const items = [];
                   if (start && now < start) {
-                    const diffDays = Math.max(0, Math.ceil((start.getTime() - now.getTime()) / (1000*60*60*24)));
+                    // Compute days-to-go by event timezone calendar days (derived from ISO offset)
+                    const DAY_MS = 24 * 60 * 60 * 1000;
+                    const iso = slide.startDate;
+                    const m = iso.match(/([+-])(\d{2}):?(\d{2})$/);
+                    const sign = m ? (m[1] === '-' ? -1 : 1) : -1; // default to -06:00 style negative offset
+                    const hh = m ? parseInt(m[2], 10) : 6;
+                    const mm = m ? parseInt(m[3], 10) : 0;
+                    const eventOffsetMs = sign * (hh * 60 + mm) * 60 * 1000;
+
+                    const startMs = start.getTime();
+                    const nowMs = now.getTime();
+                    // Convert to event-local day index by shifting by offset, then flooring by day
+                    const startDayIdx = Math.floor((startMs + eventOffsetMs) / DAY_MS);
+                    const nowDayIdx = Math.floor((nowMs + eventOffsetMs) / DAY_MS);
+                    const diffDays = Math.max(0, startDayIdx - nowDayIdx);
+
                     const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
                     items.push(
                       <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[10px] sm:text-[11px] font-semibold">

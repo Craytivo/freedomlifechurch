@@ -1,6 +1,7 @@
 import React from 'react';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 
 const StorePage = () => {
   return (
@@ -30,13 +31,14 @@ const StorePage = () => {
             Coming Soon
           </div>
 
-          <SectionHeader
-            title="FLC Store"
-            subtitle="We're building an online store featuring church apparel, books, ministry resources, and gifts that celebrate faith and support our mission to transform lives."
-            alignment="center"
-            size="large"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h1" align="center" size="xl" gradient>
+              FLC Store
+            </Heading>
+            <p className="mt-3 text-neutral-700">
+              We're building an online store featuring church apparel, books, ministry resources, and gifts that celebrate faith and support our mission to transform lives.
+            </p>
+          </div>
 
           {/* Main Illustration */}
           <div className="max-w-md mx-auto mb-12">
@@ -56,7 +58,7 @@ const StorePage = () => {
 
           {/* Product Categories Preview */}
           <div className="max-w-5xl mx-auto mb-12">
-            <h3 className="font-heading text-2xl font-bold text-primary-900 mb-8">What We're Stocking</h3>
+            <Heading as="h3" className="mb-8">What We're Stocking</Heading>
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -103,7 +105,7 @@ const StorePage = () => {
 
           {/* Featured Products Preview */}
           <div className="max-w-4xl mx-auto mb-12">
-            <h3 className="font-heading text-xl font-bold text-primary-900 mb-6">Preview Coming Products</h3>
+            <Heading as="h3" className="mb-6">Preview Coming Products</Heading>
             
             <div className="grid md:grid-cols-3 gap-6">
               <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-100 to-orange-100 p-6 hover:shadow-xl transition-all duration-300">
@@ -151,7 +153,7 @@ const StorePage = () => {
           {/* Timeline */}
           <div className="max-w-2xl mx-auto mb-12">
             <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-amber-500/5 via-white/50 to-orange-500/5 border border-amber-200/30 backdrop-blur-sm shadow-xl">
-              <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Store Opening</h3>
+              <Heading as="h3" className="mb-4">Store Opening</Heading>
               <div className="flex items-center justify-center gap-4 mb-4">
                 <div className="text-3xl md:text-4xl font-bold text-amber-600">Q1 2026</div>
               </div>
@@ -164,7 +166,7 @@ const StorePage = () => {
 
           {/* Early Access Signup */}
           <div className="max-w-md mx-auto">
-            <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Get Early Access</h3>
+            <Heading as="h3" className="mb-4">Get Early Access</Heading>
             <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="email"
@@ -182,7 +184,7 @@ const StorePage = () => {
 
           {/* Benefits */}
           <div className="mt-12 pt-8 border-t border-neutral-200">
-            <h4 className="font-heading text-lg font-bold text-primary-900 mb-6">Why Shop with FLC?</h4>
+            <Heading as="h4" className="mb-6">Why Shop with FLC?</Heading>
             <div className="grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <div className="text-center">
                 <div className="w-10 h-10 bg-amber-500/10 text-amber-600 rounded-lg flex items-center justify-center mx-auto mb-3">

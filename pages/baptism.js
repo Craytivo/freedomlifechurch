@@ -4,6 +4,7 @@ import SEO from '../src/components/seo/SEO';
 import CTAButton from '../src/components/CTAButton';
 import SmartLink from '../src/components/SmartLink';
 import Accordion from '../src/components/Accordion';
+import Heading from '../src/components/Heading';
 
 const BaptismPage = () => {
   const [formData, setFormData] = useState({
@@ -235,7 +236,7 @@ const BaptismPage = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
                   </div>
-                  <h3 className="font-heading text-2xl font-bold text-primary-900 mb-4">Ready to Take the Step?</h3>
+                  <Heading as="h3" className="mb-4">Ready to Take the Step?</Heading>
                   <p className="text-neutral-600 leading-relaxed mb-6">
                     Baptism is a beautiful outward expression of an inward change. It's your opportunity to publicly declare your faith and commitment to following Jesus.
                   </p>
@@ -255,13 +256,10 @@ const BaptismPage = () => {
       {/* FAQ Section */}
       <section className="relative py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title="Frequently Asked Questions"
-            subtitle="Common questions about baptism and what it means"
-            alignment="center"
-            size="default"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h2" align="center">Frequently Asked Questions</Heading>
+            <p className="mt-2 text-neutral-600">Common questions about baptism and what it means</p>
+          </div>
           <Accordion
             items={faqs.map(f => ({ title: f.question, content: f.answer }))}
             tone="neutral"
@@ -274,13 +272,10 @@ const BaptismPage = () => {
       <section id="register" className="relative py-16 md:py-20 bg-gradient-to-br from-blue-50 via-white to-blue-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              title="Register for Baptism"
-              subtitle="Let us know about your desire to be baptized and we'll connect with you soon"
-              alignment="center"
-              size="default"
-              className="mb-8"
-            />
+            <div className="text-center mb-8">
+              <Heading as="h2" align="center">Register for Baptism</Heading>
+              <p className="mt-2 text-neutral-600">Let us know about your desire to be baptized and we'll connect with you soon</p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-6 p-6 md:p-8 rounded-2xl bg-white border border-blue-200/30 shadow-xl">
               <div>

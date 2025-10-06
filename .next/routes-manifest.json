@@ -56,10 +56,22 @@
       "namedRegex": "^/about(?:/)?$"
     },
     {
+      "page": "/baptism",
+      "regex": "^/baptism(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/baptism(?:/)?$"
+    },
+    {
       "page": "/events",
       "regex": "^/events(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/events(?:/)?$"
+    },
+    {
+      "page": "/giving",
+      "regex": "^/giving(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/giving(?:/)?$"
     },
     {
       "page": "/groups",
@@ -68,16 +80,46 @@
       "namedRegex": "^/groups(?:/)?$"
     },
     {
+      "page": "/live",
+      "regex": "^/live(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/live(?:/)?$"
+    },
+    {
       "page": "/ministries",
       "regex": "^/ministries(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/ministries(?:/)?$"
     },
     {
+      "page": "/prayer",
+      "regex": "^/prayer(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/prayer(?:/)?$"
+    },
+    {
+      "page": "/sermons",
+      "regex": "^/sermons(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sermons(?:/)?$"
+    },
+    {
       "page": "/sermons.xml",
       "regex": "^/sermons\\.xml(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/sermons\\.xml(?:/)?$"
+    },
+    {
+      "page": "/store",
+      "regex": "^/store(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/store(?:/)?$"
+    },
+    {
+      "page": "/study-guides",
+      "regex": "^/study\\-guides(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/study\\-guides(?:/)?$"
     },
     {
       "page": "/visit",
@@ -89,31 +131,31 @@
   "dataRoutes": [
     {
       "page": "/events",
-      "dataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/events\\.json$"
+      "dataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/events\\.json$"
     },
     {
       "page": "/events/[id]",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
-      "dataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/events/([^/]+?)\\.json$",
-      "namedDataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/events/(?<nxtPid>[^/]+?)\\.json$"
+      "dataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/events/([^/]+?)\\.json$",
+      "namedDataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/events/(?<nxtPid>[^/]+?)\\.json$"
     },
     {
       "page": "/groups",
-      "dataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/groups\\.json$"
+      "dataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/groups\\.json$"
     },
     {
       "page": "/groups/[group]",
       "routeKeys": {
         "nxtPgroup": "nxtPgroup"
       },
-      "dataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/groups/([^/]+?)\\.json$",
-      "namedDataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/groups/(?<nxtPgroup>[^/]+?)\\.json$"
+      "dataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/groups/([^/]+?)\\.json$",
+      "namedDataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/groups/(?<nxtPgroup>[^/]+?)\\.json$"
     },
     {
       "page": "/sermons.xml",
-      "dataRouteRegex": "^/_next/data/huYcCZdXKiXYvoubtvsE8/sermons.xml\\.json$"
+      "dataRouteRegex": "^/_next/data/s6fkS23inZAjxlspYPuyW/sermons.xml\\.json$"
     }
   ],
   "rsc": {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 
 const LiveStreamPage = () => {
   const [currentStream, setCurrentStream] = useState(null);
@@ -129,14 +130,19 @@ const LiveStreamPage = () => {
             </div>
           )}
 
-          <SectionHeader
-            badge={isLive ? "Live Now" : "Watch Online"}
-            title={isLive ? "We're Live!" : "Latest Message"}
-            subtitle={isLive ? "Join us live for worship and teaching" : "Catch up on our most recent message or watch previous services"}
-            alignment="center"
-            size="large"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-flc-500/12 via-amber-500/8 to-flc-500/12 border border-flc-200/20 backdrop-blur-sm text-flc-700 text-xs font-semibold uppercase tracking-wide shadow-sm">
+                {isLive ? 'Live Now' : 'Watch Online'}
+              </span>
+            </div>
+            <Heading as="h1" align="center" size="xl" gradient>
+              {isLive ? "We're Live!" : "Latest Message"}
+            </Heading>
+            <p className="font-heading text-flc-600 mt-3 text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase">
+              {isLive ? 'Join us live for worship and teaching' : 'Catch up on our most recent message or watch previous services'}
+            </p>
+          </div>
 
           {/* Main Video Player */}
           <div className="max-w-5xl mx-auto mb-16">
@@ -212,13 +218,10 @@ const LiveStreamPage = () => {
       {/* Service Schedule */}
       <section className="relative py-16 md:py-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title="When We're Live"
-            subtitle="Join us for our regular live streams and special events"
-            alignment="center"
-            size="default"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h2" align="center">When We're Live</Heading>
+            <p className="mt-2 text-neutral-600">Join us for our regular live streams and special events</p>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {upcomingServices.map((service, index) => (
@@ -263,13 +266,10 @@ const LiveStreamPage = () => {
       {recentStreams.length > 0 && (
         <section className="relative py-16 md:py-20 bg-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <SectionHeader
-              title="Recent Messages"
-              subtitle="Catch up on previous services and messages"
-              alignment="center"
-              size="default"
-              className="mb-12"
-            />
+            <div className="text-center mb-12">
+              <Heading as="h2" align="center">Recent Messages</Heading>
+              <p className="mt-2 text-neutral-600">Catch up on previous services and messages</p>
+            </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {recentStreams.slice(1, 7).map((video, index) => (

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 
 const PrayerPage = () => {
   const [formData, setFormData] = useState({
@@ -120,14 +121,17 @@ const PrayerPage = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionHeader
-            badge="Prayer Support"
-            title="Prayer Requests"
-            subtitle="We believe in the power of prayer. Share your needs with us and let our prayer team stand with you in faith, trusting God for His perfect will in your life."
-            alignment="center"
-            size="large"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <div className="mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-500/10 text-purple-700 border border-purple-200/40 text-xs font-semibold uppercase tracking-wide">Prayer Support</span>
+            </div>
+            <Heading as="h1" align="center" size="xl" gradient>
+              Prayer Requests
+            </Heading>
+            <p className="font-heading text-purple-700/80 mt-3 text-xs sm:text-sm md:text-base font-semibold tracking-widest uppercase">
+              We believe in the power of prayer. Share your needs with us and let our prayer team stand with you in faith, trusting God for His perfect will in your life.
+            </p>
+          </div>
 
           {/* Prayer Promise */}
           <div className="max-w-4xl mx-auto">
@@ -163,13 +167,10 @@ const PrayerPage = () => {
       {/* How We Pray Section */}
       <section className="relative py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title="How We Pray Together"
-            subtitle="Our approach to prayer support and community intercession"
-            alignment="center"
-            size="default"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h2" align="center">How We Pray Together</Heading>
+            <p className="mt-2 text-neutral-600">Our approach to prayer support and community intercession</p>
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center group">
@@ -208,13 +209,10 @@ const PrayerPage = () => {
       {/* Prayer Promises Section */}
       <section id="prayer-promises" className="relative py-16 md:py-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            title="God's Promises in Prayer"
-            subtitle="Stand on these powerful promises as we pray together"
-            alignment="center"
-            size="default"
-            className="mb-12"
-          />
+          <div className="text-center mb-12">
+            <Heading as="h2" align="center">God's Promises in Prayer</Heading>
+            <p className="mt-2 text-neutral-600">Stand on these powerful promises as we pray together</p>
+          </div>
 
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {prayerPromises.map((promise, index) => (
@@ -241,13 +239,10 @@ const PrayerPage = () => {
       <section id="prayer-form" className="relative py-16 md:py-20 bg-gradient-to-br from-purple-50 via-white to-purple-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl mx-auto">
-            <SectionHeader
-              title="Submit Your Prayer Request"
-              subtitle="Share your heart with us and let us join you in prayer"
-              alignment="center"
-              size="default"
-              className="mb-8"
-            />
+            <div className="text-center mb-8">
+              <Heading as="h2" align="center">Submit Your Prayer Request</Heading>
+              <p className="mt-2 text-neutral-600">Share your heart with us and let us join you in prayer</p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-6 p-6 md:p-8 rounded-2xl bg-white border border-purple-200/30 shadow-xl">
               {/* Personal Information */}
@@ -415,9 +410,7 @@ const PrayerPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
             </div>
-            <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary-900 mb-4">
-              Need to Talk?
-            </h2>
+            <Heading as="h2" className="mb-4">Need to Talk?</Heading>
             <p className="text-neutral-600 leading-relaxed mb-8">
               Sometimes you need more than prayer - you need someone to talk to. Our pastoral team is available for confidential conversations, counseling, and spiritual guidance.
             </p>
