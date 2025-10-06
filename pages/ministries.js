@@ -30,7 +30,7 @@ export default function MinistriesPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {MINISTRIES.map(m => (
-              <Link key={m.slug} href={`/groups#${m.slug}`} className="group rounded-2xl border border-neutral-200 bg-white p-5 hover:border-flc-500/40 hover:shadow-sm transition">
+              <Link key={m.slug} href={`/groups/${m.slug}`} className="group rounded-2xl border border-neutral-200 bg-white p-5 hover:border-flc-500/40 hover:shadow-sm transition">
                 <div className="flex items-start gap-3">
                   <svg className={`w-6 h-6 ${m.color}`} viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -38,7 +38,7 @@ export default function MinistriesPage() {
                   <div>
                     <h3 className="font-heading text-lg font-semibold text-primary-900 group-hover:text-flc-600">{m.name}</h3>
                     <p className="mt-1 text-sm text-neutral-600">{m.blurb}</p>
-                    <div className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-flc-600">Explore groups
+                    <div className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold text-flc-600">Explore group
                       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </div>
                   </div>

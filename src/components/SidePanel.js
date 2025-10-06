@@ -154,7 +154,7 @@ const SidePanel = ({ isOpen, onClose }) => {
       items: [
         {
           name: "Men's",
-          href: '/groups#mens',
+          href: '/groups/mens',
           icon: (
             <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -163,7 +163,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Womens',
-          href: '/groups#womens',
+          href: '/groups/womens',
           icon: (
             <svg className="w-5 h-5 text-pink-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -172,7 +172,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Children',
-          href: '/groups#children',
+          href: '/groups/children',
           icon: (
             <svg className="w-5 h-5 text-emerald-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -181,7 +181,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Volunteer',
-          href: '/groups#volunteer',
+          href: '/groups/volunteer',
           icon: (
             <svg className="w-5 h-5 text-amber-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -190,7 +190,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Outreach',
-          href: '/groups#outreach',
+          href: '/groups/outreach',
           icon: (
             <svg className="w-5 h-5 text-violet-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />
@@ -199,7 +199,7 @@ const SidePanel = ({ isOpen, onClose }) => {
         },
         {
           name: 'Music',
-          href: '/groups#music',
+          href: '/groups/music',
           icon: (
             <svg className="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9" fill="currentColor" />

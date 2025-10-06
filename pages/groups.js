@@ -101,7 +101,7 @@ export default function GroupsPage({ sections }) {
                       <Link href="/events" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[13px] font-medium">See Events
                         <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                       </Link>
-                      <Link href="/ministries" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-[13px] font-semibold">Explore Ministries</Link>
+                      <Link href={`/groups/${s.id}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-[13px] font-semibold">Explore {s.name}</Link>
                     </div>
                   </div>
                 </div>
