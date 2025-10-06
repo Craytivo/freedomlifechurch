@@ -27,3 +27,22 @@ html {
 *:target {
 	scroll-margin-top: 5.25rem; /* header ~64px + small gap */
 }
+
+/* Hero carousel animations moved from runtime injection to CSS */
+@keyframes flameWatermarkFade {
+  0%, 100% { opacity: 0.16; }
+  50% { opacity: 0.05; }
+}
+
+.flame-watermark {
+  animation: flameWatermarkFade 5.2s ease-in-out infinite;
+}
+
+@keyframes heroCarouselProgress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.hero-progress-anim {
+  animation: heroCarouselProgress var(--heroProgDur) linear forwards;
+}

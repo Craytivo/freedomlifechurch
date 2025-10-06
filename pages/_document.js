@@ -46,6 +46,9 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://yt3.ggpht.com" />
         <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#eba73e" />

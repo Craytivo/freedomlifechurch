@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 import altarExperienceLogo from '../assets/logos/output-onlinepngtools.png';
+
+// Centralized configuration via env (editable without code changes)
+const CHURCHCENTER_EVENT_ID = process.env.NEXT_PUBLIC_CHURCHCENTER_EVENT_ID || '3133697';
+const CONFERENCE_RECAP_URL = process.env.NEXT_PUBLIC_CONFERENCE_RECAP_URL || '';
+const buildChurchCenterEventUrl = (id) => `https://flcedmonton.churchcenter.com/registrations/events/${id}`;
 
 // Base slide configuration (can be extended via props later)
 const baseSlides = [
@@ -9,7 +16,11 @@ const baseSlides = [
     title: 'Altar Experience Conference 2025',
     subtitle: 'Theme: The Original Mandate · Oct 24–26 · Edmonton',
     ctaLabel: 'Register Now',
-    ctaHref: 'https://flcedmonton.churchcenter.com/registrations/events/3133697',
+    // ctaHref will be injected by lifecycle transform using env ID above
+    ctaHref: undefined,
+    // Lifecycle window (local time offset included)
+    startDate: '2025-10-24T18:00:00-06:00',
+    endDate: '2025-10-26T23:59:59-06:00',
       description: 'A three-day gathering to encounter Jesus, experience revival, and be restored in His presence. Expect focused messages on renewal, surrender, and living in your Kingdom identity.',
     badge: 'Conference',
     image: null // optional future background
@@ -29,7 +40,7 @@ const baseSlides = [
     title: 'Weekly Prayer Focus',
     subtitle: 'Join the house in united agreement',
     ctaLabel: 'Submit a Request',
-    ctaHref: '#prayer',
+    ctaHref: '/prayer',
     description: 'We are setting aside this week to pray intentionally for renewal in hearts, bold witness in our city, and healing for those battling illness.',
     badge: 'Prayer Focus',
     focuses: [
@@ -49,7 +60,43 @@ const HeroCarousel = ({
   pauseOnHover = true,
   showIndicators = true
 }) => {
-  const slides = customSlides || baseSlides;
+  const router = useRouter();
+  // Build slides with lifecycle adjustments (avoid mutating base configuration)
+  const now = new Date();
+  const computeConferenceState = (slide) => {
+    const start = slide.startDate ? new Date(slide.startDate) : null;
+    const end = slide.endDate ? new Date(slide.endDate) : null;
+    const before = start ? now < start : false;
+    const during = start && end ? now >= start && now <= end : false;
+    const after = end ? now > end : false;
+    return { before, during, after };
+  };
+
+  const transformedSlides = (customSlides || baseSlides).map((s) => {
+    if (s.id !== 'conference') return s;
+    const status = computeConferenceState(s);
+    // Default registration link using env id
+    const registerHref = buildChurchCenterEventUrl(CHURCHCENTER_EVENT_ID);
+    if (status.after) {
+      return {
+        ...s,
+        badge: 'Highlights',
+        ctaLabel: 'Watch Recap',
+        ctaHref: CONFERENCE_RECAP_URL || 'https://www.youtube.com/playlist?list=PL_REPLACE_WITH_ACTUAL',
+        subtitle: 'Highlights & Messages · Watch on YouTube',
+        // Optionally tweak description post-event
+        description: 'Thanks for joining us! Rewatch key messages and moments from Altar Experience 2025.'
+      };
+    }
+    // Before/during: keep conference registration
+    return {
+      ...s,
+      ctaLabel: 'Register Now',
+      ctaHref: registerHref
+    };
+  });
+
+  const slides = transformedSlides;
   const [index, setIndex] = useState(0);
   const total = slides.length;
   
@@ -87,14 +134,31 @@ const HeroCarousel = ({
   const [sermonPlay, setSermonPlay] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const sermonStateRef = useRef({ play: false });
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(false); // hover pause
+  const [userPaused, setUserPaused] = useState(false); // explicit pause via control
+  const [reduceMotion, setReduceMotion] = useState(false);
 
-  // Auto advance (disabled while video playing or paused)
+  // Honor prefers-reduced-motion
   useEffect(() => {
-    if (paused || sermonPlay) return;
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handle = () => setReduceMotion(!!mql.matches);
+    handle();
+    if (mql.addEventListener) mql.addEventListener('change', handle);
+    else mql.addListener(handle);
+    return () => {
+      if (mql.removeEventListener) mql.removeEventListener('change', handle);
+      else mql.removeListener(handle);
+    };
+  }, []);
+
+  // Auto advance (disabled while video playing, paused, user-paused, or reduced motion)
+  const autoAdvanceEnabled = !paused && !sermonPlay && !userPaused && !reduceMotion;
+  useEffect(() => {
+    if (!autoAdvanceEnabled) return;
     const id = setInterval(next, autoAdvanceMs);
     return () => clearInterval(id);
-  }, [paused, sermonPlay, next, autoAdvanceMs]);
+  }, [autoAdvanceEnabled, next, autoAdvanceMs]);
 
   // Attempt to fetch latest video ID (YouTube channel feed). This may be blocked by CORS in browser.
   useEffect(() => {
@@ -140,16 +204,22 @@ const HeroCarousel = ({
     else if (e.key === 'ArrowLeft') { prev(); }
   };
 
-  // Simple CTA navigation handler - rebuilt from scratch
+  // Simple CTA navigation handler - uses client routing for internal paths
   const handleCTAClick = (href) => {
     if (!href) return;
-    
+    // Internal route
+    if (href.startsWith('/')) {
+      router.push(href);
+      return;
+    }
+    // Internal anchor on current page
     if (href.startsWith('#')) {
       // Internal anchor link
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+      return;
     } else {
       // External link
       window.open(href, '_blank', 'noopener,noreferrer');
@@ -161,31 +231,20 @@ const HeroCarousel = ({
     // No-op: previously started on slide 2 for mobile; keeping 0 to highlight key event
   }, [total]);
 
-  // Inject keyframes for flame watermark only once
-  useEffect(() => {
-    const styleId = 'hero-flame-watermark-keyframes';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.textContent = `@keyframes flameWatermarkFade{0%,100%{opacity:.16}50%{opacity:.05}}.flame-watermark{animation:flameWatermarkFade 5.2s ease-in-out infinite;}`;
-      document.head.appendChild(style);
-    }
-  }, []);
-
-  // Inject keyframes for progress bar animation
-  useEffect(() => {
-    const styleId = 'hero-carousel-progress-keyframes';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.textContent = `@keyframes heroCarouselProgress{from{transform:scaleX(0)}to{transform:scaleX(1)}}`;
-      document.head.appendChild(style);
-    }
-  }, []);
+  // Keyframes are provided via global CSS; no runtime injection needed
 
   return (
+    <>
+    {/* Preload current YouTube thumbnail to speed up first paint */}
+    <Head>
+      {latestVideoId && (
+        <link rel="preload" as="image" href={`https://img.youtube.com/vi/${latestVideoId}/hqdefault.jpg`} />
+      )}
+    </Head>
     <section
       className="relative overflow-hidden bg-white w-full"
+      role="region"
+      aria-roledescription="carousel"
       aria-label="Featured content carousel"
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
@@ -229,9 +288,9 @@ const HeroCarousel = ({
 
       {/* Floating premium elements */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute top-16 left-8 w-20 h-20 bg-flc-500/3 rounded-full blur-xl animate-pulse" />
-        <div className="absolute bottom-20 right-12 w-16 h-16 bg-amber-500/4 rounded-full blur-lg animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-flc-600/2 rounded-full blur-md animate-pulse" style={{ animationDelay: '4s' }} />
+        <div className={`absolute top-16 left-8 w-20 h-20 bg-flc-500/3 rounded-full blur-xl ${reduceMotion ? '' : 'animate-pulse'}`} />
+        <div className={`absolute bottom-20 right-12 w-16 h-16 bg-amber-500/4 rounded-full blur-lg ${reduceMotion ? '' : 'animate-pulse'}`} style={{ animationDelay: '2s' }} />
+        <div className={`absolute top-1/3 right-1/4 w-12 h-12 bg-flc-600/2 rounded-full blur-md ${reduceMotion ? '' : 'animate-pulse'}`} style={{ animationDelay: '4s' }} />
       </div>
       
       {/* Enhanced container with true full-width mobile and premium desktop spacing */}
@@ -244,7 +303,11 @@ const HeroCarousel = ({
               return (
                 <div
                   key={slide.id}
-                  className={`transition-opacity duration-700 ${active ? 'opacity-100 relative z-10' : 'opacity-0 pointer-events-none'} ${active ? '' : 'hidden md:block'} md:absolute md:inset-0`}
+                  id={`hero-slide-${slide.id}`}
+                  role="group"
+                  aria-roledescription="slide"
+                  aria-label={`${slide.title} (${i + 1} of ${total})`}
+                  className={`transition-opacity ${reduceMotion ? '' : 'duration-700'} ${active ? 'opacity-100 relative z-10' : 'opacity-0 pointer-events-none'} ${active ? '' : 'hidden md:block'} md:absolute md:inset-0`}
                   aria-hidden={!active}
                   aria-live={active ? 'polite' : 'off'}
                 >
@@ -368,8 +431,8 @@ const HeroCarousel = ({
                       )}
                       <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
                         <a
-                          href={slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref}
-                          onClick={(e) => { e.preventDefault(); handleCTAClick(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref); }}
+                          href={slide.id === 'sermon' ? '/sermons' : slide.ctaHref}
+                          onClick={(e) => { e.preventDefault(); handleCTAClick(slide.id === 'sermon' ? '/sermons' : slide.ctaHref); }}
                           className="group inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 hover:from-flc-700 hover:via-flc-600 hover:to-amber-600 text-white font-semibold shadow-lg shadow-flc-500/20 hover:shadow-xl hover:shadow-flc-500/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer text-sm sm:text-base transform hover:-translate-y-0.5"
                         >
                           {slide.ctaLabel}
@@ -397,8 +460,8 @@ const HeroCarousel = ({
                         )}
                         {slide.id === 'prayer-focus' && (
                           <a
-                            href="#prayer"
-                            onClick={(e) => { e.preventDefault(); handleCTAClick('#prayer'); }}
+                            href="/prayer"
+                            onClick={(e) => { e.preventDefault(); handleCTAClick('/prayer'); }}
                             className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer text-sm sm:text-base"
                           >
                             Prayer Resources
@@ -427,14 +490,22 @@ const HeroCarousel = ({
                             />
                           </div>
                           <div className="relative w-full max-w-xs sm:max-w-md mx-auto flex flex-col items-center text-center">
-                            {/* Top-right date/location pill */}
-                            <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
-                              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[10px] sm:text-[11px] font-semibold text-amber-700 shadow-sm">
-                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
-                                <span className="xs:hidden">Oct 24–26</span>
-                              </div>
-                            </div>
+                            {/* Top-right date/location pill (hide in recap mode) */}
+                            {(() => {
+                              const start = slide.startDate ? new Date(slide.startDate) : null;
+                              const end = slide.endDate ? new Date(slide.endDate) : null;
+                              const showDates = start && end && now <= end; // before or during
+                              if (!showDates) return null;
+                              return (
+                                <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
+                                  <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[10px] sm:text-[11px] font-semibold text-amber-700 shadow-sm">
+                                    <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
+                                    <span className="xs:hidden">Oct 24–26</span>
+                                  </div>
+                                </div>
+                              );
+                            })()}
                             {/* Logo */}
                             <div className="relative -mt-0.5 sm:-mt-1 -mb-0.5 sm:-mb-1 select-none pointer-events-none">
                               <div className="relative w-32 sm:w-40 md:w-56 h-16 sm:h-20 md:h-28 drop-shadow-md">
@@ -455,25 +526,35 @@ const HeroCarousel = ({
                               </span>
                               <span className="text-primary-900">The Original Mandate</span>
                             </h3>
-                            {/* Countdown + quick facts */}
-                            <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-                              {(() => {
-                                const now = new Date();
-                                const target = new Date('2025-10-24T18:00:00-06:00');
-                                const diffDays = Math.max(0, Math.ceil((target.getTime() - now.getTime()) / (1000*60*60*24)));
+                            {/* Countdown + quick facts (hide in recap mode) */}
+                            {(() => {
+                              const start = slide.startDate ? new Date(slide.startDate) : null;
+                              const end = slide.endDate ? new Date(slide.endDate) : null;
+                              const show = start && now < end; // before event starts only show countdown; keep facts before/during
+                              const items = [];
+                              if (start && now < start) {
+                                const diffDays = Math.max(0, Math.ceil((start.getTime() - now.getTime()) / (1000*60*60*24)));
                                 const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
-                                return (
-                                  <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[10px] sm:text-[11px] font-semibold">
+                                items.push(
+                                  <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[10px] sm:text-[11px] font-semibold">
                                     <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
                                     {label}
                                   </span>
                                 );
-                              })()}
-                              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[10px] sm:text-[11px] text-neutral-700">
-                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
-                                3 days · Fri–Sun
-                              </span>
-                            </div>
+                              }
+                              if (end && now <= end) {
+                                items.push(
+                                  <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[10px] sm:text-[11px] text-neutral-700">
+                                    <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
+                                    3 days · Fri–Sun
+                                  </span>
+                                );
+                              }
+                              if (!items.length) return null;
+                              return (
+                                <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">{items}</div>
+                              );
+                            })()}
                             <p className="text-[9px] sm:text-[10px] md:text-sm text-neutral-700 leading-snug mt-1.5 sm:mt-2">
                               Bring family & friends. Expect transformation in God's presence.
                             </p>
@@ -519,16 +600,27 @@ const HeroCarousel = ({
                           <div className="relative w-full" style={{paddingBottom: '56.25%'}}>
                             {/* Thumbnail (dynamic from video ID) */}
                             {!sermonReady && (
-                              <picture>
-                                <source srcSet={`https://img.youtube.com/vi/${latestVideoId}/hqdefault.jpg`} />
-                                <img
-                                  src={`https://img.youtube.com/vi/${latestVideoId}/hqdefault.jpg`}
-                                  alt="Latest sermon thumbnail"
-                                  className="absolute inset-0 w-full h-full object-cover"
-                                  loading="lazy"
-                                  draggable={false}
-                                />
-                              </picture>
+                              <Image
+                                src={`https://img.youtube.com/vi/${latestVideoId}/hqdefault.jpg`}
+                                alt="Latest sermon thumbnail"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                                className="absolute inset-0 object-cover"
+                                priority={false}
+                                draggable={false}
+                              />
+                            )}
+                            {/* Warm the cache for the same thumbnail (or future state) with a tiny offscreen image */}
+                            {!sermonReady && (
+                              <Image
+                                src={`https://img.youtube.com/vi/${latestVideoId}/mqdefault.jpg`}
+                                alt=""
+                                width={160}
+                                height={90}
+                                aria-hidden="true"
+                                className="pointer-events-none absolute opacity-0"
+                                priority={false}
+                              />
                             )}
                             {sermonReady && (
                               <>
@@ -582,6 +674,29 @@ const HeroCarousel = ({
               </button>
             </div>
 
+            {/* Pause / Play control */}
+            <div className="flex-1 flex justify-center md:justify-start">
+              <button
+                type="button"
+                aria-label={userPaused || reduceMotion ? 'Play carousel' : 'Pause carousel'}
+                aria-pressed={userPaused}
+                onClick={(e) => { e.preventDefault(); setUserPaused(p => !p); }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-300 text-neutral-700 hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-flc-500 text-xs sm:text-sm"
+              >
+                {userPaused || reduceMotion ? (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-5.197-3.026A1 1 0 008 9.026v5.948a1 1 0 001.555.832l5.197-3.026a1 1 0 000-1.732z"/></svg>
+                    Play
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 9v6m4-6v6"/></svg>
+                    Pause
+                  </>
+                )}
+              </button>
+            </div>
+
             {showIndicators && (
               <div className="flex items-center gap-1.5 sm:gap-2" role="tablist" aria-label="Slide indicators">
                 {slides.map((s, i) => (
@@ -589,6 +704,7 @@ const HeroCarousel = ({
                     key={s.id}
                     role="tab"
                     aria-selected={i === index}
+                    aria-controls={`hero-slide-${s.id}`}
                     aria-label={`Go to slide ${i + 1}: ${s.title}`}
                     onClick={() => goTo(i)}
                     className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500 ${
@@ -604,8 +720,8 @@ const HeroCarousel = ({
       {/* Auto-advance progress bar */}
       <div className="absolute left-0 right-0 bottom-0 h-1 bg-neutral-200/40 overflow-hidden" aria-hidden="true">
         <div
-          key={index + (paused || sermonPlay ? '-paused' : '-running')}
-          className={`h-full origin-left bg-flc-500 ${paused || sermonPlay ? '' : 'animate-[heroCarouselProgress_var(--heroProgDur)_linear_forwards]'}`}
+          key={index + (autoAdvanceEnabled ? '-running' : '-paused')}
+          className={`h-full origin-left bg-flc-500 ${autoAdvanceEnabled && !reduceMotion ? 'hero-progress-anim' : ''}`}
           style={{
             // Use CSS var for timing; restart via key change above
             '--heroProgDur': `${autoAdvanceMs}ms`
@@ -613,6 +729,7 @@ const HeroCarousel = ({
         />
       </div>
     </section>
+    </>
   );
 };
 
