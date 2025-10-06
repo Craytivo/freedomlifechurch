@@ -55,7 +55,6 @@ export default function EventsPage({ initialEvents }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [clientEvents, setClientEvents] = useState(null);
   const [loadingLive, setLoadingLive] = useState(false);
-  const [loadError, setLoadError] = useState(false);
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -81,12 +80,9 @@ export default function EventsPage({ initialEvents }) {
         const data = await resp.json();
         if (!abort && Array.isArray(data.events) && data.events.length) {
           setClientEvents(data.events);
-          setLoadError(false);
-        } else if (!abort) {
-          setLoadError(true);
         }
       } catch (e) {
-        if (!abort) setLoadError(true);
+        // ignore; fallback embed will handle UI
       } finally {
         if (!abort) setLoadingLive(false);
       }

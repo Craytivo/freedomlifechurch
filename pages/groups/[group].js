@@ -1,6 +1,6 @@
+/* global Set */
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { GROUPS } from '../../src/data/groups';
 import { loadEventsFromICS } from '../../src/lib/icsEvents';
 
@@ -17,7 +17,6 @@ function classifyTags({ title = '', blurb = '' }) {
 }
 
 export default function GroupDetail({ group, nextEvent }) {
-  const router = useRouter();
   if (!group) return null;
 
   const heroBg = 'radial-gradient(circle at 12% 8%, rgba(235,167,62,0.08), rgba(235,167,62,0) 55%)';
