@@ -54,6 +54,8 @@ function buildCalendar(baseDate) {
 export default function EventsPage({ initialEvents }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [clientEvents, setClientEvents] = useState(null);
+  const [loadingLive, setLoadingLive] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -68,17 +70,26 @@ export default function EventsPage({ initialEvents }) {
 
   // Client-side hydrate if SSG failed to load any events (e.g., ICS blocked at build time)
   React.useEffect(() => {
-    if (initialEvents && initialEvents.length > 0) return;
     let abort = false;
+    const shouldFetch = !initialEvents || initialEvents.length === 0;
+    if (!shouldFetch) return;
+    setLoadingLive(true);
     (async () => {
       try {
         const resp = await fetch('/api/events', { cache: 'no-store' });
-        if (!resp.ok) return;
+        if (!resp.ok) throw new Error('Failed to load events');
         const data = await resp.json();
         if (!abort && Array.isArray(data.events) && data.events.length) {
           setClientEvents(data.events);
+          setLoadError(false);
+        } else if (!abort) {
+          setLoadError(true);
         }
-      } catch { /* ignore */ }
+      } catch (e) {
+        if (!abort) setLoadError(true);
+      } finally {
+        if (!abort) setLoadingLive(false);
+      }
     })();
     return () => { abort = true; };
   }, [initialEvents]);
@@ -257,7 +268,29 @@ export default function EventsPage({ initialEvents }) {
             <div className="lg:col-span-7">
               <div className="grid md:grid-cols-2 gap-4">
                 {visibleList.length === 0 ? (
-                  <div className="col-span-full text-neutral-500 text-sm">No events found for this month.</div>
+                  <div className="col-span-full text-neutral-500 text-sm space-y-3">
+                    {loadingLive && (
+                      <div>Loading live events…</div>
+                    )}
+                    {!loadingLive && (
+                      <div>No events found for this month.</div>
+                    )}
+                    {/* Graceful fallback to embedded Google Calendar when no events render in production */}
+                    {!loadingLive && (
+                      <div className="mt-2">
+                        <div className="text-neutral-600 mb-2">Can’t see events? View the live calendar below:</div>
+                        <div className="rounded-xl border border-neutral-200 overflow-hidden">
+                          <iframe
+                            title="Google Calendar"
+                            src="https://calendar.google.com/calendar/embed?src=8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb%40group.calendar.google.com&ctz=America%2FEdmonton"
+                            style={{ border: 0, width: '100%', height: 500 }}
+                            frameBorder="0"
+                            scrolling="no"
+                          />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ) : visibleList.map(e => (
                   <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
                     <div className="flex items-start justify-between gap-3">
