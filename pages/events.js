@@ -3,6 +3,9 @@ import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { loadEventsFromICS } from '../src/lib/icsEvents';
+import dynamic from 'next/dynamic';
+
+const EventsMap = dynamic(() => import('../src/components/EventsMap'), { ssr: false });
 
 // Build relevant filters dynamically from event data
 function classifyEvent(e) {
@@ -274,16 +277,8 @@ export default function EventsPage({ initialEvents }) {
                     {/* Graceful fallback to embedded Google Calendar when no events render in production */}
                     {!loadingLive && (
                       <div className="mt-2">
-                        <div className="text-neutral-600 mb-2">Can’t see events? View the live calendar below:</div>
-                        <div className="rounded-xl border border-neutral-200 overflow-hidden">
-                          <iframe
-                            title="Google Calendar"
-                            src="https://calendar.google.com/calendar/embed?src=8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb%40group.calendar.google.com&ctz=America%2FEdmonton"
-                            style={{ border: 0, width: '100%', height: 500 }}
-                            frameBorder="0"
-                            scrolling="no"
-                          />
-                        </div>
+                        <div className="text-neutral-600 mb-2">Map view</div>
+                        <EventsMap events={events} height={420} />
                       </div>
                     )}
                   </div>
@@ -306,6 +301,13 @@ export default function EventsPage({ initialEvents }) {
                   </Link>
                 ))}
               </div>
+              {/* Always show map under list when there are events */}
+              {visibleList.length > 0 && (
+                <div className="mt-6">
+                  <div className="text-neutral-700 mb-2">Map view</div>
+                  <EventsMap events={filtered} height={420} />
+                </div>
+              )}
             </div>
           </div>
         </div>
