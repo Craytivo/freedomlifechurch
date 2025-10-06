@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import SectionHeader from '../src/components/SectionHeader';
 import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
 import imgFamily from '../src/assets/images/IMG_4895webcropped-768x839.jpg';
 
@@ -262,10 +263,15 @@ export default function AboutPage() {
 
       {/* What We Believe */}
       <Section className="bg-white" id="beliefs">
-        <div className="text-center max-w-4xl mx-auto mb-12">
-          <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Our Foundation</span>
-          <h2 className="mt-3 font-heading text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-tight">What We Believe</h2>
-          <div className="mt-6 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-flc-500/5 via-transparent to-amber-500/5 border border-flc-200/50">
+        <SectionHeader
+          badge="Our Foundation"
+          title="What We Believe"
+          alignment="center"
+          size="default"
+          className="max-w-4xl mx-auto mb-8"
+        />
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-flc-500/5 via-transparent to-amber-500/5 border border-flc-200/50">
             <p className="text-lg md:text-xl text-neutral-700 leading-relaxed font-medium mb-4">
               We believe healing happens in the presence of God and in the context of loving, supportive community. You are welcome here — to heal, to grow, and to walk in freedom.
             </p>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import SectionHeader from './SectionHeader';
 
 const items = [
   {
@@ -138,18 +139,18 @@ const WaysToGetInvolved = () => {
         <div className="px-0 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
         <div className="px-4 sm:px-0">
           <div className="text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
-            For every age & season
+            <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+              For every age & season
+            </div>
+            <h2 className="mt-5 sm:mt-6 font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-tight mb-4">
+              A place for you
+              <span className="block bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 bg-clip-text text-transparent mt-1">and your family</span>
+            </h2>
+            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto">
+              Discover belonging for every season of life: vibrant kids & youth ministries, authentic community for adults, and meaningful ways to serve together as a family.
+            </p>
           </div>
-          <h2 className="mt-5 sm:mt-6 font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] drop-shadow-lg">
-            A place for you
-            <span className="block bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 bg-clip-text text-transparent mt-2">and your family</span>
-          </h2>
-          <p className="mt-6 sm:mt-8 text-lg sm:text-xl md:text-2xl text-neutral-600 leading-relaxed font-semibold max-w-4xl mx-auto tracking-wide">
-            Discover belonging for every season of life: vibrant kids & youth ministries, authentic community for adults, and meaningful ways to serve together as a family.
-          </p>
-        </div>
 
         <div className="mt-6 sm:mt-8 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item, idx) => {

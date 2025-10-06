@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import SectionHeader from './SectionHeader';
 
 // Plan a Visit section tailored for first-time guests
 // Includes quick facts, simple interest form (non-submitting placeholder), and next-step CTAs.
@@ -98,15 +99,13 @@ const PlanVisitSection = () => {
           <div className="grid lg:grid-cols-12 gap-14 lg:gap-16 items-start">
             {/* Left: Intro & Facts */}
             <div className="lg:col-span-7">
-              <div className="mb-8">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">First time here?</div>
-                <h2 className="mt-3 font-heading text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 drop-shadow-md leading-[1.1]">
-                  Plan Your Visit
-                </h2>
-                <p className="text-neutral-600 text-lg md:text-xl leading-relaxed max-w-2xl font-medium tracking-wide">
-                  We know visiting a church for the first time can feel uncertain. Let us know you're coming and we'll save you a spot, help your family check in, and make sure you feel at home.
-                </p>
-              </div>
+              <SectionHeader
+                badge="First time here?"
+                title="Plan Your Visit"
+                subtitle="We know visiting a church for the first time can feel uncertain. Let us know you're coming and we'll save you a spot, help your family check in, and make sure you feel at home."
+                size="default"
+                className="mb-8"
+              />
               <div className="grid sm:grid-cols-2 gap-5 mb-10">
                 {quickFacts.map(f => (
                   <div key={f.label} className="p-4 rounded-lg border border-neutral-200 bg-neutral-50/60 hover:bg-white transition-colors">
