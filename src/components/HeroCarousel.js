@@ -10,17 +10,17 @@ const baseSlides = [
     subtitle: 'Theme: The Original Mandate · Oct 24–26 · Edmonton',
     ctaLabel: 'Register Now',
     ctaHref: 'https://flcedmonton.churchcenter.com/registrations/events/3133697',
-    description: 'A weekend of encounter, revival, and restoration in God\'s presence. Focused messages on renewal, surrender, and walking in Kingdom identity.',
+      description: 'A three-day gathering to encounter Jesus, experience revival, and be restored in His presence. Expect focused messages on renewal, surrender, and living in your Kingdom identity.',
     badge: 'Conference',
     image: null // optional future background
   },
   {
     id: 'sermon',
-    title: 'Latest Sermon Stream',
-    subtitle: 'Watch our most recent YouTube message',
+      title: 'Latest Message',
+      subtitle: 'Watch our most recent message on YouTube.',
     ctaLabel: 'Watch Sermon',
     ctaHref: 'https://www.youtube.com/watch?v=X5K8Wk7pBGw',
-    description: 'Join us as we dive into the Word. Be encouraged, equipped, and strengthened in your faith journey.',
+      description: 'Join us as we open God\'s Word. Be encouraged, equipped, and strengthened for your faith journey.',
     badge: 'Sermon',
     image: null
   },
@@ -236,7 +236,7 @@ const HeroCarousel = ({
                       {slide.id === 'conference' && (
                         <div className="space-y-4 mb-6 text-neutral-700 max-w-3xl">
                           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
-                            {['Prophetic Ministry','Extended Worship','Regional Leaders','Personal Renewal','Unity & Commission','Kingdom Identity'].map(point => (
+                            {['Prophetic ministry','Extended worship','Regional leaders','Personal renewal','Unity and commission','Kingdom identity'].map(point => (
                               <li key={point} className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
                                 <span>{point}</span>
@@ -244,7 +244,7 @@ const HeroCarousel = ({
                             ))}
                           </ul>
                           <div className="text-[13px] leading-relaxed text-neutral-600">
-                            <strong className="font-semibold text-neutral-800">Why come?</strong> Step away from routine, rekindle first love, receive fresh impartation and return strengthened for the mandate ahead.
+                            <strong className="font-semibold text-neutral-800">Why come?</strong> Step away from routine, rekindle your first love, receive fresh impartation, and return strengthened for the mandate ahead.
                           </div>
                         </div>
                       )}
@@ -253,8 +253,8 @@ const HeroCarousel = ({
                           <div className="p-3 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start gap-3">
                             <span className="inline-flex w-6 h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-[11px] font-semibold">NEW</span>
                             <div className="space-y-1.5">
-                              <p className="text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing mid‑week.</p>
-                              <p className="text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 10:30 AM or on‑demand anytime.</p>
+                              <p className="text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing midweek.</p>
+                              <p className="text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 12:00 PM (MST), or on‑demand anytime.</p>
                             </div>
                           </div>
                           <div className="mt-4 rounded-lg border border-neutral-200 bg-neutral-50/80 p-4">
@@ -262,15 +262,15 @@ const HeroCarousel = ({
                             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[13px] text-neutral-700">
                               <li className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
-                                <span>Biblical teaching that builds strong disciples.</span>
+                                <span>Biblical teaching that forms strong disciples.</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
-                                <span>Practical application for everyday life.</span>
+                                <span>Clear, practical application for everyday life.</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
-                                <span>Spirit‑led ministry and moments of prayer.</span>
+                                <span>Spirit‑led ministry and intentional moments of prayer.</span>
                               </li>
                             </ul>
                           </div>
