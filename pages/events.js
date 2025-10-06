@@ -53,6 +53,7 @@ function buildCalendar(baseDate) {
 
 export default function EventsPage({ initialEvents }) {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [clientEvents, setClientEvents] = useState(null);
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -62,7 +63,25 @@ export default function EventsPage({ initialEvents }) {
   const { start, days } = useMemo(() => buildCalendar(cursor), [cursor]);
   const monthKeyStr = monthKey(cursor);
 
-  const events = initialEvents;
+  // Use client-fetched events if available; otherwise fall back to SSG-provided events
+  const events = clientEvents ?? initialEvents;
+
+  // Client-side hydrate if SSG failed to load any events (e.g., ICS blocked at build time)
+  React.useEffect(() => {
+    if (initialEvents && initialEvents.length > 0) return;
+    let abort = false;
+    (async () => {
+      try {
+        const resp = await fetch('/api/events', { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (!abort && Array.isArray(data.events) && data.events.length) {
+          setClientEvents(data.events);
+        }
+      } catch { /* ignore */ }
+    })();
+    return () => { abort = true; };
+  }, [initialEvents]);
   const { tagIndex, filters } = useMemo(() => {
     const tagIndex = new Map(); // id -> tags[]
     const counts = new Map();
