@@ -157,9 +157,9 @@ function expandRecurring(master, overrides) {
   }
 
   const now = new Date();
-  // Include a generous window so SSG builds still cover upcoming months on live
-  const windowStart = new Date(now.getFullYear(), now.getMonth() - 12, 1);
-  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 24, 0); // ~24 months ahead
+  // Include an even more generous window so SSG and runtime cover a broad range
+  const windowStart = new Date(now.getFullYear(), now.getMonth() - 18, 1);
+  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 30, 0); // ~30 months ahead
 
   const out = [];
 
@@ -324,14 +324,17 @@ function makeId(summary, dateKey, uid) {
 
 async function loadRawICS() {
   const url = process.env.CALENDAR_ICS_URL;
-  if (url) {
+  // Default public Google Calendar ICS URL fallback (keeps live working even if env var is missing)
+  const DEFAULT_ICS_URL = 'https://calendar.google.com/calendar/ical/8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb%40group.calendar.google.com/public/basic.ics';
+  const candidates = [url, DEFAULT_ICS_URL].filter(Boolean);
+  for (const u of candidates) {
     try {
-      const res = await fetch(url, { headers: { 'cache-control': 'no-cache' } });
+      const res = await fetch(u, { headers: { 'cache-control': 'no-cache' } });
       if (!res.ok) throw new Error(`Fetch failed ${res.status}`);
-      return await res.text();
+      const txt = await res.text();
+      if (txt && txt.trim()) return txt;
     } catch (e) {
-      console.error('Failed to fetch ICS URL:', url, e);
-      // fall through to local file
+      console.error('Failed to fetch ICS URL:', u, e);
     }
   }
   try {
