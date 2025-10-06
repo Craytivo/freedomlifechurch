@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
 import SectionHeader from '../src/components/SectionHeader';
+import SEO from '../src/components/seo/SEO';
+import CTAButton from '../src/components/CTAButton';
+import SmartLink from '../src/components/SmartLink';
 
 const BaptismPage = () => {
   const [formData, setFormData] = useState({
@@ -83,14 +85,13 @@ const BaptismPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Baptism | Freedom Life Church</title>
-        <meta name="description" content="Take the next step in your faith journey through baptism at Freedom Life Church. Learn about baptism and register for our next baptism service." />
-        <meta name="keywords" content="baptism, water baptism, faith, Freedom Life Church Edmonton, salvation, new life" />
-        <meta property="og:title" content="Baptism | Freedom Life Church" />
-        <meta property="og:description" content="Take the next step in your faith journey through baptism at Freedom Life Church. Learn about baptism and register for our next baptism service." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Baptism | Freedom Life Church"
+        description="Take the next step in your faith journey through baptism at Freedom Life Church. Learn about baptism and register for our next baptism service."
+        keywords={[
+          'baptism','water baptism','faith','Freedom Life Church Edmonton','salvation','new life'
+        ]}
+      />
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
@@ -123,21 +124,22 @@ const BaptismPage = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
-            <a
+            <CTAButton
               href="#register"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 transform hover:-translate-y-0.5 transition-all duration-300"
+              className="px-8 py-4 from-blue-600 via-blue-500 to-blue-400 shadow-blue-500/20 hover:shadow-blue-500/30"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6"/>
               </svg>
               Register for Baptism
-            </a>
-            <a
+            </CTAButton>
+            <CTAButton
               href="#learn-more"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/80 backdrop-blur-sm border border-blue-200/40 text-blue-700 font-semibold rounded-xl shadow-md hover:shadow-lg hover:bg-white/90 hover:border-blue-300/60 transform hover:-translate-y-0.5 transition-all duration-300"
+              variant="secondary"
+              className="px-8 py-4 border-blue-200/40 text-blue-700 hover:border-blue-300/60"
             >
               Learn More
-            </a>
+            </CTAButton>
           </div>
         </div>
       </section>
@@ -353,12 +355,13 @@ const BaptismPage = () => {
                 />
               </div>
 
-              <button
+              <CTAButton
+                as="button"
                 type="submit"
-                className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                className="w-full py-4 from-blue-600 via-blue-500 to-blue-400"
               >
                 Submit Registration
-              </button>
+              </CTAButton>
 
               <p className="text-sm text-neutral-600 text-center">
                 We'll contact you within 24 hours to discuss next steps and answer any questions.
