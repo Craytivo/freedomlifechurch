@@ -215,20 +215,20 @@ export default function AboutPage() {
       <Section className="bg-neutral-50" id="get-involved">
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Room for all</span>
-          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">Find your place to belong</h2>
-          <p className="mt-2 text-neutral-600">Whether you’re new to church or have been walking with Jesus for years, there’s a ministry where you can thrive.</p>
+          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900">Find your place to belong</h2>
+          <p className="mt-2 text-neutral-600 leading-relaxed">Whether you’re new to church or have been walking with Jesus for years, there’s a ministry where you can thrive.</p>
         </div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { title: 'Groups', desc: 'Find authentic community and grow your faith together.', href: '#groups' },
-            { title: 'Serve', desc: 'Use your gifts to build the church and make a difference.', href: '#volunteer' },
-            { title: 'Kids & Youth', desc: 'A safe, fun space to grow in Jesus for every age.', href: '#nextgen' },
-            { title: 'Prayer', desc: 'We would love to pray with you and for you.', href: '#prayer' },
+            { title: 'Groups', desc: 'Find authentic community and grow your faith together.', href: '/groups' },
+            { title: 'Serve', desc: 'Use your gifts to build the church and make a difference.', href: '/ministries' },
+            { title: 'Kids & Youth', desc: 'A safe, fun space to grow in Jesus for every age.', href: '/visit#nextgen' },
+            { title: 'Prayer', desc: 'We would love to pray with you and for you.', href: '/prayer' },
           ].map((c) => (
             <a key={c.title} href={c.href} className="group relative rounded-xl overflow-hidden shadow-sm border border-neutral-200 bg-white p-5 md:p-6 hover:border-flc-500/40 hover:shadow-md transition-colors">
-              <h3 className="font-heading text-lg font-semibold text-primary-900 mb-1">{c.title}</h3>
+              <h3 className="font-heading text-lg font-medium text-primary-900 mb-1 group-hover:text-flc-700 transition-colors">{c.title}</h3>
               <p className="text-sm text-neutral-600 leading-relaxed">{c.desc}</p>
-              <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-semibold uppercase tracking-wide text-flc-600">Learn more
+              <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium tracking-wide text-flc-600">Learn more
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
               </span>
             </a>
@@ -241,7 +241,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-6 items-center">
           <div>
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">For your family</span>
-            <h2 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">We’ve got something for everyone</h2>
+            <h2 className="mt-2 font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900">We’ve got something for everyone</h2>
             <p className="mt-2 text-neutral-700">From kids to youth and young adults—your family will find a place to belong, grow, and serve together.</p>
             <p className="mt-3 text-neutral-700">Kids experience Jesus in age‑appropriate, engaging environments with a secure check‑in process. Youth gather to build real friendships, grow in the Word, and discover God’s purpose for their lives. We also equip parents with simple tools to lead faith at home.</p>
             <ul className="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
@@ -251,8 +251,8 @@ export default function AboutPage() {
               <li className="flex items-start gap-2"><span className="mt-2 w-1.5 h-1.5 rounded-full bg-flc-500" />Parent resources to disciple your family</li>
             </ul>
             <div className="mt-5 flex flex-wrap gap-3">
-              <a href="#nextgen" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">NextGen</a>
-              <a href="#groups" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Groups</a>
+              <a href="/visit#nextgen" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">NextGen</a>
+              <a href="/groups" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium">Groups</a>
             </div>
           </div>
           <div>
