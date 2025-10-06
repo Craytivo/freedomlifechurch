@@ -118,13 +118,9 @@ const HeroCarousel = ({
     else if (e.key === 'ArrowLeft') { prev(); }
   };
 
-  // On mobile, start with the second slide (index 1) to show “second card” first
+  // Ensure the first slide (Conference) remains first on mobile as it's the most important
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    if (isMobile && total > 1) {
-      setIndex(1);
-    }
+    // No-op: previously started on slide 2 for mobile; keeping 0 to highlight key event
   }, [total]);
 
   // Inject keyframes for flame watermark only once
@@ -306,9 +302,10 @@ const HeroCarousel = ({
                       )}
                       <div className="flex flex-wrap items-center gap-4">
                         <a
-                          href={slide.ctaHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href={slide.id === 'sermon' ? `https://www.youtube.com/watch?v=${latestVideoId}` : slide.ctaHref}
+                          {...(String(slide.id === 'sermon' ? `https://www.youtube.com/watch?v=${latestVideoId}` : slide.ctaHref).startsWith('#')
+                            ? {}
+                            : { target: '_blank', rel: 'noopener noreferrer' })}
                           className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40"
                         >
                           {slide.ctaLabel}
@@ -349,11 +346,10 @@ const HeroCarousel = ({
                     {/* Media Area (first on mobile, right on desktop) */}
                     <div className="order-1 md:order-2 relative z-10 md:z-0 w-full md:col-span-3 mb-6 md:mb-0">
                       {slide.id === 'conference' ? (
-                        <div className="rounded-xl shadow-lg overflow-hidden relative flex justify-center px-2.5 md:px-3 pt-1.5 pb-3.5 md:pt-2 md:pb-5">
-                          {/* Light gradient background */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-flc-100 to-neutral-100" />
-                          {/* Soft radial center glow */}
-                          <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0) 65%)' }} />
+                        <div className="rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2.5 md:px-3 pt-1.5 pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
+                          {/* Light gradient background with subtle motion */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-amber-50 to-neutral-100" />
+                          <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 0%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0) 60%)' }} />
                           {/* Animated flame watermark */}
                           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                             <Image
@@ -367,6 +363,14 @@ const HeroCarousel = ({
                             />
                           </div>
                           <div className="relative w-full max-w-md mx-auto flex flex-col items-center text-center">
+                            {/* Top-right date/location pill */}
+                            <div className="absolute right-2.5 top-2.5 md:right-3 md:top-3">
+                              <div className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[11px] font-semibold text-amber-700 shadow-sm">
+                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                Oct 24–26 · Edmonton
+                              </div>
+                            </div>
+                            {/* Logo */}
                             <div className="relative -mt-1 -mb-1 select-none pointer-events-none">
                               <div className="relative w-40 md:w-56 h-20 md:h-28 drop-shadow-md">
                                 <Image
@@ -379,16 +383,39 @@ const HeroCarousel = ({
                                 />
                               </div>
                             </div>
+                            {/* Tagline */}
                             <h3 className="font-heading text-lg md:text-2xl font-bold leading-snug text-primary-900 mt-1">
                               <span className="block text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
                                 Encounter · Revival · Restoration
                               </span>
                               <span className="text-primary-900">The Original Mandate</span>
                             </h3>
-                            <p className="text-[10px] md:text-sm text-neutral-700 leading-snug mt-1">
-                              Bring family & friends. Expect transformation in God&apos;s presence.
+                            {/* Countdown + quick facts */}
+                            <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+                              {(() => {
+                                const now = new Date();
+                                const target = new Date('2025-10-24T18:00:00-06:00');
+                                const diffDays = Math.max(0, Math.ceil((target.getTime() - now.getTime()) / (1000*60*60*24)));
+                                const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
+                                return (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[11px] font-semibold">
+                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
+                                    {label}
+                                  </span>
+                                );
+                              })()}
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[11px] text-neutral-700">
+                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
+                                3 days · Fri–Sun
+                              </span>
+                            </div>
+                            <p className="text-[10px] md:text-sm text-neutral-700 leading-snug mt-2">
+                              Bring family & friends. Expect transformation in God\'s presence.
                             </p>
                           </div>
+                          {/* Subtle corner glow */}
+                          <div className="pointer-events-none absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-amber-400/20 blur-2xl" aria-hidden="true" />
+                          <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-flc-500/20 blur-2xl" aria-hidden="true" />
                         </div>
                       ) : slide.id === 'prayer-focus' ? (
                         <div className="rounded-xl shadow-lg overflow-hidden relative border border-neutral-200 bg-gradient-to-br from-flc-50 via-neutral-50 to-white">
