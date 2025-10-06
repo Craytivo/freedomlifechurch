@@ -302,8 +302,8 @@ const HeroCarousel = ({
                       )}
                       <div className="flex flex-wrap items-center gap-4">
                         <a
-                          href={slide.id === 'sermon' ? `https://www.youtube.com/watch?v=${latestVideoId}` : slide.ctaHref}
-                          {...(String(slide.id === 'sermon' ? `https://www.youtube.com/watch?v=${latestVideoId}` : slide.ctaHref).startsWith('#')
+                          href={slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref}
+                          {...(String(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref).startsWith('#')
                             ? {}
                             : { target: '_blank', rel: 'noopener noreferrer' })}
                           className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40"
@@ -323,7 +323,7 @@ const HeroCarousel = ({
                         )}
                         {slide.id === 'sermon' && (
                           <a
-                            href="https://www.youtube.com/@FLCEdmonton?sub_confirmation=1"
+                            href="https://www.youtube.com/@FLCEdmonton"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm"
@@ -410,7 +410,7 @@ const HeroCarousel = ({
                               </span>
                             </div>
                             <p className="text-[10px] md:text-sm text-neutral-700 leading-snug mt-2">
-                              Bring family & friends. Expect transformation in God\'s presence.
+                              Bring family & friends. Expect transformation in God's presence.
                             </p>
                           </div>
                           {/* Subtle corner glow */}
