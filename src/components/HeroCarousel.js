@@ -306,6 +306,7 @@ const HeroCarousel = ({
                           {...(String(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref).startsWith('#')
                             ? {}
                             : { target: '_blank', rel: 'noopener noreferrer' })}
+                          onClick={(e) => { e.stopPropagation(); }}
                           className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40"
                         >
                           {slide.ctaLabel}
@@ -316,6 +317,7 @@ const HeroCarousel = ({
                             href="https://www.youtube.com/@FLCEdmonton/streams"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => { e.stopPropagation(); }}
                             className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
                           >
                             More Streams
@@ -326,6 +328,7 @@ const HeroCarousel = ({
                             href="https://www.youtube.com/@FLCEdmonton"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={(e) => { e.stopPropagation(); }}
                             className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm"
                           >
                             Subscribe on YouTube
@@ -335,6 +338,7 @@ const HeroCarousel = ({
                         {slide.id === 'prayer-focus' && (
                           <a
                             href="#prayer"
+                            onClick={(e) => { e.stopPropagation(); }}
                             className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
                           >
                             Prayer Resources
