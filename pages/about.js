@@ -260,6 +260,90 @@ export default function AboutPage() {
         </div>
       </Section>
 
+      {/* What We Believe */}
+      <Section className="bg-white" id="beliefs">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Our Foundation</span>
+          <h2 className="mt-3 font-heading text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-tight">What We Believe</h2>
+          <div className="mt-6 p-6 md:p-8 rounded-2xl bg-gradient-to-br from-flc-500/5 via-transparent to-amber-500/5 border border-flc-200/50">
+            <p className="text-lg md:text-xl text-neutral-700 leading-relaxed font-medium mb-4">
+              We believe healing happens in the presence of God and in the context of loving, supportive community. You are welcome here — to heal, to grow, and to walk in freedom.
+            </p>
+            <p className="text-base md:text-lg text-neutral-600 leading-relaxed">
+              Freedom Life Church is a Spirit-led, Christ-centered, and community-rooted church committed to helping people experience freedom, healing, and transformation through Jesus Christ.
+            </p>
+          </div>
+        </div>
+
+        {/* Core Beliefs Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {[
+            { title: 'Salvation By Grace', description: 'We believe salvation is a gift from God through faith in Jesus Christ, not by works.' },
+            { title: 'The Scriptures', description: 'We believe the Bible is the inspired, infallible Word of God and our ultimate authority.' },
+            { title: 'Baptism', description: 'We practice baptism by immersion as an outward sign of inward faith and new life in Christ.' },
+            { title: 'Gifts Of The Spirit', description: 'We believe in the gifts of the Holy Spirit for today, including healing, prophecy, and tongues.' },
+            { title: 'The Person And Work Of Christ', description: 'We believe Jesus is fully God and fully man, our Savior and Lord.' },
+            { title: 'The Church', description: 'We believe the church is the body of Christ, called to love, serve, and make disciples.' },
+            { title: 'Pentecostal Identity', description: 'We embrace the Pentecostal tradition of Spirit-filled living and ministry.' },
+            { title: 'Discipleship', description: 'We are committed to growing mature disciples who follow Jesus in every area of life.' },
+            { title: 'Christian Living And Holiness', description: 'We believe in living a life set apart for God, marked by love, integrity, and righteousness.' },
+            { title: 'Christ\'s Return', description: 'We believe Jesus will return to establish His kingdom and judge the earth.' },
+            { title: 'Human Dignity, Justice, Mission', description: 'We believe every person is made in God\'s image and deserves dignity, justice, and love.' },
+            { title: 'Our Trauma-Informed Commitment', description: 'We are committed to creating safe spaces for healing and restoration in community.' }
+          ].map((belief, index) => (
+            <div key={index} className="p-6 rounded-xl border border-neutral-200 bg-white hover:border-flc-500/30 hover:shadow-sm transition-all duration-300">
+              <h3 className="font-heading text-lg font-bold text-primary-900 mb-3">{belief.title}</h3>
+              <p className="text-sm text-neutral-600 leading-relaxed">{belief.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Beliefs FAQ Section */}
+        <div className="max-w-4xl mx-auto">
+          <h3 className="font-heading text-2xl md:text-3xl font-bold text-primary-900 mb-8 text-center">Common Questions About Our Beliefs</h3>
+          <div className="space-y-4">
+            {[
+              {
+                question: 'What does it mean to be Spirit-led?',
+                answer: 'Being Spirit-led means we rely on the Holy Spirit to guide our decisions, ministry, and daily lives. We believe the Spirit gives gifts, guidance, and power for living as followers of Jesus.'
+              },
+              {
+                question: 'Do you believe in divine healing?',
+                answer: 'Yes, we believe God heals today through prayer, community support, medical care, and His supernatural power. Healing happens in many ways, and we create space for God to work in every situation.'
+              },
+              {
+                question: 'What is your view on the gifts of the Spirit?',
+                answer: 'We believe the gifts of the Spirit (1 Corinthians 12) are active today for building up the church and reaching the world. This includes gifts like prophecy, healing, tongues, interpretation, and others.'
+              },
+              {
+                question: 'How do you approach trauma and mental health?',
+                answer: 'We are committed to being trauma-informed, creating safe spaces for healing. We believe God works through counseling, community support, prayer, and professional help to bring restoration and wholeness.'
+              },
+              {
+                question: 'What does community-rooted mean?',
+                answer: 'We believe faith grows best in relationship. Our church emphasizes authentic community where people can be known, supported, and encouraged in their journey with Jesus.'
+              },
+              {
+                question: 'How do you balance grace and holiness?',
+                answer: 'We believe grace empowers holy living, not the other way around. God\'s grace transforms us from the inside out, enabling us to live lives that honor Him and love others well.'
+              }
+            ].map((faq, index) => (
+              <details key={index} className="group rounded-xl border border-neutral-200 bg-white overflow-hidden hover:border-flc-500/30 transition-colors">
+                <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-50 transition-colors">
+                  <span className="font-semibold text-primary-900">{faq.question}</span>
+                  <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </summary>
+                <div className="px-6 pb-4 border-t border-neutral-100">
+                  <p className="text-neutral-600 leading-relaxed pt-3">{faq.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       {/* FAQs */}
       <Section className="bg-neutral-50" id="faq">
         <div className="text-center max-w-3xl mx-auto">
