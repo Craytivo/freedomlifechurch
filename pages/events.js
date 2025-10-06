@@ -64,6 +64,10 @@ export default function EventsPage({ initialEvents }) {
   const { start, days } = useMemo(() => buildCalendar(cursor), [cursor]);
   const monthKeyStr = monthKey(cursor);
 
+  // Public subscription links
+  const ICS_PUBLIC_URL = 'https://calendar.google.com/calendar/ical/8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb%40group.calendar.google.com/public/basic.ics';
+  const GOOGLE_CAL_LINK = 'https://calendar.google.com/calendar/u/0/r?cid=8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb@group.calendar.google.com';
+
   // Use client-fetched events if available; otherwise fall back to SSG-provided events
   const events = clientEvents ?? initialEvents;
 
@@ -140,6 +144,35 @@ export default function EventsPage({ initialEvents }) {
   const visibleList = filtered.filter(e => e.date.slice(0,7) === monthKeyStr);
   const dayEvents = selectedDate ? byDate.get(selectedDate.toLocaleDateString('en-CA')) || [] : [];
 
+  // Simple upcoming highlights (top 3)
+  const upcoming = useMemo(() => {
+    const todayKey = new Date().toLocaleDateString('en-CA');
+    return events
+      .filter(e => e.date >= todayKey)
+      .sort((a,b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+      .slice(0, 3);
+  }, [events]);
+
+  const categoryIcon = (name) => {
+    const cls = 'w-4 h-4';
+    switch ((name || '').toLowerCase()) {
+      case 'services':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12h18M12 3v18"/></svg>);
+      case 'prayer':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>);
+      case 'groups':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2a5 5 0 019.288-1.857"/></svg>);
+      case 'kids & youth':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 6l7 4-7 4-7-4 7-4z"/></svg>);
+      case 'women':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4"/><path d="M12 12v8M9 21h6"/></svg>);
+      case 'men':
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="9" cy="15" r="6"/><path d="M15 9l6-6M15 3h6v6"/></svg>);
+      default:
+        return (<svg className={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>);
+    }
+  };
+
   const monthLabel = cursor.toLocaleString(undefined, { month: 'long', year: 'numeric' });
 
   const goPrev = () => setCursor(c => new Date(c.getFullYear(), c.getMonth()-1, 1));
@@ -162,7 +195,7 @@ export default function EventsPage({ initialEvents }) {
             <div>
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">What’s happening</span>
               <h1 className="mt-2 font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">Events</h1>
-              <p className="mt-2 text-neutral-700 max-w-2xl">Find opportunities to connect, serve, and grow. Filter by category or browse the calendar.</p>
+              <p className="mt-2 text-neutral-700 max-w-2xl">Find opportunities to connect, serve, and grow. Browse highlights, filter by category, or tap a date to see what’s on. Services happen every Sunday at 12:00 PM—everyone’s welcome.</p>
             </div>
             <div className="flex flex-wrap gap-2">
               <button
@@ -193,6 +226,46 @@ export default function EventsPage({ initialEvents }) {
               ))}
             </div>
           </div>
+
+          {/* Subscription actions */}
+          <div className="mb-6 flex flex-wrap gap-3">
+            <a
+              href={ICS_PUBLIC_URL}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-semibold"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Subscribe (ICS)
+            </a>
+            <a
+              href={GOOGLE_CAL_LINK}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold"
+              target="_blank" rel="noopener noreferrer"
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 5h18v14H3z"/></svg>
+              Add to Google
+            </a>
+          </div>
+
+          {/* Highlights */}
+          {upcoming.length > 0 && (
+            <div className="mb-8 grid md:grid-cols-3 gap-4">
+              {upcoming.map((e) => (
+                <Link key={`hi-${e.id}`} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-4 hover:border-flc-500/40 hover:shadow-sm transition-colors">
+                  <div className="flex items-start gap-3">
+                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-flc-500/10 text-flc-700">
+                      {categoryIcon(e.category)}
+                    </span>
+                    <div className="min-w-0">
+                      <div className="text-[11px] uppercase tracking-wide text-flc-600 font-semibold">Featured</div>
+                      <h3 className="mt-0.5 font-heading text-base font-semibold text-primary-900 group-hover:text-flc-600 truncate">{e.title}</h3>
+                      <div className="mt-0.5 text-[12px] text-neutral-600">{new Date(e.date).toLocaleDateString(undefined,{ month:'short', day:'numeric' })} · {e.time}</div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* Calendar + List */}
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -278,16 +351,39 @@ export default function EventsPage({ initialEvents }) {
                       <div>Loading live events…</div>
                     )}
                     {!loadingLive && (
-                      <div>No events found for this month.</div>
+                      <div>
+                        No events found for this month. Try another month or category, or subscribe to the calendar to stay up to date.
+                      </div>
                     )}
-                    {/* Graceful fallback to embedded Google Calendar when no events render in production */}
-                    {/* No additional fallback UI */}
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      <a
+                        href={ICS_PUBLIC_URL}
+                        className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold"
+                        target="_blank" rel="noopener noreferrer"
+                      >
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        ICS
+                      </a>
+                      <a
+                        href={GOOGLE_CAL_LINK}
+                        className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-[12px] font-semibold"
+                        target="_blank" rel="noopener noreferrer"
+                      >
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 5h18v14H3z"/></svg>
+                        Google
+                      </a>
+                    </div>
                   </div>
                 ) : visibleList.map(e => (
                   <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="text-[11px] uppercase tracking-wide text-flc-600 font-semibold">{e.category}</div>
+                        <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-flc-600 font-semibold">
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-flc-500/10 text-flc-700">
+                            {categoryIcon(e.category)}
+                          </span>
+                          <span>{e.category}</span>
+                        </div>
                         <h3 className="mt-1 font-heading text-lg font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</h3>
                         <p className="mt-1 text-sm text-neutral-600 leading-relaxed">{e.blurb}</p>
                       </div>
