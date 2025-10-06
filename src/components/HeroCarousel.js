@@ -52,10 +52,32 @@ const HeroCarousel = ({
   const slides = customSlides || baseSlides;
   const [index, setIndex] = useState(0);
   const total = slides.length;
+  
+  // Touch/swipe support for mobile
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const next = useCallback(() => setIndex(i => (i + 1) % total), [total]);
   const prev = useCallback(() => setIndex(i => (i - 1 + total) % total), [total]);
   const goTo = (i) => setIndex(i);
+
+  // Handle touch events for swipe
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) next();
+    if (isRightSwipe) prev();
+  };
 
   // Video / sermon related state defined before effects referencing them
 
@@ -168,6 +190,9 @@ const HeroCarousel = ({
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
       onKeyDown={handleKeyDown}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
       tabIndex={0}
     >
       {/* Faint gold glow bar */}
@@ -216,18 +241,18 @@ const HeroCarousel = ({
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }}
                         aria-label="Previous slide"
                         disabled={total <= 1}
-                        className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
                       >
-                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        <svg className="w-5 h-5 sm:w-5.5 sm:h-5.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
                       </button>
                       <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }}
                         aria-label="Next slide"
                         disabled={total <= 1}
-                        className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
                       >
-                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        <svg className="w-5 h-5 sm:w-5.5 sm:h-5.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                       </button>
                     </div>
                   </div>
@@ -244,7 +269,7 @@ const HeroCarousel = ({
 
                   <div className="md:h-full grid md:grid-cols-7 gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-start">
                     {/* Text Content (on mobile this comes after media) */}
-                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20 px-4 sm:px-0">
+                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20 px-4 sm:px-0 py-2 sm:py-0">
                       {/* Decorative vertical accent (desktop only) */}
                       <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
                       {/* Title and subtitle moved above header section */}
@@ -359,7 +384,7 @@ const HeroCarousel = ({
                     </div>
 
                     {/* Media Area (first on mobile, right on desktop) */}
-                    <div className="order-1 md:order-2 relative z-10 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0 px-4 sm:px-0">
+                    <div className="order-1 md:order-2 relative z-10 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0 px-4 sm:px-0 py-2 sm:py-0">
                       {slide.id === 'conference' ? (
                         <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
                           {/* Light gradient background with subtle motion */}

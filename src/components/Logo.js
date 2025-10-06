@@ -4,9 +4,9 @@ import mainLogo from '../assets/logos/FLC main logo.png';
 
 const Logo = ({ size = 'default' }) => {
   const sizeMap = {
-    small: 'h-8',      // appropriate for compact contexts
-    default: 'h-12',   // fits comfortably inside a 64px header
-    large: 'h-16'      // optional larger usage outside header
+    small: 'h-9',      // appropriate for compact contexts
+    default: 'h-14',   // fits comfortably inside a 64px header - made larger
+    large: 'h-18'      // optional larger usage outside header
   };
 
   return (
