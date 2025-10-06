@@ -1,5 +1,6 @@
 /* global Promise */
 import { useEffect, useRef, useState } from 'react';
+import { KNOWN_VENUES } from '../data/venues';
 
 // Minimal client-only Leaflet map via CDN that plots event markers.
 // Props: events: Array<{ id, title, date, time, address, locationName }>
@@ -103,9 +104,14 @@ export default function EventsMap({ events = [], height = 360 }) {
           continue;
         }
         let pt = null;
-        if (/14970\s*114\s*Ave/i.test(e.address) || /freedom\s*life\s*church/i.test(e.address)) {
+        // First, try known venues
+        const hit = KNOWN_VENUES.find(v => v.pattern?.test(e.address) || e.address.toLowerCase().includes((v.address || '').toLowerCase()) || (v.name && e.address.toLowerCase().includes(v.name.toLowerCase())));
+        if (hit) {
+          pt = { lat: hit.lat, lng: hit.lng };
+        } else if (/freedom\s*life\s*church/i.test(e.address)) {
           pt = FLC;
         } else {
+          // Fallback to geocoding
           pt = await geocode(e.address);
         }
         if (pt) points.push({ pt, e });
