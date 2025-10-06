@@ -118,27 +118,41 @@ const HeroCarousel = ({
     else if (e.key === 'ArrowLeft') { prev(); }
   };
 
-  // Ensure in-page anchors scroll reliably even if other handlers exist
-  const handleSmartNav = useCallback((e, href) => {
-    try {
-      e.stopPropagation();
-      if (typeof href === 'string' && href.startsWith('#')) {
-        e.preventDefault();
-        const el = document.querySelector(href);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          if (history && history.pushState) history.pushState(null, '', href);
-        } else {
-          // Anchor not on this page—navigate to site root with hash
-          const base = window.location.origin || '';
-          window.location.href = `${base}/${href.replace(/^#/, '') ? '#' + href.replace(/^#/, '') : ''}`;
+  // AGGRESSIVE CTA isolation - force navigation bypassing all parent handlers
+  const handleForcedNav = useCallback((e, href) => {
+    // Stop ALL event propagation immediately
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    
+    // Force navigation on next tick to bypass any interference
+    setTimeout(() => {
+      try {
+        if (typeof href === 'string') {
+          if (href.startsWith('#')) {
+            // For anchors, force scroll directly
+            const el = document.querySelector(href);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // Force URL update
+              window.history.replaceState(null, '', href);
+            } else {
+              // Force navigate to home with hash
+              window.location.replace('/' + href);
+            }
+          } else {
+            // External link - force open
+            window.open(href, '_blank', 'noopener,noreferrer');
+          }
         }
-        return;
+      } catch (err) {
+        console.warn('Navigation failed:', err);
+        // Last resort - direct assignment
+        if (href && !href.startsWith('#')) {
+          window.location.href = href;
+        }
       }
-      // external or non-hash: let default navigation proceed
-    } catch {
-      // no-op
-    }
+    }, 0);
   }, []);
 
   // Ensure the first slide (Conference) remains first on mobile as it's the most important
@@ -314,58 +328,56 @@ const HeroCarousel = ({
                               ))}
                             </ul>
                             <div className="mt-4 flex flex-wrap gap-3 items-center">
-                              <a href="#prayer-gathering" onClick={(e) => handleSmartNav(e, '#prayer-gathering')} className="text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1">
+                              <button type="button" onClick={(e) => handleForcedNav(e, '#prayer-gathering')} onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }} className="text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1 cursor-pointer bg-transparent border-0 p-0">
                                 Weekly Prayer Gatherings
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                              </a>
+                              </button>
                               <span className="text-[11px] text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
                             </div>
                           </div>
                         </div>
                       )}
                       <div className="flex flex-wrap items-center gap-4">
-                        <a
-                          href={slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref}
-                          {...(String(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref).startsWith('#')
-                            ? {}
-                            : { target: '_blank', rel: 'noopener noreferrer' })}
-                          onClick={(e) => handleSmartNav(e, slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref)}
-                          className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40"
+                        <button
+                          type="button"
+                          onClick={(e) => handleForcedNav(e, slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref)}
+                          onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                          onTouchStart={(e) => { e.stopPropagation(); }}
+                          className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer"
                         >
                           {slide.ctaLabel}
                           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                        </a>
+                        </button>
                         {slide.id === 'sermon' && (
-                          <a
-                            href="https://www.youtube.com/@FLCEdmonton/streams"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => { e.stopPropagation(); }}
-                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
+                          <button
+                            type="button"
+                            onClick={(e) => handleForcedNav(e, 'https://www.youtube.com/@FLCEdmonton/streams')}
+                            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer"
                           >
                             More Streams
-                          </a>
+                          </button>
                         )}
                         {slide.id === 'sermon' && (
-                          <a
-                            href="https://www.youtube.com/@FLCEdmonton"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => { e.stopPropagation(); }}
-                            className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm"
+                          <button
+                            type="button"
+                            onClick={(e) => handleForcedNav(e, 'https://www.youtube.com/@FLCEdmonton')}
+                            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                            className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm cursor-pointer"
                           >
                             Subscribe on YouTube
                             <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
-                          </a>
+                          </button>
                         )}
                         {slide.id === 'prayer-focus' && (
-                          <a
-                            href="#prayer"
-                            onClick={(e) => handleSmartNav(e, '#prayer')}
-                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30"
+                          <button
+                            type="button"
+                            onClick={(e) => handleForcedNav(e, '#prayer')}
+                            onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer"
                           >
                             Prayer Resources
-                          </a>
+                          </button>
                         )}
                       </div>
                     </div>
