@@ -91,7 +91,7 @@ const SermonLibraryPreview = () => {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Stay encouraged</div>
-              <h2 className="mt-2 sm:mt-3 font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-2 sm:mb-3 drop-shadow-md leading-[1.1]">Recent Messages</h2>
+              <h2 className="mt-2 sm:mt-3 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-2 sm:mb-3 drop-shadow-md leading-[1.1]">Recent Messages</h2>
               <p className="text-neutral-600 text-base sm:text-lg md:text-xl max-w-xl leading-relaxed font-medium tracking-wide">Catch up on the latest teaching and explore past messages to keep growing mid‑week.</p>
             </div>
             <div className="flex items-center gap-3 sm:gap-4">

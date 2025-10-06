@@ -100,7 +100,7 @@ const PlanVisitSection = () => {
             <div className="lg:col-span-7">
               <div className="mb-8">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">First time here?</div>
-                <h2 className="mt-3 font-heading text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 drop-shadow-md leading-[1.1]">
+                <h2 className="mt-3 font-heading text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 drop-shadow-md leading-[1.1]">
                   Plan Your Visit
                 </h2>
                 <p className="text-neutral-600 text-lg md:text-xl leading-relaxed max-w-2xl font-medium tracking-wide">

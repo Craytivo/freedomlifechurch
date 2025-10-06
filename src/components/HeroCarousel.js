@@ -195,7 +195,7 @@ const HeroCarousel = ({
       onTouchEnd={onTouchEnd}
       tabIndex={0}
     >
-      {/* Faint gold glow bar */}
+      {/* Enhanced faint gold glow bar with premium shimmer effect */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-0 w-full h-2 md:h-3"
@@ -213,6 +213,26 @@ const HeroCarousel = ({
           maskComposite: 'intersect'
         }}
       />
+
+      {/* Premium ambient gradient overlay */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          background: `
+            radial-gradient(circle at 15% 25%, rgba(235,167,62,0.04), rgba(235,167,62,0) 60%),
+            radial-gradient(circle at 85% 75%, rgba(235,167,62,0.03), rgba(235,167,62,0) 50%),
+            linear-gradient(135deg, rgba(235,167,62,0.02) 0%, rgba(235,167,62,0) 50%)
+          `
+        }}
+      />
+
+      {/* Floating premium elements */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute top-16 left-8 w-20 h-20 bg-flc-500/3 rounded-full blur-xl animate-pulse" />
+        <div className="absolute bottom-20 right-12 w-16 h-16 bg-amber-500/4 rounded-full blur-lg animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-flc-600/2 rounded-full blur-md animate-pulse" style={{ animationDelay: '4s' }} />
+      </div>
       
       {/* Enhanced container with true full-width mobile and premium desktop spacing */}
       <div className="w-full px-0 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-10">
@@ -228,31 +248,34 @@ const HeroCarousel = ({
                   aria-hidden={!active}
                   aria-live={active ? 'polite' : 'off'}
                 >
-                  {/* Slide header: badge + slide index + mobile arrows (always on top) */}
+                  {/* Premium slide header: enhanced badge + slide index + mobile arrows */}
                   <div className="relative z-20 flex items-center justify-between mb-3 sm:mb-4 md:mb-3">
-                    <div className="inline-flex items-center gap-2">
-                      <span className="px-2.5 py-1 sm:px-3 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
-                      <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
+                    <div className="inline-flex items-center gap-3">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-flc-500/12 via-amber-500/8 to-flc-500/12 border border-flc-200/20 backdrop-blur-sm text-flc-700 text-xs font-semibold uppercase tracking-wide shadow-sm">
+                        <div className="w-1.5 h-1.5 bg-flc-500 rounded-full animate-pulse" />
+                        {slide.badge}
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-500 font-medium">Slide {i + 1} of {total}</span>
                     </div>
-                    {/* Mobile inline arrows */}
-                    <div className="flex-none flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
+                    {/* Premium mobile navigation arrows */}
+                    <div className="flex-none flex md:hidden items-center gap-2 ml-1" aria-hidden={total <= 1}>
                       <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }}
                         aria-label="Previous slide"
                         disabled={total <= 1}
-                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/80 backdrop-blur-sm border border-neutral-200/50 text-neutral-600 hover:bg-white hover:border-neutral-300 hover:shadow-md disabled:opacity-40 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500/50 hover:-translate-y-0.5"
                       >
-                        <svg className="w-5 h-5 sm:w-5.5 sm:h-5.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
                       </button>
                       <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }}
                         aria-label="Next slide"
                         disabled={total <= 1}
-                        className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/80 backdrop-blur-sm border border-neutral-200/50 text-neutral-600 hover:bg-white hover:border-neutral-300 hover:shadow-md disabled:opacity-40 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500/50 hover:-translate-y-0.5"
                       >
-                        <svg className="w-5 h-5 sm:w-5.5 sm:h-5.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                       </button>
                     </div>
                   </div>
@@ -347,18 +370,19 @@ const HeroCarousel = ({
                         <a
                           href={slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref}
                           onClick={(e) => { e.preventDefault(); handleCTAClick(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref); }}
-                          className="inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer text-sm sm:text-base"
+                          className="group inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 hover:from-flc-700 hover:via-flc-600 hover:to-amber-600 text-white font-semibold shadow-lg shadow-flc-500/20 hover:shadow-xl hover:shadow-flc-500/30 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer text-sm sm:text-base transform hover:-translate-y-0.5"
                         >
                           {slide.ctaLabel}
-                          <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                          <svg className="w-4 h-4 ml-2 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                         </a>
                         {slide.id === 'sermon' && (
                           <a
                             href="https://www.youtube.com/@FLCEdmonton/streams"
                             onClick={(e) => { e.preventDefault(); handleCTAClick('https://www.youtube.com/@FLCEdmonton/streams'); }}
-                            className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer text-sm sm:text-base"
+                            className="group inline-flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-white/80 backdrop-blur-sm border border-neutral-200/50 text-neutral-700 hover:bg-white hover:border-flc-300/60 hover:text-flc-600 font-medium shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer text-sm sm:text-base transform hover:-translate-y-0.5"
                           >
                             More Streams
+                            <svg className="w-3 h-3 ml-1.5 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                           </a>
                         )}
                         {slide.id === 'sermon' && (

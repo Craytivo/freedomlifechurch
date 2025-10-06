@@ -18,7 +18,7 @@ export default function PrayerSection() {
         <div className="px-4 sm:px-0">
         <div className="max-w-3xl">
           <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Prayer</span>
-          <h2 className="mt-1.5 sm:mt-2 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 drop-shadow-md leading-[1.1]">We would love to pray with you</h2>
+          <h2 className="mt-1.5 sm:mt-2 font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 drop-shadow-md leading-[1.1]">We would love to pray with you</h2>
           <p className="mt-3 sm:mt-4 text-base sm:text-lg md:text-xl text-neutral-700 font-medium tracking-wide leading-relaxed">Share a request or a testimony. Our team prays throughout the week and at gatherings.</p>
         </div>
 

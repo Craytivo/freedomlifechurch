@@ -45,7 +45,7 @@ export default function GroupDetail({ group, nextEvent }) {
             <span className="mx-2 text-neutral-400">/</span>
             <span className="text-primary-900 font-medium">{group.name}</span>
           </nav>
-          <h1 className="font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">{group.name}</h1>
+          <h1 className="font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">{group.name}</h1>
           <p className="mt-2 text-neutral-700 max-w-2xl">{group.intro || group.blurb}</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {nextEvent && (

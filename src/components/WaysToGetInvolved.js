@@ -142,7 +142,7 @@ const WaysToGetInvolved = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
             For every age & season
           </div>
-          <h2 className="mt-5 sm:mt-6 font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] drop-shadow-lg">
+          <h2 className="mt-5 sm:mt-6 font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] drop-shadow-lg">
             A place for you
             <span className="block bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 bg-clip-text text-transparent mt-2">and your family</span>
           </h2>

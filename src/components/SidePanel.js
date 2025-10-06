@@ -71,8 +71,9 @@ const SidePanel = ({ isOpen, onClose }) => {
           )
         },
         { 
-          name: 'Giving', 
-          href: '/giving', 
+          name: 'Give', 
+          href: 'https://flcedmonton.churchcenter.com/giving', 
+          external: true,
           icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -301,6 +302,29 @@ const SidePanel = ({ isOpen, onClose }) => {
                 <div className="space-y-1">
                   {section.items.map((item) => {
                     const active = isActiveRoute(item.href);
+                    const isExternal = item.external || item.href.startsWith('http');
+                    
+                    if (isExternal) {
+                      return (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={onClose}
+                          className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900`}
+                        >
+                          <span className={`mr-3 text-neutral-400 group-hover:text-neutral-500`}>
+                            {item.icon}
+                          </span>
+                          {item.name}
+                          <svg className="ml-auto w-3 h-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                          </svg>
+                        </a>
+                      );
+                    }
+                    
                     return (
                       <Link
                         key={item.name}
