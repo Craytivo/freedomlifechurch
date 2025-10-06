@@ -81,7 +81,7 @@ const PlanVisitSection = () => {
   };
 
   return (
-    <section id="plan-visit" className="relative py-20 md:py-28 bg-white">
+    <section id="plan-visit" className="relative py-20 md:py-28 bg-white w-full">
       {/* Enhanced premium background */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
         background: [
@@ -93,7 +93,8 @@ const PlanVisitSection = () => {
       
       {/* True full-width container for mobile */}
       <div className="w-full px-0 sm:px-6 lg:px-8">
-        <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '78rem' }}>
+        <div className="px-0 sm:px-0 mx-auto" style={{ maxWidth: '78rem' }}>
+        <div className="px-4 sm:px-0">
           <div className="grid lg:grid-cols-12 gap-14 lg:gap-16 items-start">
             {/* Left: Intro & Facts */}
             <div className="lg:col-span-7">
@@ -264,6 +265,7 @@ const PlanVisitSection = () => {
               </form>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

@@ -9,11 +9,11 @@ const Layout = ({ children }) => {
   const handleCloseMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
-  <div className={`min-h-screen flex flex-col ${menuOpen ? 'overflow-hidden' : ''}`}>
+  <div className={`min-h-screen flex flex-col w-full ${menuOpen ? 'overflow-hidden' : ''}`}>
       <Header isMenuOpen={menuOpen} onToggleMenu={handleToggleMenu} onCloseMenu={handleCloseMenu} />
-      <div className="relative flex-grow">
+      <div className="relative flex-grow w-full">
         {/* Content wrapper with blur when menu open */}
-        <main className={`min-h-full transition-all duration-300 ${menuOpen ? 'filter blur-sm scale-[0.995]' : 'filter-none'}`} aria-hidden={menuOpen}>
+        <main className={`min-h-full w-full transition-all duration-300 ${menuOpen ? 'filter blur-sm scale-[0.995]' : 'filter-none'}`} aria-hidden={menuOpen}>
           {children}
         </main>
         {/* Removed in-page overlay so global portal overlay can capture clicks */}

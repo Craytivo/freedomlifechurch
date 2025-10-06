@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function PrayerSection() {
   return (
-    <section id="prayer" className="relative py-10 sm:py-14 md:py-16 bg-gradient-to-b from-neutral-50 via-white to-neutral-50">
+    <section id="prayer" className="relative py-10 sm:py-14 md:py-16 bg-gradient-to-b from-neutral-50 via-white to-neutral-50 w-full">
       {/* Enhanced premium background */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
         background: [
@@ -14,7 +14,8 @@ export default function PrayerSection() {
       
       {/* True full-width container for mobile */}
       <div className="relative w-full px-0 sm:px-4 lg:px-8">
-        <div className="px-3 sm:px-0 mx-auto" style={{ maxWidth: '78rem' }}>
+        <div className="px-0 sm:px-0 mx-auto" style={{ maxWidth: '78rem' }}>
+        <div className="px-4 sm:px-0">
         <div className="max-w-3xl">
           <span className="inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Prayer</span>
           <h2 className="mt-1.5 sm:mt-2 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 drop-shadow-md leading-[1.1]">We would love to pray with you</h2>
@@ -52,6 +53,7 @@ export default function PrayerSection() {
             </div>
           </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

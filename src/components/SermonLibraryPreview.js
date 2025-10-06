@@ -73,7 +73,7 @@ const SermonLibraryPreview = () => {
 
   return (
     <>
-    <section id="sermon-library" className="relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-neutral-50/40 via-white to-neutral-50/30 content-visibility-auto">
+    <section id="sermon-library" className="relative py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-neutral-50/40 via-white to-neutral-50/30 content-visibility-auto w-full">
       {/* Enhanced premium background */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
         background: [
@@ -86,7 +86,8 @@ const SermonLibraryPreview = () => {
       
       {/* True full-width container for mobile */}
       <div className="w-full px-0 sm:px-4 lg:px-8">
-        <div className="px-3 sm:px-0 mx-auto" style={{ maxWidth: '82rem' }}>
+        <div className="px-0 sm:px-0 mx-auto" style={{ maxWidth: '82rem' }}>
+        <div className="px-4 sm:px-0">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Stay encouraged</div>
@@ -204,6 +205,7 @@ const SermonLibraryPreview = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

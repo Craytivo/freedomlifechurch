@@ -163,7 +163,7 @@ const HeroCarousel = ({
 
   return (
     <section
-      className="relative overflow-hidden bg-white"
+      className="relative overflow-hidden bg-white w-full"
       aria-label="Featured content carousel"
       onMouseEnter={() => pauseOnHover && setPaused(true)}
       onMouseLeave={() => pauseOnHover && setPaused(false)}
@@ -191,7 +191,7 @@ const HeroCarousel = ({
       
       {/* Enhanced container with true full-width mobile and premium desktop spacing */}
       <div className="w-full px-0 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-10">
-        <div className="relative px-3 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
+        <div className="relative px-0 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
           {/* Slide Container: optimized height for mobile, fixed/min height only on desktop; reserve space for bottom controls */}
           <div className="relative pb-12 sm:pb-14 md:min-h-[520px] md:pb-16 lg:pb-20">
             {slides.map((slide, i) => {
@@ -244,7 +244,7 @@ const HeroCarousel = ({
 
                   <div className="md:h-full grid md:grid-cols-7 gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-start">
                     {/* Text Content (on mobile this comes after media) */}
-                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20">
+                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20 px-4 sm:px-0">
                       {/* Decorative vertical accent (desktop only) */}
                       <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
                       {/* Title and subtitle moved above header section */}
@@ -359,7 +359,7 @@ const HeroCarousel = ({
                     </div>
 
                     {/* Media Area (first on mobile, right on desktop) */}
-                    <div className="order-1 md:order-2 relative z-10 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0">
+                    <div className="order-1 md:order-2 relative z-10 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0 px-4 sm:px-0">
                       {slide.id === 'conference' ? (
                         <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
                           {/* Light gradient background with subtle motion */}
