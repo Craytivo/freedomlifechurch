@@ -327,8 +327,8 @@ export default function EventsPage({ initialEvents }) {
 
           {/* Calendar + List */}
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-            {/* Calendar */}
-            <div className="lg:col-span-5">
+            {/* Calendar - Hidden on mobile */}
+            <div className="hidden lg:block lg:col-span-5">
               <div className="rounded-xl border border-neutral-200 bg-white shadow-sm">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
                   <button onClick={goPrev} aria-label="Previous month" className="p-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600">
@@ -412,9 +412,9 @@ export default function EventsPage({ initialEvents }) {
               )}
             </div>
 
-            {/* List */}
+            {/* List - Full width on mobile, right column on desktop */}
             <div className="lg:col-span-7">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {visibleList.length === 0 ? (
                   <div className="col-span-full text-neutral-500 text-sm space-y-3">
                     {loadingLive && (

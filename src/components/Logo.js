@@ -10,7 +10,7 @@ const Logo = ({ size = 'default' }) => {
   };
 
   return (
-    <a href="#home" className="flex items-center group" aria-label="Freedom Life Church Home">
+    <a href="/" className="flex items-center group" aria-label="Freedom Life Church Home">
   <span className={`relative block w-auto ${sizeMap[size]}`} style={{ aspectRatio: '5 / 2' }}>
         <Image
           src={mainLogo}
