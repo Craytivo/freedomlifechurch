@@ -96,7 +96,7 @@ const StudyGuidesPage = () => {
             <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-emerald-500/5 via-white/50 to-teal-500/5 border border-emerald-200/30 backdrop-blur-sm shadow-xl">
               <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Expected Launch</h3>
               <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="text-3xl md:text-4xl font-bold text-emerald-600">Q2 2024</div>
+                <div className="text-3xl md:text-4xl font-bold text-emerald-600">Q1 2026</div>
               </div>
               <p className="text-neutral-600 leading-relaxed">
                 We're working hard to create high-quality study materials that will enhance your spiritual growth. 

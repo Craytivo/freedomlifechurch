@@ -153,7 +153,7 @@ const StorePage = () => {
             <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-br from-amber-500/5 via-white/50 to-orange-500/5 border border-amber-200/30 backdrop-blur-sm shadow-xl">
               <h3 className="font-heading text-xl font-bold text-primary-900 mb-4">Store Opening</h3>
               <div className="flex items-center justify-center gap-4 mb-4">
-                <div className="text-3xl md:text-4xl font-bold text-amber-600">Spring 2024</div>
+                <div className="text-3xl md:text-4xl font-bold text-amber-600">Q1 2026</div>
               </div>
               <p className="text-neutral-600 leading-relaxed">
                 We're carefully curating products that reflect our values and mission. 
