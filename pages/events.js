@@ -127,6 +127,64 @@ export default function EventsPage({ initialEvents }) {
     return { tagIndex, filters };
   }, [events]);
 
+  // Color mapping for categories/tags
+  const tagBgColors = {
+    'Men': 'bg-blue-600',
+    'Women': 'bg-pink-500',
+    'Kids & Youth': 'bg-emerald-600',
+    'Prayer': 'bg-violet-600',
+    'Groups': 'bg-indigo-600',
+    'Services': 'bg-amber-600',
+    'Special': 'bg-neutral-400'
+  };
+  const tagTextColors = {
+    'Men': 'text-blue-600',
+    'Women': 'text-pink-500',
+    'Kids & Youth': 'text-emerald-600',
+    'Prayer': 'text-violet-600',
+    'Groups': 'text-indigo-600',
+    'Services': 'text-amber-600',
+    'Special': 'text-neutral-500'
+  };
+  const tagBorderColors = {
+    'Men': 'border-blue-600',
+    'Women': 'border-pink-500',
+    'Kids & Youth': 'border-emerald-600',
+    'Prayer': 'border-violet-600',
+    'Groups': 'border-indigo-600',
+    'Services': 'border-amber-600',
+    'Special': 'border-neutral-400'
+  };
+  const colorPriority = ['Men','Women','Kids & Youth','Prayer','Groups','Services','Special'];
+  const eventBgColor = (e) => {
+    const tags = (tagIndex.get(e.id) || []);
+    for (const t of colorPriority) if (tags.includes(t)) return tagBgColors[t];
+    return 'bg-neutral-400';
+  };
+  const eventTextColor = (e) => {
+    const tags = (tagIndex.get(e.id) || []);
+    for (const t of colorPriority) if (tags.includes(t)) return tagTextColors[t];
+    return 'text-neutral-500';
+  };
+
+  const filterButtonClasses = (name, active) => {
+    if (name === 'All') {
+      return active
+        ? 'bg-flc-500 text-white border-flc-500'
+        : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600';
+    }
+    const text = tagTextColors[name];
+    const border = tagBorderColors[name];
+    if (!text || !border) {
+      return active
+        ? 'bg-neutral-800 text-white border-neutral-800'
+        : 'border-neutral-300 text-neutral-700 hover:border-neutral-500 hover:text-neutral-800';
+    }
+    return active
+      ? `${border} ${text.replace('text-','bg-')} text-white`
+      : `${border} ${text} bg-white hover:opacity-90`;
+  };
+
   const filtered = useMemo(() => {
     if (activeFilter === 'All') return events;
     return events.filter(e => (tagIndex.get(e.id) || []).includes(activeFilter));
@@ -204,7 +262,7 @@ export default function EventsPage({ initialEvents }) {
                 onClick={() => { setActiveFilter('All'); setSelectedDate(null); }}
                 className={classNames(
                   'px-3 py-1.5 rounded-full text-sm font-semibold border transition-colors',
-                  activeFilter === 'All' ? 'bg-flc-500 text-white border-flc-500' : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600'
+                  filterButtonClasses('All', activeFilter === 'All')
                 )}
                 aria-pressed={activeFilter === 'All'}
               >
@@ -217,7 +275,7 @@ export default function EventsPage({ initialEvents }) {
                   onClick={() => { setActiveFilter(f); setSelectedDate(null); }}
                   className={classNames(
                     'px-3 py-1.5 rounded-full text-sm font-semibold border transition-colors',
-                    activeFilter === f ? 'bg-flc-500 text-white border-flc-500' : 'border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600'
+                    filterButtonClasses(f, activeFilter === f)
                   )}
                   aria-pressed={activeFilter === f}
                 >
@@ -306,14 +364,26 @@ export default function EventsPage({ initialEvents }) {
                       >
                         <div className="text-[11px] font-semibold text-neutral-500">{d.getDate()}</div>
                         {has && <div className="absolute bottom-1 left-2 flex gap-1">
-                          {(byDate.get(key) || []).slice(0,3).map((_, idx) => (
-                            <span key={idx} className="w-1.5 h-1.5 rounded-full bg-flc-500" />
+                          {(byDate.get(key) || []).slice(0,3).map((ev, idx) => (
+                            <span key={idx} className={`w-1.5 h-1.5 rounded-full ${eventBgColor(ev)}`} />
                           ))}
                           {(byDate.get(key) || []).length > 3 && <span className="text-[10px] text-neutral-400">+{(byDate.get(key) || []).length - 3}</span>}
                         </div>}
                       </button>
                     );
                   })}
+                </div>
+
+                {/* Legend */}
+                <div className="mt-3 flex flex-wrap items-center gap-3 text-[12px] text-neutral-600">
+                  {colorPriority
+                    .filter(name => filters.includes(name))
+                    .map(name => (
+                      <div key={`legend-${name}`} className="inline-flex items-center gap-1.5">
+                        <span className={`inline-block w-2 h-2 rounded-full ${tagBgColors[name] || 'bg-neutral-400'}`} />
+                        <span className="capitalize">{name}</span>
+                      </div>
+                    ))}
                 </div>
               </div>
 
@@ -328,7 +398,7 @@ export default function EventsPage({ initialEvents }) {
                       {dayEvents.map(e => (
                         <li key={e.id}>
                           <Link href={`/events/${e.id}`} className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
-                            <span className="mt-1 inline-flex w-2 h-2 rounded-full bg-flc-500" />
+                            <span className={`mt-1 inline-flex w-2 h-2 rounded-full ${eventBgColor(e)}`} />
                             <div>
                               <div className="text-sm font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</div>
                               <div className="text-[12px] text-neutral-600">{e.time} · {e.locationName}</div>
@@ -378,11 +448,13 @@ export default function EventsPage({ initialEvents }) {
                   <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide text-flc-600 font-semibold">
-                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-flc-500/10 text-flc-700">
+                        <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide font-semibold">
+                          <span className={`inline-flex items-center justify-center w-5 h-5 rounded-md bg-neutral-100 ${eventTextColor(e)}`}>
                             {categoryIcon(e.category)}
                           </span>
-                          <span>{e.category}</span>
+                          <span className={`truncate ${eventTextColor(e)}`}>
+                            {e.category}
+                          </span>
                         </div>
                         <h3 className="mt-1 font-heading text-lg font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</h3>
                         <p className="mt-1 text-sm text-neutral-600 leading-relaxed">{e.blurb}</p>

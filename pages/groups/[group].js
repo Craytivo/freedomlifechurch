@@ -19,6 +19,15 @@ function classifyTags({ title = '', blurb = '' }) {
 export default function GroupDetail({ group, nextEvent }) {
   if (!group) return null;
 
+  const colorMap = {
+    mens: { dot: 'bg-blue-600', border: 'border-blue-600/40', text: 'text-blue-600' },
+    womens: { dot: 'bg-pink-500', border: 'border-pink-500/40', text: 'text-pink-500' },
+    children: { dot: 'bg-emerald-600', border: 'border-emerald-600/40', text: 'text-emerald-600' },
+    volunteer: { dot: 'bg-amber-600', border: 'border-amber-600/40', text: 'text-amber-600' },
+    outreach: { dot: 'bg-violet-600', border: 'border-violet-600/40', text: 'text-violet-600' },
+    music: { dot: 'bg-indigo-600', border: 'border-indigo-600/40', text: 'text-indigo-600' },
+  };
+  const theme = colorMap[group.id] || { dot: 'bg-flc-500', border: 'border-flc-500/40', text: 'text-flc-600' };
   const heroBg = 'radial-gradient(circle at 12% 8%, rgba(235,167,62,0.08), rgba(235,167,62,0) 55%)';
 
   return (
@@ -57,7 +66,7 @@ export default function GroupDetail({ group, nextEvent }) {
         <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
           <div className="grid lg:grid-cols-12 gap-8">
             <div className="lg:col-span-8">
-              <div className="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+              <div className={`rounded-2xl border ${theme.border} bg-white p-5 md:p-6`}>
                 <h2 className="font-heading text-xl md:text-2xl font-bold tracking-tight text-primary-900">About {group.name}</h2>
                 {Array.isArray(group.body) && group.body.length > 0 && (
                   <div className="mt-2 space-y-3 text-sm text-neutral-700">
@@ -67,14 +76,14 @@ export default function GroupDetail({ group, nextEvent }) {
                 <ul className="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
                   {group.points.map((p, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1 inline-block w-1.5 h-1.5 rounded-full bg-flc-500" />
+                      <span className={`mt-1 inline-block w-1.5 h-1.5 rounded-full ${theme.dot}`} />
                       <span>{p}</span>
                     </li>
                   ))}
                 </ul>
                 {group.join && (<p className="mt-4 text-sm text-neutral-700">{group.join}</p>)}
                 {group.scripture && (
-                  <figure className="mt-4 border-l-2 border-flc-500 pl-3 text-sm text-neutral-800">
+                  <figure className={`mt-4 border-l-2 pl-3 text-sm text-neutral-800 ${theme.border}`}>
                     <blockquote className="italic">“{group.scripture.text}”</blockquote>
                     <figcaption className="mt-1 text-neutral-500">— {group.scripture.ref}</figcaption>
                   </figure>
