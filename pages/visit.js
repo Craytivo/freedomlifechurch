@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SEO from '../src/components/seo/SEO';
+import Heading from '../src/components/Heading';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 
@@ -225,9 +226,7 @@ export default function VisitPage() {
                 First time here?
               </div>
               
-              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-6 drop-shadow-sm leading-tight">
-                Plan Your Visit
-              </h1>
+              <Heading as="h1" size="lg" align="center" gradient className="mb-6 drop-shadow-sm">Plan Your Visit</Heading>
               
               <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto mb-8">
                 We know visiting a church for the first time can feel uncertain. We're here to make your experience welcoming, comfortable, and meaningful.
@@ -253,9 +252,7 @@ export default function VisitPage() {
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/8 text-flc-700 text-xs font-semibold uppercase tracking-wide mb-3">
                     Sunday Schedule
                   </div>
-                  <h2 className="font-heading text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-2">
-                    Your Sunday Timeline
-                  </h2>
+                  <Heading as="h2" size="md" align="center" gradient className="mb-2">Your Sunday Timeline</Heading>
                   <p className="text-neutral-600 font-medium">Here's what to expect during your visit</p>
                 </div>
 
@@ -317,9 +314,7 @@ export default function VisitPage() {
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
             <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-                The Essentials
-              </h2>
+              <Heading as="h2" size="md" align="center" gradient className="mb-4">The Essentials</Heading>
               <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
                 Everything you need to know for your first visit
               </p>
@@ -348,9 +343,7 @@ export default function VisitPage() {
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
             <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-                What to Expect
-              </h2>
+              <Heading as="h2" size="md" align="center" gradient className="mb-4">What to Expect</Heading>
               <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
                 Here's what a typical Sunday looks like at Freedom Life Church
               </p>
@@ -378,9 +371,7 @@ export default function VisitPage() {
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
             <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-                Common Questions
-              </h2>
+              <Heading as="h2" size="md" align="center" gradient className="mb-4">Common Questions</Heading>
               <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
                 We've answered the questions we hear most from first-time visitors
               </p>
@@ -399,9 +390,7 @@ export default function VisitPage() {
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
               {/* Map & Location Info */}
               <div className="lg:col-span-7">
-                <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-6 leading-tight">
-                  Find Us
-                </h2>
+                <Heading as="h2" size="md" gradient className="mb-6">Find Us</Heading>
                 
                 {/* Address & Utilities */}
                 <div className="mb-6">

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import SEO from '../src/components/seo/SEO';
+import Heading from '../src/components/Heading';
 
 // Simple local storage helpers (will be swapped for API-backed storage later)
 const LS_KEYS = {
@@ -122,9 +123,9 @@ export default function MyFLCPage() {
           }} />
         </div>
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
+            <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">MyFLC</div>
-            <h1 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">Your Notes & Prayers</h1>
+            <Heading as="h1" size="md" className="mt-3">Your Notes & Prayers</Heading>
             <p className="mt-2 text-neutral-600 max-w-2xl">Capture sermon notes and prayer requests. This saves to your device for now. We’ll add sign‑in and syncing next.</p>
             {!isAuthenticated && (
               <div className="mt-4 p-3 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-sm">

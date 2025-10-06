@@ -1,6 +1,7 @@
 /* global Map Set Promise */
 import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
+import Heading from '../src/components/Heading';
 import Link from 'next/link';
 import { loadEventsFromICS } from '../src/lib/icsEvents';
 
@@ -252,7 +253,7 @@ export default function EventsPage({ initialEvents }) {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
             <div>
               <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">What’s happening</span>
-              <h1 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">Events</h1>
+              <Heading as="h1" size="md" className="mt-2">Events</Heading>
               <p className="mt-2 text-neutral-700 max-w-2xl">Find opportunities to connect, serve, and grow. Browse highlights, filter by category, or tap a date to see what’s on. Services happen every Sunday at 12:00 PM—everyone’s welcome.</p>
             </div>
             <div className="flex flex-wrap gap-2">

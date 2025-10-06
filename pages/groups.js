@@ -1,5 +1,6 @@
 /* global Map Set */
 import Head from 'next/head';
+import Heading from '../src/components/Heading';
 import Link from 'next/link';
 import { loadEventsFromICS } from '../src/lib/icsEvents';
 
@@ -69,7 +70,7 @@ export default function GroupsPage({ sections }) {
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
           <div className="mb-8">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Get Connected</span>
-            <h1 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">Groups</h1>
+            <Heading as="h1" size="md" className="mt-2">Groups</Heading>
             <p className="mt-2 text-neutral-700 max-w-2xl">There’s a place for you here. Explore ministries and find a group where you can grow in faith and friendship.</p>
           </div>
 

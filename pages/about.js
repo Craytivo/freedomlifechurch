@@ -3,6 +3,7 @@ import SEO from '../src/components/seo/SEO';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 import SectionHeader from '../src/components/SectionHeader';
+import Heading from '../src/components/Heading';
 import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
 import imgFamily from '../src/assets/images/IMG_4895webcropped-768x839.jpg';
 
@@ -48,7 +49,7 @@ export default function AboutPage() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7">
             <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Who we are</span>
-            <h1 className="mt-2 font-heading text-3xl md:text-4xl font-extrabold tracking-tight text-primary-900">About Freedom Life Church</h1>
+            <Heading as="h1" size="md" className="mt-2">About Freedom Life Church</Heading>
             <p className="mt-3 text-neutral-700 text-base md:text-lg leading-relaxed max-w-2xl">
               We are a church that believes that freedom, life and grace are given and experienced in Jesus Christ alone (John 8:36). Believing the entire Word of Jesus Christ, and that salvation is given only by His grace alone! (Titus 3:5-7).
             </p>
@@ -137,7 +138,7 @@ export default function AboutPage() {
       <Section className="bg-neutral-50" id="mission">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-7">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900 mb-3">Our Mission</h2>
+            <Heading as="h2" size="md" className="mb-3">Our Mission</Heading>
             <p className="text-neutral-700 text-base md:text-lg leading-relaxed max-w-3xl">
               It is our mission to proclaim the freedom and life that is in Jesus Christ given to humanity by His grace. FLC believes
               that one is justified and made righteous by His grace! Therefore, it is not by works that one obtains salvation, but by
@@ -163,7 +164,7 @@ export default function AboutPage() {
       <Section className="bg-white">
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Beliefs & Values</span>
-          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">How we think and live</h2>
+          <Heading as="h2" size="md" align="center" className="mt-3">How we think and live</Heading>
           <p className="mt-2 text-neutral-600">God’s Word shapes what we believe and how we love our city.</p>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -184,7 +185,7 @@ export default function AboutPage() {
       <Section className="bg-white">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-6">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold tracking-tight text-primary-900 mb-3">Our Story</h2>
+            <Heading as="h2" size="md" className="mb-3">Our Story</Heading>
             <p className="text-neutral-700 leading-relaxed">
               Pastor Rohan (Ro) is married to his best friend, the beautiful Jhanelle (Jo) Samuels. Pastor Ro embodies the rare
               balance of spiritual gifts and practical educational experiences that connects pastoral leadership and discipleship
@@ -363,7 +364,7 @@ export default function AboutPage() {
       <Section className="bg-neutral-50" id="faq">
         <div className="text-center max-w-3xl mx-auto">
           <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Questions</span>
-          <h2 className="mt-3 font-heading text-3xl md:text-4xl font-extrabold text-primary-900">What to know before you come</h2>
+          <Heading as="h2" size="md" className="mt-3">What to know before you come</Heading>
           <p className="mt-2 text-neutral-600">Here are answers to common questions as you plan your visit.</p>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-2">

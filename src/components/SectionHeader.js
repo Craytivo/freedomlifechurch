@@ -1,4 +1,5 @@
 import React from 'react';
+import Heading from './Heading';
 
 /**
  * Reusable section header component with proper typography hierarchy
@@ -44,10 +45,9 @@ const SectionHeader = ({
           {badge}
         </div>
       )}
-      
-      <h2 className={`font-heading font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 leading-tight ${variant.title} ${variant.spacing} ${titleClassName}`}>
+      <Heading as="h2" size={size === 'large' ? 'lg' : size === 'small' ? 'sm' : 'base'} align={alignment} weight="bold" gradient className={`${variant.spacing} ${titleClassName}`}>
         {title}
-      </h2>
+      </Heading>
       
       {subtitle && (
         <p className={`text-neutral-600 leading-relaxed font-medium max-w-3xl ${alignment === 'center' ? 'mx-auto' : ''} ${variant.subtitle} ${subtitleClassName}`}>

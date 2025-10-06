@@ -1,5 +1,6 @@
 import React from 'react';
 import SEO from '../src/components/seo/SEO';
+import Heading from '../src/components/Heading';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 
@@ -139,9 +140,7 @@ const GivingPage = () => {
               Generous Living
             </div>
             
-            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-6 leading-tight">
-              Give with Purpose
-            </h1>
+            <Heading as="h1" size="lg" align="center" gradient className="mb-6">Give with Purpose</Heading>
             
             <p className="text-xl sm:text-2xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto mb-8">
               When we give, we join God in His work of transformation. Every gift makes an eternal difference in lives, families, and our community.
@@ -183,9 +182,7 @@ const GivingPage = () => {
       <section className="relative py-16 md:py-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-              The Heart of Giving
-            </h2>
+            <Heading as="h2" size="md" align="center" gradient className="mb-4">The Heart of Giving</Heading>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               Giving isn't about what we can afford to lose, but about what we can joyfully invest in God's kingdom
             </p>
@@ -209,9 +206,7 @@ const GivingPage = () => {
       <section className="relative py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-              Your Impact in Action
-            </h2>
+            <Heading as="h2" size="md" align="center" gradient className="mb-4">Your Impact in Action</Heading>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               See how your generous giving creates lasting change in our community and beyond
             </p>
@@ -243,9 +238,7 @@ const GivingPage = () => {
       <section className="relative py-16 md:py-20 bg-neutral-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-              Ways to Give
-            </h2>
+            <Heading as="h2" size="md" align="center" gradient className="mb-4">Ways to Give</Heading>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               Choose the giving option that works best for you and your family
             </p>
@@ -277,9 +270,7 @@ const GivingPage = () => {
       <section className="relative py-16 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4 leading-tight">
-              Questions About Giving
-            </h2>
+            <Heading as="h2" size="md" align="center" gradient className="mb-4">Questions About Giving</Heading>
             <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
               Common questions about biblical stewardship and giving
             </p>
@@ -293,9 +284,7 @@ const GivingPage = () => {
       {/* Final CTA Section */}
       <section className="relative py-16 md:py-20 bg-gradient-to-br from-flc-500/5 via-amber-500/3 to-flc-500/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-heading text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-4">
-            Ready to Make an Impact?
-          </h2>
+          <Heading as="h2" size="md" align="center" gradient className="mb-4">Ready to Make an Impact?</Heading>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto mb-8">
             Join us in advancing God's kingdom through generous giving. Every gift, no matter the size, makes an eternal difference.
           </p>
