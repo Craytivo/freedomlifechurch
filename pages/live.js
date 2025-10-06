@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
 
 const LiveStreamPage = () => {
@@ -87,9 +87,7 @@ const LiveStreamPage = () => {
   if (loading) {
     return (
       <>
-        <Head>
-          <title>Live Stream | Freedom Life Church</title>
-        </Head>
+        <SEO title="Live Stream | Freedom Life Church" />
         <div className="min-h-screen flex items-center justify-center">
           <div className="w-12 h-12 border-4 border-flc-500/30 border-t-flc-500 rounded-full animate-spin" />
         </div>
@@ -99,14 +97,11 @@ const LiveStreamPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Live Stream | Freedom Life Church</title>
-        <meta name="description" content="Watch Freedom Life Church live or catch up on recent messages. Join our online community for worship, teaching, and connection." />
-        <meta name="keywords" content="live stream, church online, Freedom Life Church Edmonton, worship, sermons" />
-        <meta property="og:title" content="Live Stream | Freedom Life Church" />
-        <meta property="og:description" content="Watch Freedom Life Church live or catch up on recent messages. Join our online community for worship, teaching, and connection." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Live Stream | Freedom Life Church"
+        description="Watch Freedom Life Church live or catch up on recent messages. Join our online community for worship, teaching, and connection."
+        keywords={[ 'live stream','church online','Freedom Life Church Edmonton','worship','sermons' ]}
+      />
 
       {/* Hero Section with Live Stream */}
       <section className="relative py-16 md:py-24 bg-white overflow-hidden">

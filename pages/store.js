@@ -1,18 +1,15 @@
 import React from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
 
 const StorePage = () => {
   return (
     <>
-      <Head>
-        <title>Store - Coming Soon | Freedom Life Church</title>
-        <meta name="description" content="The Freedom Life Church store is coming soon! Browse apparel, books, and ministry resources to support your faith journey and our mission." />
-        <meta name="keywords" content="church store, apparel, books, Freedom Life Church Edmonton, merchandise, ministry resources" />
-        <meta property="og:title" content="Store - Coming Soon | Freedom Life Church" />
-        <meta property="og:description" content="The Freedom Life Church store is coming soon! Browse apparel, books, and ministry resources to support your faith journey and our mission." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Store - Coming Soon | Freedom Life Church"
+        description="The Freedom Life Church store is coming soon! Browse apparel, books, and ministry resources to support your faith journey and our mission."
+        keywords={[ 'church store','apparel','books','Freedom Life Church Edmonton','merchandise','ministry resources' ]}
+      />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-orange-50 overflow-hidden">

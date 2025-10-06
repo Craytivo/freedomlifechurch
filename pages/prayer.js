@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
 
 const PrayerPage = () => {
@@ -81,9 +81,7 @@ const PrayerPage = () => {
   if (isSubmitted) {
     return (
       <>
-        <Head>
-          <title>Prayer Request Submitted | Freedom Life Church</title>
-        </Head>
+        <SEO title="Prayer Request Submitted | Freedom Life Church" />
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-white to-green-50 p-4">
           <div className="max-w-md w-full text-center p-8 rounded-2xl bg-white shadow-xl border border-green-200/30">
             <div className="w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-6">
@@ -106,14 +104,11 @@ const PrayerPage = () => {
 
   return (
     <>
-      <Head>
-        <title>Prayer Requests | Freedom Life Church</title>
-        <meta name="description" content="Submit your prayer requests to Freedom Life Church. Our prayer team is here to pray with you and support you in your time of need." />
-        <meta name="keywords" content="prayer request, prayer team, Freedom Life Church Edmonton, prayer support, faith" />
-        <meta property="og:title" content="Prayer Requests | Freedom Life Church" />
-        <meta property="og:description" content="Submit your prayer requests to Freedom Life Church. Our prayer team is here to pray with you and support you in your time of need." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Prayer Requests | Freedom Life Church"
+        description="Submit your prayer requests to Freedom Life Church. Our prayer team is here to pray with you and support you in your time of need."
+        keywords={[ 'prayer request','prayer team','Freedom Life Church Edmonton','prayer support','faith' ]}
+      />
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 bg-gradient-to-br from-purple-50 via-white to-purple-50 overflow-hidden">

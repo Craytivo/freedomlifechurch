@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import Image from 'next/image';
 
 // Visit page - comprehensive guide for first-time visitors
@@ -172,13 +172,10 @@ export default function VisitPage() {
 
   return (
     <>
-      <Head>
-        <title>Plan Your Visit – Freedom Life Church</title>
-        <meta name="description" content="Planning your first visit to Freedom Life Church? Find service times, what to expect, directions, and answers to common questions." />
-        <meta property="og:title" content="Plan Your Visit – Freedom Life Church" />
-        <meta property="og:description" content="Join us Sundays at 12:00 PM MST. Get directions, learn what to expect, and let us know you're coming." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Plan Your Visit – Freedom Life Church"
+        description="Planning your first visit to Freedom Life Church? Find service times, what to expect, directions, and answers to common questions."
+      />
 
       {/* Premium Hero Section with Integrated Timeline */}
       <section className="relative py-16 md:py-24 bg-white overflow-hidden">

@@ -1,18 +1,15 @@
 import React from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
 
 const StudyGuidesPage = () => {
   return (
     <>
-      <Head>
-        <title>Study Guides - Coming Soon | Freedom Life Church</title>
-        <meta name="description" content="Bible study guides and resources are coming soon to Freedom Life Church. Get notified when our comprehensive study materials become available." />
-        <meta name="keywords" content="bible study, study guides, Freedom Life Church Edmonton, biblical resources, small groups" />
-        <meta property="og:title" content="Study Guides - Coming Soon | Freedom Life Church" />
-        <meta property="og:description" content="Bible study guides and resources are coming soon to Freedom Life Church. Get notified when our comprehensive study materials become available." />
-        <meta property="og:type" content="website" />
-      </Head>
+      <SEO
+        title="Study Guides - Coming Soon | Freedom Life Church"
+        description="Bible study guides and resources are coming soon to Freedom Life Church. Get notified when our comprehensive study materials become available."
+        keywords={[ 'bible study','study guides','Freedom Life Church Edmonton','biblical resources','small groups' ]}
+      />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-teal-50 overflow-hidden">

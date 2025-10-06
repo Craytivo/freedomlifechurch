@@ -3,6 +3,7 @@ import SectionHeader from '../src/components/SectionHeader';
 import SEO from '../src/components/seo/SEO';
 import CTAButton from '../src/components/CTAButton';
 import SmartLink from '../src/components/SmartLink';
+import Accordion from '../src/components/Accordion';
 
 const BaptismPage = () => {
   const [formData, setFormData] = useState({
@@ -261,22 +262,11 @@ const BaptismPage = () => {
             size="default"
             className="mb-12"
           />
-
-          <div className="max-w-3xl mx-auto space-y-4">
-            {faqs.map((faq, index) => (
-              <details key={index} className="group rounded-xl border border-neutral-200 bg-neutral-50 overflow-hidden">
-                <summary className="list-none flex items-center justify-between gap-4 py-4 px-6 cursor-pointer hover:bg-neutral-100">
-                  <span className="font-semibold text-primary-900">{faq.question}</span>
-                  <svg className="w-5 h-5 text-neutral-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
-                  </svg>
-                </summary>
-                <div className="px-6 pb-4">
-                  <p className="text-neutral-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              </details>
-            ))}
-          </div>
+          <Accordion
+            items={faqs.map(f => ({ title: f.question, content: f.answer }))}
+            tone="neutral"
+            className="max-w-3xl mx-auto space-y-4"
+          />
         </div>
       </section>
 

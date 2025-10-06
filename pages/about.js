@@ -1,5 +1,5 @@
 import React from 'react';
-import Head from 'next/head';
+import SEO from '../src/components/seo/SEO';
 import Image from 'next/image';
 import SectionHeader from '../src/components/SectionHeader';
 import imgHero from '../src/assets/images/IMG_4843webcropped-768x946.jpg';
@@ -19,10 +19,7 @@ const Section = ({ children, className = '' }) => (
 export default function AboutPage() {
   return (
     <>
-      <Head>
-        <title>About Freedom Life Church</title>
-        <meta name="description" content="Learn about Freedom Life Church: mission, story, and how to get connected." />
-      </Head>
+      <SEO title="About Freedom Life Church" description="Learn about Freedom Life Church: mission, story, and how to get connected." />
 
       {/* Hero */}
       <Section className="bg-white pt-10 md:pt-14">
