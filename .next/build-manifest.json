@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/-wWiVuYs9Uxxnpd4j_wC7/_buildManifest.js",
-    "static/-wWiVuYs9Uxxnpd4j_wC7/_ssgManifest.js"
+    "static/bmIxKV6C_JKsBJWXDKYZa/_buildManifest.js",
+    "static/bmIxKV6C_JKsBJWXDKYZa/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "rootMainFilesTree": {},
@@ -27,8 +27,8 @@
       "static/chunks/webpack-3ac8482649b484dd.js",
       "static/chunks/framework-292291387d6b2e39.js",
       "static/chunks/main-846c6dc600d6b891.js",
-      "static/css/aa90984357fe9acf.css",
-      "static/chunks/pages/_app-e0d7b233ea99c736.js"
+      "static/css/91cc4691ce586798.css",
+      "static/chunks/pages/_app-3531593fe2c9d920.js"
     ],
     "/_error": [
       "static/chunks/webpack-3ac8482649b484dd.js",
@@ -77,6 +77,12 @@
       "static/chunks/framework-292291387d6b2e39.js",
       "static/chunks/main-846c6dc600d6b891.js",
       "static/chunks/pages/sermons.xml-7aa026f8bcdcf74c.js"
+    ],
+    "/visit": [
+      "static/chunks/webpack-3ac8482649b484dd.js",
+      "static/chunks/framework-292291387d6b2e39.js",
+      "static/chunks/main-846c6dc600d6b891.js",
+      "static/chunks/pages/visit-138dd83f35748813.js"
     ]
   },
   "ampFirstPages": []

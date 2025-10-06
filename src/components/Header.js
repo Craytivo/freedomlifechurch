@@ -12,6 +12,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
 
   const navigation = [
     { name: 'Groups', href: '/groups', section: 'Primary' },
+    { name: 'Visit', href: '/visit', section: 'Primary' },
   { name: 'Events', href: '/events', section: 'Primary' },
   { name: 'About', href: '/about', section: 'Primary' },
   ];

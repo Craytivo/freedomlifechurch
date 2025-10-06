@@ -78,36 +78,42 @@
       "regex": "^/sermons\\.xml(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/sermons\\.xml(?:/)?$"
+    },
+    {
+      "page": "/visit",
+      "regex": "^/visit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/visit(?:/)?$"
     }
   ],
   "dataRoutes": [
     {
       "page": "/events",
-      "dataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/events\\.json$"
+      "dataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/events\\.json$"
     },
     {
       "page": "/events/[id]",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
-      "dataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/events/([^/]+?)\\.json$",
-      "namedDataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/events/(?<nxtPid>[^/]+?)\\.json$"
+      "dataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/events/([^/]+?)\\.json$",
+      "namedDataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/events/(?<nxtPid>[^/]+?)\\.json$"
     },
     {
       "page": "/groups",
-      "dataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/groups\\.json$"
+      "dataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/groups\\.json$"
     },
     {
       "page": "/groups/[group]",
       "routeKeys": {
         "nxtPgroup": "nxtPgroup"
       },
-      "dataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/groups/([^/]+?)\\.json$",
-      "namedDataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/groups/(?<nxtPgroup>[^/]+?)\\.json$"
+      "dataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/groups/([^/]+?)\\.json$",
+      "namedDataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/groups/(?<nxtPgroup>[^/]+?)\\.json$"
     },
     {
       "page": "/sermons.xml",
-      "dataRouteRegex": "^/_next/data/\\-wWiVuYs9Uxxnpd4j_wC7/sermons.xml\\.json$"
+      "dataRouteRegex": "^/_next/data/bmIxKV6C_JKsBJWXDKYZa/sermons.xml\\.json$"
     }
   ],
   "rsc": {
