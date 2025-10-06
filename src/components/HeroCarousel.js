@@ -197,7 +197,7 @@ const HeroCarousel = ({
               return (
                 <div
                   key={slide.id}
-                  className={`transition-opacity duration-700 ${active ? 'opacity-100' : 'opacity-0'} ${active ? '' : 'hidden md:block'} md:absolute md:inset-0 md:${active ? '' : 'pointer-events-none'}`}
+                  className={`transition-opacity duration-700 ${active ? 'opacity-100 relative z-10' : 'opacity-0 pointer-events-none'} ${active ? '' : 'hidden md:block'} md:absolute md:inset-0`}
                   aria-hidden={!active}
                   aria-live={active ? 'polite' : 'off'}
                 >
@@ -242,7 +242,7 @@ const HeroCarousel = ({
 
                   <div className="md:h-full grid md:grid-cols-7 gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-start">
                     {/* Text Content (on mobile this comes after media) */}
-                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
+                    <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20">
                       {/* Decorative vertical accent (desktop only) */}
                       <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
                       {/* Title and subtitle moved above header section */}
@@ -357,7 +357,7 @@ const HeroCarousel = ({
                     </div>
 
                     {/* Media Area (first on mobile, right on desktop) */}
-                    <div className="order-1 md:order-2 relative z-10 md:z-0 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0">
+                    <div className="order-1 md:order-2 relative z-10 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0">
                       {slide.id === 'conference' ? (
                         <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
                           {/* Light gradient background with subtle motion */}
