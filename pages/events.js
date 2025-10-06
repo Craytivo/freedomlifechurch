@@ -270,6 +270,6 @@ export async function getStaticProps() {
   const initialEvents = await loadEventsFromICS();
   return {
     props: { initialEvents },
-    revalidate: 60 * 60 // revalidate hourly
+    revalidate: 60 * 5 // revalidate every 5 minutes
   };
 }

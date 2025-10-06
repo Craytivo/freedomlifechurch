@@ -157,8 +157,9 @@ function expandRecurring(master, overrides) {
   }
 
   const now = new Date();
-  const windowStart = new Date(now.getFullYear(), now.getMonth() - 2, 1);
-  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 14, 0); // ~12 months ahead
+  // Include a generous window so SSG builds still cover upcoming months on live
+  const windowStart = new Date(now.getFullYear(), now.getMonth() - 12, 1);
+  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 24, 0); // ~24 months ahead
 
   const out = [];
 
