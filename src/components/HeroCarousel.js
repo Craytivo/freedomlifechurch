@@ -188,10 +188,10 @@ const HeroCarousel = ({
           maskComposite: 'intersect'
         }}
       />
-  <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10" style={{ maxWidth: '88rem' }}>
+  <div className="mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 md:py-10" style={{ maxWidth: '88rem' }}>
         <div className="relative">
-          {/* Slide Container: static height on mobile, fixed/min height only on desktop; reserve space for bottom controls */}
-          <div className="relative md:min-h-[520px] md:pb-16 lg:pb-20">
+          {/* Slide Container: optimized height for mobile, fixed/min height only on desktop; reserve space for bottom controls */}
+          <div className="relative pb-12 sm:pb-14 md:min-h-[520px] md:pb-16 lg:pb-20">
             {slides.map((slide, i) => {
               const active = i === index;
               return (
@@ -202,10 +202,10 @@ const HeroCarousel = ({
                   aria-live={active ? 'polite' : 'off'}
                 >
                   {/* Slide header: badge + slide index + mobile arrows (always on top) */}
-                  <div className="relative z-20 flex items-center justify-between mb-2 md:mb-3">
+                  <div className="relative z-20 flex items-center justify-between mb-3 sm:mb-4 md:mb-3">
                     <div className="inline-flex items-center gap-2">
-                      <span className="px-3 py-1 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
-                      <span className="text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
+                      <span className="px-2.5 py-1 sm:px-3 rounded-full bg-flc-500/10 text-flc-600 text-xs font-semibold uppercase tracking-wide">{slide.badge}</span>
+                      <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-500">Slide {i + 1} of {total}</span>
                     </div>
                     {/* Mobile inline arrows */}
                     <div className="flex-none flex md:hidden items-center gap-1 ml-1" aria-hidden={total <= 1}>
@@ -214,44 +214,44 @@ const HeroCarousel = ({
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); prev(); }}
                         aria-label="Previous slide"
                         disabled={total <= 1}
-                        className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
                       </button>
                       <button
                         type="button"
                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); next(); }}
                         aria-label="Next slide"
                         disabled={total <= 1}
-                        className="w-7 h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
+                        className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full border border-neutral-300 text-neutral-600 hover:bg-neutral-100 disabled:opacity-40 transition-colors focus:outline-none focus:ring-2 focus:ring-flc-500"
                       >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                       </button>
                     </div>
                   </div>
 
                   {/* Title and subtitle directly under header (always below header, before grid) */}
-                  <div className="mb-3 md:mb-5">
-                    <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] text-[clamp(1.9rem,4.2vw,3.25rem)]">
+                  <div className="mb-4 sm:mb-6 md:mb-5">
+                    <h2 className="font-heading font-bold text-primary-900 tracking-tight leading-[1.15] text-[clamp(1.5rem,6vw,3.25rem)] sm:text-[clamp(1.9rem,4.2vw,3.25rem)]">
                       {slide.title}
                     </h2>
-                    <p className="font-heading text-flc-600 mt-2 text-xs md:text-sm font-semibold tracking-[0.18em] uppercase">
+                    <p className="font-heading text-flc-600 mt-2 text-[10px] sm:text-xs md:text-sm font-semibold tracking-[0.16em] sm:tracking-[0.18em] uppercase">
                       {slide.subtitle}
                     </p>
                   </div>
 
-                  <div className="md:h-full grid md:grid-cols-7 gap-10 md:gap-12 lg:gap-14 items-start">
+                  <div className="md:h-full grid md:grid-cols-7 gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-start">
                     {/* Text Content (on mobile this comes after media) */}
                     <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative">
                       {/* Decorative vertical accent (desktop only) */}
                       <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
                       {/* Title and subtitle moved above header section */}
-                      <p className="font-body text-neutral-700 text-base md:text-lg leading-relaxed mb-5 md:mb-6 max-w-3xl">
+                      <p className="font-body text-neutral-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-5 md:mb-6 max-w-3xl">
                         {slide.description}
                       </p>
                       {slide.id === 'conference' && (
-                        <div className="space-y-4 mb-6 text-neutral-700 max-w-3xl">
-                          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                        <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6 text-neutral-700 max-w-3xl">
+                          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-1.5 sm:gap-y-2 text-xs sm:text-sm">
                             {['Prophetic ministry','Extended worship','Regional leaders','Personal renewal','Unity and commission','Kingdom identity'].map(point => (
                               <li key={point} className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
@@ -259,23 +259,23 @@ const HeroCarousel = ({
                               </li>
                             ))}
                           </ul>
-                          <div className="text-[13px] leading-relaxed text-neutral-600">
+                          <div className="text-xs sm:text-[13px] leading-relaxed text-neutral-600">
                             <strong className="font-semibold text-neutral-800">Why come?</strong> Step away from routine, rekindle your first love, receive fresh impartation, and return strengthened for the mandate ahead.
                           </div>
                         </div>
                       )}
                       {slide.id === 'sermon' && (
-                        <div className="mb-6 max-w-xl">
-                          <div className="p-3 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start gap-3">
-                            <span className="inline-flex w-6 h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-[11px] font-semibold">NEW</span>
-                            <div className="space-y-1.5">
-                              <p className="text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing midweek.</p>
-                              <p className="text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 12:00 PM (MST), or on‑demand anytime.</p>
+                        <div className="mb-5 sm:mb-6 max-w-xl">
+                          <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start gap-2.5 sm:gap-3">
+                            <span className="inline-flex w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-[10px] sm:text-[11px] font-semibold">NEW</span>
+                            <div className="space-y-1 sm:space-y-1.5">
+                              <p className="text-xs sm:text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing midweek.</p>
+                              <p className="text-[11px] sm:text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 12:00 PM (MST), or on‑demand anytime.</p>
                             </div>
                           </div>
-                          <div className="mt-4 rounded-lg border border-neutral-200 bg-neutral-50/80 p-4">
-                            <p className="text-[12px] text-neutral-500 uppercase font-semibold tracking-wide mb-2">Highlights</p>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[13px] text-neutral-700">
+                          <div className="mt-3 sm:mt-4 rounded-lg border border-neutral-200 bg-neutral-50/80 p-3 sm:p-4">
+                            <p className="text-[11px] sm:text-[12px] text-neutral-500 uppercase font-semibold tracking-wide mb-2">Highlights</p>
+                            <ul className="grid grid-cols-1 gap-2 text-xs sm:text-[13px] text-neutral-700">
                               <li className="flex items-start gap-2">
                                 <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
                                 <span>Biblical teaching that forms strong disciples.</span>
@@ -293,12 +293,12 @@ const HeroCarousel = ({
                         </div>
                       )}
                       {slide.id === 'prayer-focus' && (
-                        <div className="mb-6 max-w-xl">
-                          <div className="rounded-lg border border-neutral-200 bg-neutral-50/80 p-4 md:p-5">
-                            <p className="text-[13px] text-neutral-600 leading-relaxed mb-3">
+                        <div className="mb-5 sm:mb-6 max-w-xl">
+                          <div className="rounded-lg border border-neutral-200 bg-neutral-50/80 p-3 sm:p-4 md:p-5">
+                            <p className="text-xs sm:text-[13px] text-neutral-600 leading-relaxed mb-2.5 sm:mb-3">
                               Focus your agreement on these themes—set a reminder, gather with someone, and lean into listening prayer.
                             </p>
-                            <ul className="grid grid-cols-2 gap-2 text-[12px] md:text-[13px]">
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] sm:text-[12px] md:text-[13px]">
                               {slide.focuses?.map(f => (
                                 <li key={f} className="flex items-center gap-2 px-2 py-1 rounded-md bg-white border border-neutral-200 shadow-xs">
                                   <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
@@ -306,21 +306,21 @@ const HeroCarousel = ({
                                 </li>
                               ))}
                             </ul>
-                            <div className="mt-4 flex flex-wrap gap-3 items-center">
-                              <a href="#prayer-gathering" onClick={(e) => { e.preventDefault(); handleCTAClick('#prayer-gathering'); }} className="text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1 cursor-pointer">
+                            <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-3 items-start sm:items-center">
+                              <a href="#prayer-gathering" onClick={(e) => { e.preventDefault(); handleCTAClick('#prayer-gathering'); }} className="text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1 cursor-pointer">
                                 Weekly Prayer Gatherings
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                               </a>
-                              <span className="text-[11px] text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
+                              <span className="text-[10px] sm:text-[11px] text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
                             </div>
                           </div>
                         </div>
                       )}
-                      <div className="flex flex-wrap items-center gap-4">
+                      <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
                         <a
                           href={slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref}
                           onClick={(e) => { e.preventDefault(); handleCTAClick(slide.id === 'sermon' ? '#sermon-library' : slide.ctaHref); }}
-                          className="inline-flex items-center justify-center px-7 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer"
+                          className="inline-flex items-center justify-center px-6 sm:px-7 py-2.5 sm:py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/40 cursor-pointer text-sm sm:text-base"
                         >
                           {slide.ctaLabel}
                           <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -329,7 +329,7 @@ const HeroCarousel = ({
                           <a
                             href="https://www.youtube.com/@FLCEdmonton/streams"
                             onClick={(e) => { e.preventDefault(); handleCTAClick('https://www.youtube.com/@FLCEdmonton/streams'); }}
-                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer"
+                            className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer text-sm sm:text-base"
                           >
                             More Streams
                           </a>
@@ -338,17 +338,17 @@ const HeroCarousel = ({
                           <a
                             href="https://www.youtube.com/@FLCEdmonton"
                             onClick={(e) => { e.preventDefault(); handleCTAClick('https://www.youtube.com/@FLCEdmonton'); }}
-                            className="inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-sm cursor-pointer"
+                            className="inline-flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-300/50 text-xs sm:text-sm cursor-pointer"
                           >
                             Subscribe on YouTube
-                            <svg className="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+                            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 00.5 6.2 31 31 0 000 12a31 31 0 00.5 5.8 3 3 0 002.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 002.1-2.1A31 31 0 0024 12a31 31 0 00-.5-5.8zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
                           </a>
                         )}
                         {slide.id === 'prayer-focus' && (
                           <a
                             href="#prayer"
                             onClick={(e) => { e.preventDefault(); handleCTAClick('#prayer'); }}
-                            className="inline-flex items-center justify-center px-5 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer"
+                            className="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flc-500/30 cursor-pointer text-sm sm:text-base"
                           >
                             Prayer Resources
                           </a>
@@ -357,9 +357,9 @@ const HeroCarousel = ({
                     </div>
 
                     {/* Media Area (first on mobile, right on desktop) */}
-                    <div className="order-1 md:order-2 relative z-10 md:z-0 w-full md:col-span-3 mb-6 md:mb-0">
+                    <div className="order-1 md:order-2 relative z-10 md:z-0 w-full md:col-span-3 mb-4 sm:mb-6 md:mb-0">
                       {slide.id === 'conference' ? (
-                        <div className="rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2.5 md:px-3 pt-1.5 pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
+                        <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60">
                           {/* Light gradient background with subtle motion */}
                           <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-amber-50 to-neutral-100" />
                           <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 0%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0) 60%)' }} />
@@ -375,54 +375,55 @@ const HeroCarousel = ({
                               priority={false}
                             />
                           </div>
-                          <div className="relative w-full max-w-md mx-auto flex flex-col items-center text-center">
+                          <div className="relative w-full max-w-xs sm:max-w-md mx-auto flex flex-col items-center text-center">
                             {/* Top-right date/location pill */}
-                            <div className="absolute right-2.5 top-2.5 md:right-3 md:top-3">
-                              <div className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[11px] font-semibold text-amber-700 shadow-sm">
-                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                Oct 24–26 · Edmonton
+                            <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
+                              <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[10px] sm:text-[11px] font-semibold text-amber-700 shadow-sm">
+                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
+                                <span className="xs:hidden">Oct 24–26</span>
                               </div>
                             </div>
                             {/* Logo */}
-                            <div className="relative -mt-1 -mb-1 select-none pointer-events-none">
-                              <div className="relative w-40 md:w-56 h-20 md:h-28 drop-shadow-md">
+                            <div className="relative -mt-0.5 sm:-mt-1 -mb-0.5 sm:-mb-1 select-none pointer-events-none">
+                              <div className="relative w-32 sm:w-40 md:w-56 h-16 sm:h-20 md:h-28 drop-shadow-md">
                                 <Image
                                   src={altarExperienceLogo}
                                   alt="Altar Experience Conference Logo"
                                   fill
-                                  sizes="(max-width:768px) 160px, 224px"
+                                  sizes="(max-width:640px) 128px, (max-width:768px) 160px, 224px"
                                   className="object-contain"
                                   priority
                                 />
                               </div>
                             </div>
                             {/* Tagline */}
-                            <h3 className="font-heading text-lg md:text-2xl font-bold leading-snug text-primary-900 mt-1">
-                              <span className="block text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
+                            <h3 className="font-heading text-base sm:text-lg md:text-2xl font-bold leading-snug text-primary-900 mt-0.5 sm:mt-1">
+                              <span className="block text-[8px] sm:text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
                                 Encounter · Revival · Restoration
                               </span>
                               <span className="text-primary-900">The Original Mandate</span>
                             </h3>
                             {/* Countdown + quick facts */}
-                            <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+                            <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                               {(() => {
                                 const now = new Date();
                                 const target = new Date('2025-10-24T18:00:00-06:00');
                                 const diffDays = Math.max(0, Math.ceil((target.getTime() - now.getTime()) / (1000*60*60*24)));
                                 const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
                                 return (
-                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[11px] font-semibold">
-                                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
+                                  <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[10px] sm:text-[11px] font-semibold">
+                                    <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
                                     {label}
                                   </span>
                                 );
                               })()}
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[11px] text-neutral-700">
-                                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
+                              <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[10px] sm:text-[11px] text-neutral-700">
+                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
                                 3 days · Fri–Sun
                               </span>
                             </div>
-                            <p className="text-[10px] md:text-sm text-neutral-700 leading-snug mt-2">
+                            <p className="text-[9px] sm:text-[10px] md:text-sm text-neutral-700 leading-snug mt-1.5 sm:mt-2">
                               Bring family & friends. Expect transformation in God's presence.
                             </p>
                           </div>
@@ -462,7 +463,7 @@ const HeroCarousel = ({
                           </div>
                         </div>
                       ) : (
-                        <div className="rounded-xl shadow-lg overflow-hidden bg-black relative group md:scale-[1.05] md:origin-center">
+                        <div className="rounded-lg sm:rounded-xl shadow-lg overflow-hidden bg-black relative group md:scale-[1.05] md:origin-center">
                           {/* Maintain true 16:9 to avoid black letterbox bars */}
                           <div className="relative w-full" style={{paddingBottom: '56.25%'}}>
                             {/* Thumbnail (dynamic from video ID) */}
@@ -491,7 +492,7 @@ const HeroCarousel = ({
                                 />
                                 {!iframeLoaded && (
                                   <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                                    <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" aria-label="Loading video" />
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-white/30 border-t-white rounded-full animate-spin" aria-label="Loading video" />
                                   </div>
                                 )}
                               </>
@@ -504,8 +505,8 @@ const HeroCarousel = ({
                                 className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-colors"
                                 aria-label="Play latest sermon"
                               >
-                                <span className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/90 group-hover:bg-white shadow-lg transition-all border border-white/60">
-                                  <svg className="w-10 h-10 text-flc-500 drop-shadow-sm" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                <span className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/90 group-hover:bg-white shadow-lg transition-all border border-white/60">
+                                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-flc-500 drop-shadow-sm" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                                 </span>
                               </button>
                             )}
@@ -520,7 +521,7 @@ const HeroCarousel = ({
           </div>
 
           {/* Controls */}
-          <div className="relative z-20 flex items-center justify-between mt-10">
+          <div className="relative z-20 flex items-center justify-between mt-6 sm:mt-8 md:mt-10">
             <div className="hidden md:flex gap-3">
               <button onClick={(e)=>{ e.preventDefault(); e.stopPropagation(); prev(); }} aria-label="Previous slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -531,7 +532,7 @@ const HeroCarousel = ({
             </div>
 
             {showIndicators && (
-              <div className="flex items-center gap-2" role="tablist" aria-label="Slide indicators">
+              <div className="flex items-center gap-1.5 sm:gap-2" role="tablist" aria-label="Slide indicators">
                 {slides.map((s, i) => (
                   <button
                     key={s.id}
@@ -539,8 +540,8 @@ const HeroCarousel = ({
                     aria-selected={i === index}
                     aria-label={`Go to slide ${i + 1}: ${s.title}`}
                     onClick={() => goTo(i)}
-                    className={`h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500 ${
-                      i === index ? 'bg-flc-500 w-8' : 'bg-neutral-300 w-2'
+                    className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-flc-500 ${
+                      i === index ? 'bg-flc-500 w-6 sm:w-8' : 'bg-neutral-300 w-2'
                     }`}
                   />
                 ))}
