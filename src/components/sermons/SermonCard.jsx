@@ -14,7 +14,7 @@ const formatDuration = (duration) => {
 const formatDate = (date) => new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(date);
 const formatViewCount = (count) => { const n = parseInt(count)||0; if(n>=1_000_000) return `${(n/1_000_000).toFixed(1)}M`; if(n>=1_000) return `${(n/1_000).toFixed(1)}K`; return n.toString(); };
 
-const SermonCard = ({ sermon, categoryLabel }) => (
+const SermonCard = ({ sermon, categoryLabel, onPlay }) => (
   <div className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
     <div className="relative aspect-video overflow-hidden">
       <img
@@ -25,14 +25,14 @@ const SermonCard = ({ sermon, categoryLabel }) => (
       />
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
       <div className="absolute inset-0 flex items-center justify-center">
-        <a
-          href={`https://www.youtube.com/watch?v=${sermon.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          type="button"
+          onClick={() => onPlay?.(sermon)}
           className="w-16 h-16 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-red-600 hover:bg-white hover:scale-110 transition-all duration-200 shadow-lg"
         >
           <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </a>
+          <span className="sr-only">Play sermon</span>
+        </button>
       </div>
       <div className="absolute bottom-2 right-2 px-2 py-1 bg-black/80 text-white text-xs font-medium rounded">{formatDuration(sermon.duration)}</div>
       <div className="absolute top-2 left-2">

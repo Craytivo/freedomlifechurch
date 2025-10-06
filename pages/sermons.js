@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SermonGrid from '../src/components/sermons/SermonGrid';
+import VideoModal from '../src/components/VideoModal';
 import SEO from '../src/components/seo/SEO';
 import SectionHeader from '../src/components/SectionHeader';
 
@@ -10,6 +11,8 @@ const SermonsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(null);
   const sermonsPerPage = 12;
 
   // Fetch sermons from server-side YouTube feed proxy
@@ -254,7 +257,11 @@ const SermonsPage = () => {
             </div>
           ) : (
             <>
-              <SermonGrid sermons={currentSermons} categories={categories} />
+              <SermonGrid
+                sermons={currentSermons}
+                categories={categories}
+                onPlay={(sermon) => { setActiveVideo(sermon); setModalOpen(true); }}
+              />
 
               {/* Pagination */}
               {totalPages > 1 && (
@@ -384,6 +391,14 @@ const SermonsPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Video Modal */}
+      <VideoModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        videoId={activeVideo?.id}
+        title={activeVideo?.title}
+      />
     </>
   );
 };
