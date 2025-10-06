@@ -1,9 +1,11 @@
-/* global Map */
+/* global Promise */
 import { useEffect, useRef, useState } from 'react';
-import Head from 'next/head';
 
 // Minimal client-only Leaflet map via CDN that plots event markers.
 // Props: events: Array<{ id, title, date, time, address, locationName }>
+// Known location fallback (FLC address)
+const FLC = { lat: 53.5695, lng: -113.5860, name: 'Freedom Life Church' };
+
 export default function EventsMap({ events = [], height = 360 }) {
   const mapRef = useRef(null);
   const containerRef = useRef(null);
@@ -33,11 +35,8 @@ export default function EventsMap({ events = [], height = 360 }) {
       }
       setReady(true);
     };
-    ensure().catch(() => {});
+    ensure().catch((e) => { console.warn('Leaflet load failed', e); });
   }, []);
-
-  // Known location fallback (FLC address)
-  const FLC = { lat: 53.5695, lng: -113.5860, name: 'Freedom Life Church' };
 
   // Basic client-side geocoder using Nominatim with localStorage cache
   async function geocode(address) {
@@ -52,10 +51,12 @@ export default function EventsMap({ events = [], height = 360 }) {
       const data = await resp.json();
       if (Array.isArray(data) && data[0]) {
         const pt = { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
-        try { window.localStorage.setItem(key, JSON.stringify(pt)); } catch {}
+        try { window.localStorage.setItem(key, JSON.stringify(pt)); } catch (e) { /* ignore quota */ }
         return pt;
       }
-    } catch {}
+    } catch (e) {
+      console.warn('Geocode failed', e);
+    }
     return null;
   }
 
@@ -126,14 +127,10 @@ export default function EventsMap({ events = [], height = 360 }) {
       disposed = true;
       layer.remove();
     };
-  }, [ready, JSON.stringify(events)]);
+  }, [ready, events]);
 
   return (
     <div className="rounded-xl border border-neutral-200 bg-white p-3">
-      {/* Include CSS in head once (script injected dynamically) */}
-      <Head>
-        {/* leaflet CSS added via effect; keeping Head for clarity */}
-      </Head>
       <div ref={containerRef} style={{ width: '100%', height }} />
     </div>
   );
