@@ -46,6 +46,16 @@ export const GROUPS = [
     name: 'Children',
     color: 'text-emerald-600',
     blurb: 'Raising the next generation to know Jesus in a safe, fun environment.',
+    intro: 'FLC Kids exists to help children know, love, and follow Jesus.',
+    body: [
+      'At Freedom Life Church, we believe every child is a gift from God, created with a purpose and full of potential. Our Kids Ministry is a fun, safe, and Spirit-filled environment where children can grow in their faith, build lasting friendships, and discover God’s great love for them.',
+      'Through Bible teaching, worship, and hands-on activities, we are raising up a new generation that lives in freedom, joy, and truth.'
+    ],
+    join: 'Our children’s church ministry is available every Sunday during our services.',
+    scripture: {
+      text: 'Start children off on the way they should go, and even when they are old they will not turn from it.',
+      ref: 'Proverbs 22:6 (NIV)'
+    },
     points: [
       'Age-appropriate teaching and worship',
       'Safe check-in and screened leaders',
@@ -57,6 +67,11 @@ export const GROUPS = [
     name: 'Volunteer Teams',
     color: 'text-amber-600',
     blurb: 'Use your gifts—hospitality, kids, tech, music, prayer—to build the Church.',
+    intro: 'Get Involved – Serve at FLC!',
+    body: [
+      'At Freedom Life Church, we believe that every person has a unique gift to offer. Whether you love working with kids, greeting guests, helping behind the scenes, or leading in worship—there’s a place for you here! Volunteering is a great way to grow in your faith, connect with others, and make a real difference in our church family.'
+    ],
+  join: 'Ready to take the next step? Fill out our volunteer form and let us know where you’d like to serve. We can’t wait to serve alongside you!',
     points: [
       'Find your gifts and make a difference',
       'Flexible roles across Sundays and midweek',
@@ -68,6 +83,16 @@ export const GROUPS = [
     name: 'Outreach',
     color: 'text-violet-600',
     blurb: 'Serving our city together through practical compassion and partnership.',
+    intro: 'Taking the love of Jesus beyond our walls into our city and world.',
+    body: [
+      'Outreach at FLC is about hands-on compassion—meeting needs, building relationships, and partnering with our community so people can experience the tangible love of God.',
+      'From seasonal drives to local service projects and missional partnerships, we go together to make a real difference where we live.'
+    ],
+    join: 'Jump in on an upcoming project—check our events calendar and sign up to serve with the team.',
+    scripture: {
+      text: 'Let your light shine before others, that they may see your good deeds and glorify your Father in heaven.',
+      ref: 'Matthew 5:16 (NIV)'
+    },
     points: [
       'City partnerships and service projects',
       'Seasonal drives and initiatives',
@@ -79,6 +104,16 @@ export const GROUPS = [
     name: 'Music & Production',
     color: 'text-indigo-600',
     blurb: 'Lead our church in worship—vocals, band, audio, video, lighting.',
+    intro: 'Creating spaces where people encounter Jesus through excellent, Spirit-led worship.',
+    body: [
+      'Our Music & Production team exists to point people to Jesus. From the platform to the booth, we steward our gifts with excellence and humility so the church can worship freely and clearly hear the gospel.',
+      'Whether you sing, play an instrument, mix audio, run cameras, or design lighting, there’s a place to grow your craft and your heart for worship.'
+    ],
+    join: 'Interested in joining the team? Start the conversation—auditions and onboarding happen regularly.',
+    scripture: {
+      text: 'Sing to the Lord a new song; sing to the Lord, all the earth.',
+      ref: 'Psalm 96:1 (NIV)'
+    },
     points: [
       'Auditions and onboarding for new team members',
       'Training for audio, video, and lighting',
