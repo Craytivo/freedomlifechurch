@@ -84,27 +84,39 @@ const items = [
 ];
 
 const Card = ({ item, spanClass = '' }) => (
-  <div className={`relative rounded-xl overflow-hidden shadow-sm border border-neutral-200 bg-white group ${spanClass} transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-flc-500/30 focus-within:-translate-y-0.5 focus-within:shadow-md focus-within:border-flc-500/30 focus-within:ring-2 focus-within:ring-flc-500/30`}>
-    {/* Soft background mark */}
-    <div className={`absolute -right-10 -top-10 w-48 h-48 rounded-full ${item.bgMark}`} aria-hidden="true" />
-    <div className="relative p-4 sm:p-5 md:p-6 lg:p-7 flex flex-col h-[200px] sm:h-[220px] md:h-[256px]">
-      {/* Icon */}
-      <div className={`inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-md bg-white/90 border border-neutral-200 shadow-sm ${item.color}`}>
-        {item.icon}
+  <div className={`group relative rounded-2xl overflow-hidden shadow-sm border border-neutral-200/60 bg-white/90 backdrop-blur-sm ${spanClass} transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5 hover:border-flc-500/30 focus-within:-translate-y-1 focus-within:shadow-lg focus-within:shadow-black/5 focus-within:border-flc-500/30 focus-within:ring-2 focus-within:ring-flc-500/20`}>
+    {/* Enhanced background mark with gradient */}
+    <div className={`absolute -right-12 -top-12 w-56 h-56 rounded-full bg-gradient-to-br ${item.bgMark} opacity-60 blur-xl`} aria-hidden="true" />
+    <div className={`absolute -right-8 -top-8 w-40 h-40 rounded-full ${item.bgMark} opacity-40`} aria-hidden="true" />
+    
+    {/* Premium corner accent */}
+    <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-white/60 to-transparent" aria-hidden="true" />
+    
+    <div className="relative p-5 sm:p-6 md:p-7 lg:p-8 flex flex-col h-[220px] sm:h-[240px] md:h-[276px]">
+      {/* Enhanced icon with premium styling */}
+      <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-white via-white to-neutral-50 border border-neutral-200/80 shadow-md ${item.color} group-hover:shadow-lg transition-all duration-300`}>
+        <div className="transform group-hover:scale-110 transition-transform duration-300">
+          {item.icon}
+        </div>
       </div>
-      <div className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-neutral-500 mb-1.5 sm:mb-2">{item.title}</div>
-      <h3 className="text-lg sm:text-xl md:text-2xl font-extrabold text-neutral-900 leading-snug">
-        <span className="bg-gradient-to-br text-transparent bg-clip-text from-neutral-900 to-neutral-700">{item.blurb}</span>
+      
+      <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-500 mb-3 sm:mb-4 mt-4">{item.title}</div>
+      
+      <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-primary-900 leading-tight mb-auto">
+        <span className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 bg-clip-text text-transparent group-hover:from-primary-800 group-hover:via-primary-700 group-hover:to-flc-600 transition-all duration-300">
+          {item.blurb}
+        </span>
       </h3>
-      <div className="mt-auto pt-3 sm:pt-4">
+      
+      <div className="pt-4 sm:pt-5">
         <Link
           href={item.href}
           {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          className="inline-flex items-center text-xs sm:text-sm font-semibold text-neutral-900 hover:text-flc-600 focus:outline-none"
+          className="inline-flex items-center text-sm sm:text-base font-bold text-primary-900 hover:text-flc-600 focus:outline-none group-hover:text-flc-600 transition-colors duration-300"
           aria-label={`Learn more about ${item.title}`}
         >
           Learn more
-          <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-1 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2 transition-all duration-300 group-hover:translate-x-1 group-hover:text-flc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
         </Link>
       </div>
     </div>
@@ -113,12 +125,25 @@ const Card = ({ item, spanClass = '' }) => (
 
 const WaysToGetInvolved = () => {
   return (
-    <section className="bg-neutral-50 py-8 sm:py-12 md:py-16">
-      <div className="mx-auto px-3 sm:px-4 lg:px-8" style={{ maxWidth: '88rem' }}>
-        <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">For every age</div>
-          <h2 className="mt-2 sm:mt-3 font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-neutral-900">A place for you and your family</h2>
-          <p className="mt-1.5 sm:mt-2 text-sm sm:text-base text-neutral-600">Find belonging for every season: vibrant kids & youth, authentic community for adults, and meaningful ways to serve together.</p>
+    <section className="relative bg-gradient-to-b from-neutral-50 via-white to-neutral-50/40 py-8 sm:py-12 md:py-16 overflow-hidden">
+      {/* Premium background elements */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-flc-500/[0.03] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-amber-400/[0.04] rounded-full blur-3xl" />
+      </div>
+      <div className="relative mx-auto px-3 sm:px-4 lg:px-8" style={{ maxWidth: '88rem' }}>
+        <div className="text-center max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
+            For every age & season
+          </div>
+          <h2 className="mt-5 sm:mt-6 font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.1]">
+            A place for you
+            <span className="block text-flc-600 mt-1">and your family</span>
+          </h2>
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto">
+            Discover belonging for every season of life: vibrant kids & youth ministries, authentic community for adults, and meaningful ways to serve together as a family.
+          </p>
         </div>
 
         <div className="mt-6 sm:mt-8 grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -131,10 +156,10 @@ const WaysToGetInvolved = () => {
           })}
         </div>
 
-        <div className="mt-6 sm:mt-8 flex justify-center">
-          <Link href="#next-steps" className="inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 rounded-md border border-neutral-300 bg-white text-neutral-800 hover:border-flc-500 hover:text-flc-600 font-medium focus:outline-none focus:ring-2 focus:ring-flc-500/30 text-sm sm:text-base">
-            See all Next Steps
-            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <div className="mt-10 sm:mt-12 flex justify-center">
+          <Link href="#next-steps" className="group inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 rounded-xl border border-neutral-300/60 bg-white/80 backdrop-blur-sm text-primary-900 hover:border-flc-500/60 hover:text-flc-600 hover:bg-white font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/30 text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-300">
+            Explore All Next Steps
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 ml-2.5 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-flc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
           </Link>
         </div>
       </div>
