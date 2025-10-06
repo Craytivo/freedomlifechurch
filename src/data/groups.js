@@ -4,6 +4,16 @@ export const GROUPS = [
     name: "Men's",
     color: 'text-blue-600',
     blurb: 'Brotherhood, discipleship, accountability, and serving shoulder-to-shoulder.',
+    intro: 'FLC Men exists to help men know, follow, and reflect Jesus in every area of their lives.',
+    body: [
+      'At Freedom Life Church, we believe every man has a God-given purpose and the potential to lead with strength, humility, and faith. Our Men’s Ministry is a place where men grow together through worship, the Word, and authentic community — encouraging one another to live lives of integrity, courage, and freedom.',
+      'Through Bible teaching, discipleship, and brotherhood, we are raising up strong men of God who lead by example in their homes, church, and community.'
+    ],
+    join: 'Join the men of FLC each month for Bible study and in-person small group. Check our calendar for more information.',
+    scripture: {
+      text: 'Be watchful, stand firm in the faith, act like men, be strong.',
+      ref: '1 Corinthians 16:13 (ESV)'
+    },
     points: [
       'Monthly gatherings and small groups',
       'Discipleship and accountability',
@@ -15,6 +25,16 @@ export const GROUPS = [
     name: 'Womens',
     color: 'text-pink-500',
     blurb: 'Sisterhood, prayer, Bible study, and encouragement in all seasons.',
+    intro: 'FLC Women exists to empower women to grow in faith, purpose, and sisterhood.',
+    body: [
+      'At Freedom Life Church, we believe that every woman is uniquely created by God, deeply loved, and called to live a life of purpose and power through Christ. Our heart is to build a community where women are encouraged, equipped, and inspired to pursue God wholeheartedly and support one another in every season of life.',
+      'Through discipleship, prayer, fellowship, and service, we aim to cultivate strong, Spirit-filled women who impact their families, church, and world for God’s glory.'
+    ],
+    join: 'Join the women of FLC each month for Bible study and in-person small group. Check our calendar for more information and join our FLC hub to get connected.',
+    scripture: {
+      text: 'She is clothed with strength and dignity; she can laugh at the days to come.',
+      ref: 'Proverbs 31:25 (NIV)'
+    },
     points: [
       'Bible studies and prayer nights',
       'Multi-generational community',

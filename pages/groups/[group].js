@@ -38,7 +38,7 @@ export default function GroupDetail({ group, nextEvent }) {
             <span className="text-primary-900 font-medium">{group.name}</span>
           </nav>
           <h1 className="font-heading text-4xl md:text-5xl font-extrabold tracking-tight text-primary-900">{group.name}</h1>
-          <p className="mt-2 text-neutral-700 max-w-2xl">{group.blurb}</p>
+          <p className="mt-2 text-neutral-700 max-w-2xl">{group.intro || group.blurb}</p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {nextEvent && (
               <Link href={`/events/${nextEvent.id}`} className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-neutral-50 border border-neutral-200 text-[12px] text-neutral-700">
@@ -60,6 +60,11 @@ export default function GroupDetail({ group, nextEvent }) {
             <div className="lg:col-span-8">
               <div className="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
                 <h2 className="font-heading text-xl md:text-2xl font-bold tracking-tight text-primary-900">About {group.name}</h2>
+                {Array.isArray(group.body) && group.body.length > 0 && (
+                  <div className="mt-2 space-y-3 text-sm text-neutral-700">
+                    {group.body.map((para, i) => (<p key={i}>{para}</p>))}
+                  </div>
+                )}
                 <ul className="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
                   {group.points.map((p, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -68,7 +73,13 @@ export default function GroupDetail({ group, nextEvent }) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-sm text-neutral-700">Want to get involved? Visit us on Sunday or reach out through the Plan Your Visit form, and we’ll help you find your next step with {group.name}.</p>
+                {group.join && (<p className="mt-4 text-sm text-neutral-700">{group.join}</p>)}
+                {group.scripture && (
+                  <figure className="mt-4 border-l-2 border-flc-500 pl-3 text-sm text-neutral-800">
+                    <blockquote className="italic">“{group.scripture.text}”</blockquote>
+                    <figcaption className="mt-1 text-neutral-500">— {group.scripture.ref}</figcaption>
+                  </figure>
+                )}
               </div>
             </div>
             <div className="lg:col-span-4">
