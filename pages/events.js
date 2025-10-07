@@ -136,7 +136,7 @@ export default function EventsPage({ initialEvents }) {
     'Prayer': 'bg-violet-600',
     'Groups': 'bg-indigo-600',
     'Services': 'bg-amber-600',
-    'Special': 'bg-neutral-400'
+    'Special': 'bg-red-600'
   };
   const tagTextColors = {
     'Men': 'text-blue-600',
@@ -145,7 +145,7 @@ export default function EventsPage({ initialEvents }) {
     'Prayer': 'text-violet-600',
     'Groups': 'text-indigo-600',
     'Services': 'text-amber-600',
-    'Special': 'text-neutral-500'
+    'Special': 'text-red-600'
   };
   const tagBorderColors = {
     'Men': 'border-blue-600',
@@ -154,7 +154,7 @@ export default function EventsPage({ initialEvents }) {
     'Prayer': 'border-violet-600',
     'Groups': 'border-indigo-600',
     'Services': 'border-amber-600',
-    'Special': 'border-neutral-400'
+    'Special': 'border-red-600'
   };
   const colorPriority = ['Men','Women','Kids & Youth','Prayer','Groups','Services','Special'];
   const eventBgColor = (e) => {
