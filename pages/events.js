@@ -28,10 +28,11 @@ function buildCalendar(baseDate) {
   return { start, end, days };
 }
 
-export default function EventsPage({ initialEvents }) {
+export default function EventsPage({ initialEvents, buildFetchedAt }) {
   const [activeFilter, setActiveFilter] = useState('All');
   const [clientEvents, setClientEvents] = useState(null);
   const [loadingLive, setLoadingLive] = useState(false);
+  const [fetchedAt, setFetchedAt] = useState(buildFetchedAt || null);
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -62,6 +63,7 @@ export default function EventsPage({ initialEvents }) {
         if (!abort && Array.isArray(data.events) && data.events.length) {
           setClientEvents(data.events);
         }
+        if (!abort && data.fetchedAt) setFetchedAt(data.fetchedAt);
         // If still empty, retry once after a short delay in case of cold starts
         if (!abort && (!data.events || data.events.length === 0)) {
           await new Promise(r => setTimeout(r, 800));
@@ -69,6 +71,7 @@ export default function EventsPage({ initialEvents }) {
           if (r2.ok) {
             const d2 = await r2.json();
             if (Array.isArray(d2.events) && d2.events.length) setClientEvents(d2.events);
+            if (d2.fetchedAt) setFetchedAt(d2.fetchedAt);
           }
         }
       } catch (e) {
@@ -261,6 +264,15 @@ export default function EventsPage({ initialEvents }) {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Feed freshness */}
+          <div className="-mt-3 mb-6 text-[12px] text-neutral-500">
+            {fetchedAt ? (
+              <span>Updated from Google Calendar: {new Date(fetchedAt).toLocaleString()}</span>
+            ) : (
+              <span>Updated from Google Calendar: at build time</span>
+            )}
           </div>
 
           {/* Subscription actions */}
@@ -463,16 +475,17 @@ export default function EventsPage({ initialEvents }) {
 export async function getStaticProps() {
   try {
     const initialEvents = await loadEventsFromICS();
+    const buildFetchedAt = new Date().toISOString();
     // If SSG was able to load events, ship with ISR
     if (Array.isArray(initialEvents) && initialEvents.length > 0) {
-      return { props: { initialEvents }, revalidate: 60 * 5 };
+      return { props: { initialEvents, buildFetchedAt }, revalidate: 60 * 5 };
     }
   } catch (e) {
     // Log and fall back to client hydration
     console.warn('getStaticProps: ICS fetch failed at build time', e);
   }
   // As a fallback, return empty and let client hydrate below.
-  return { props: { initialEvents: [] }, revalidate: 60 * 5 };
+  return { props: { initialEvents: [], buildFetchedAt: null }, revalidate: 60 * 5 };
 }
 
 // Extra safety: server-side runtime fallback for platforms blocking ICS at build

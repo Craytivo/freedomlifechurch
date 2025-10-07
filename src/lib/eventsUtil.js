@@ -5,6 +5,7 @@ export function classifyEventFrom(e) {
   const title = (e.title || '').toLowerCase();
   const blurb = (e.blurb || '').toLowerCase();
   const text = `${title} ${blurb}`;
+  const isSpecialKeyword = /(altar\s*experience|conference)/i.test(text);
 
   if (/\b(sunday\s+service|service)\b/.test(text)) tags.add('Services');
   if (/\bprayer\b/.test(text)) tags.add('Prayer');
@@ -12,6 +13,8 @@ export function classifyEventFrom(e) {
   if (/(women|women's|ladies)/.test(text)) tags.add('Women');
   if (/(men|men's)/.test(text)) tags.add('Men');
   if (/(child|children|kids|youth|vbs|vacation\s*bible)/.test(text)) tags.add('Kids & Youth');
+  // Always mark special keywords as Special (overrides other tags for color/priority downstream)
+  if (isSpecialKeyword) tags.add('Special');
   if (tags.size === 0) tags.add('Special');
 
   try {
@@ -22,7 +25,12 @@ export function classifyEventFrom(e) {
     }
   } catch {}
 
-  return Array.from(tags);
+  // Ensure 'Special' appears first when present
+  const arr = Array.from(tags);
+  if (arr.includes('Special')) {
+    return ['Special', ...arr.filter(t => t !== 'Special')];
+  }
+  return arr;
 }
 
 // Temporary time normalization for specific events while source calendar is adjusted.
