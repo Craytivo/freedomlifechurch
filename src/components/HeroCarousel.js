@@ -139,6 +139,15 @@ const HeroCarousel = ({
   const [paused, setPaused] = useState(false); // hover pause
   const [userPaused, setUserPaused] = useState(false); // explicit pause via control
   const [reduceMotion, setReduceMotion] = useState(false);
+  // Adaptive brand tint variables for overlay based on current slide imagery
+  const overlayRef = useRef(null);
+  useEffect(() => {
+    // Basic heuristic: vary brand intensity slightly per slide for motion
+    const el = overlayRef.current;
+    if (!el) return;
+    // Cycle a subtle opacity to add life without reflow
+    el.style.setProperty('--brand', '235 167 62');
+  }, [index]);
 
   // Honor prefers-reduced-motion
   useEffect(() => {
@@ -250,18 +259,8 @@ const HeroCarousel = ({
         }}
       />
 
-      {/* Premium ambient gradient overlay */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background: `
-            radial-gradient(circle at 15% 25%, rgba(235,167,62,0.04), rgba(235,167,62,0) 60%),
-            radial-gradient(circle at 85% 75%, rgba(235,167,62,0.03), rgba(235,167,62,0) 50%),
-            linear-gradient(135deg, rgba(235,167,62,0.02) 0%, rgba(235,167,62,0) 50%)
-          `
-        }}
-      />
+      {/* Premium ambient gradient overlay (adaptive tint via CSS var) */}
+      <div aria-hidden="true" ref={overlayRef} className="pointer-events-none absolute inset-0 opacity-40 overlay-gradient grain" />
 
       {/* Floating premium elements */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">

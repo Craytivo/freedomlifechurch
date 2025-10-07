@@ -7,6 +7,7 @@ import SidePanel from './SidePanel';
 import GiveLink from './GiveLink';
 import UserAvatar from './UserAvatar';
 import Logo from './Logo';
+import ThemeToggle from './ThemeToggle';
 
 const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   const router = useRouter();
@@ -114,6 +115,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
       if (e.key === 'Escape') {
         setSearchQuery('');
         setActiveIndex(-1);
+        setOverlayOpen(false);
       }
       return;
     }
@@ -139,6 +141,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
     } else if (e.key === 'Escape') {
       setSearchQuery('');
       setActiveIndex(-1);
+      setOverlayOpen(false);
     }
   }, [showResults, flatResults, activeIndex]);
 
@@ -272,6 +275,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           <div className="hidden md:flex items-center space-x-8">
             <NavigationMenu items={navigation} className="group/nav" activePath={router.pathname} />
             <GiveLink />
+            <ThemeToggle />
             <UserAvatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
           </div>
           </div>
