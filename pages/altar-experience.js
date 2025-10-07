@@ -76,15 +76,15 @@ export default function AltarExperiencePage() {
 
                 {/* Right: Event info card (replicated style from hero slide) */}
                 <div className="md:col-span-3 md:order-none mt-6 md:mt-0">
-                  <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60 bg-white/80 backdrop-blur md:scale-125 lg:scale-150 origin-center">
+                  <div role="region" aria-label="Event summary" className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60 bg-white/80 backdrop-blur md:scale-125 lg:scale-150 origin-center">
                     <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-amber-50 to-neutral-100" />
                     <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 0%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0) 60%)' }} />
                     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                       <Image
                         src={altarExperienceLogo}
-                        alt="Altar Experience watermark"
+                        alt=""
                         fill
-                        className="flame-watermark select-none opacity-15 mix-blend-multiply object-contain"
+                        className="flame-watermark select-none opacity-15 mix-blend-multiply object-contain motion-reduce:animate-none"
                         style={{ transform: 'translate(-50%, -50%) scale(2.4)', top: '50%', left: '50%', position: 'absolute', filter: 'blur(0.5px)' }}
                         draggable={false}
                         priority={false}
@@ -93,7 +93,7 @@ export default function AltarExperiencePage() {
                     <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto flex flex-col items-center text-center">
                       {/* Date chip */}
                       <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
-                        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-2xs sm:text-xs font-semibold text-amber-700 shadow-sm">
+                        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/90 backdrop-blur border border-amber-300 text-2xs sm:text-xs font-semibold text-amber-800 shadow-sm">
                           <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                           <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
                           <span className="xs:hidden">Oct 24–26</span>
@@ -134,21 +134,21 @@ export default function AltarExperiencePage() {
                             const label = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
                             // Desktop/tablet: full countdown with seconds
                             items.push(
-                              <span key="countdown" className="hidden md:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
+                              <span key="countdown" className="hidden md:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-900 border border-amber-300 text-2xs sm:text-xs font-semibold">
                                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
                                 {label}
                               </span>
                             );
                             // Mobile fallback: simple starts label
                             items.push(
-                              <span key="countdown-mobile" className="md:hidden inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-300/80 text-2xs font-semibold">
+                              <span key="countdown-mobile" className="md:hidden inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-900 border border-amber-300 text-2xs font-semibold">
                                 Starts Oct 24
                               </span>
                             );
                           }
                           if (end && now <= end) {
                             items.push(
-                              <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-2xs sm:text-xs text-neutral-700">
+                              <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/90 backdrop-blur border border-neutral-300 text-2xs sm:text-xs text-neutral-800">
                                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
                                 3 days · Fri–Sun
                               </span>
@@ -223,6 +223,21 @@ export default function AltarExperiencePage() {
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
               </div>
+              {/* Location & parking */}
+              <div className="mt-6">
+                <h3 className="text-sm font-semibold text-neutral-800">Location & Parking</h3>
+                <p className="mt-1 text-sm text-neutral-700">Freedom Life Church · 14970 114 Ave NW, Edmonton, AB</p>
+                <p className="text-xs text-neutral-500">Parking available on-site; please use the main south entrance. Doors open 30 minutes prior to each session.</p>
+                <div className="mt-3 grid grid-cols-1 gap-2">
+                  <a className="inline-flex items-center gap-2 px-3 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium" href="https://www.google.com/maps/search/?api=1&query=14970+114+Ave+NW+Edmonton+AB+T5M+4G4" target="_blank" rel="noopener noreferrer">
+                    Get Directions
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                  </a>
+                  <div className="rounded-md overflow-hidden border border-neutral-200">
+                    <iframe title="Freedom Life Church Map" aria-label="Map to Freedom Life Church" loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="w-full" style={{ minHeight: '180px', border: 0 }} src="https://www.google.com/maps?q=14970+114+Ave+NW+Edmonton+AB+T5M+4G4&output=embed" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Details */}
@@ -247,6 +262,44 @@ export default function AltarExperiencePage() {
                     We invite you, your family, and friends to join us at <strong>Freedom Life Church</strong> for this life-changing experience. Come expecting renewal, transformation, and a fresh move of God!
                   </p>
                   <p className="text-neutral-500 text-xs">*Registration opens September 7 and will close October 12*</p>
+                </div>
+              </div>
+              {/* Schedule at a glance */}
+              <div className="card p-5">
+                <span className="kicker text-amber-700/80">Schedule</span>
+                <h2 className="mt-1 text-lg font-semibold text-primary-900">Schedule at a Glance</h2>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+                  <div className="rounded-md border border-neutral-200 p-3">
+                    <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wide">Friday</p>
+                    <p className="mt-1 text-neutral-800">Doors 6:30 PM</p>
+                    <p className="text-neutral-700">Session 7:00–9:00 PM</p>
+                  </div>
+                  <div className="rounded-md border border-neutral-200 p-3">
+                    <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wide">Saturday</p>
+                    <p className="mt-1 text-neutral-800">Doors 11:30 AM</p>
+                    <p className="text-neutral-700">Session 12:00–2:00 PM</p>
+                  </div>
+                  <div className="rounded-md border border-neutral-200 p-3">
+                    <p className="text-neutral-500 text-xs font-semibold uppercase tracking-wide">Sunday</p>
+                    <p className="mt-1 text-neutral-800">Doors 11:30 AM</p>
+                    <p className="text-neutral-700">Session 12:00–2:00 PM</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Kids & follow-up */}
+              <div className="card p-5">
+                <span className="kicker text-amber-700/80">Families</span>
+                <h2 className="mt-1 text-lg font-semibold text-primary-900">Kids & Follow-up</h2>
+                <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <h3 className="text-sm font-semibold text-neutral-800">Childcare & Check-in</h3>
+                    <p className="mt-1 text-neutral-700">Kids ministry is available for most sessions. Check-in opens 15 minutes before each session.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-neutral-800">Can’t make it?</h3>
+                    <p className="mt-1 text-neutral-700">Watch the <a className="text-flc-600 hover:text-flc-700 underline" href="/live">livestream</a> or <a className="text-flc-600 hover:text-flc-700 underline" href="mailto:?subject=Join%20me%20at%20Altar%20Experience%202025&body=Let%E2%80%99s%20go%20to%20Altar%20Experience%202025%3A%20https%3A%2F%2Fwww.freedomlifechurch.ca%2Faltar-experience">invite a friend</a>.</p>
+                  </div>
                 </div>
               </div>
               {/* Removed Official Event Page embed by request */}
