@@ -1,6 +1,6 @@
 module.exports = {
-  // Enable dark mode via class or [data-theme="dark"] to support attribute toggling
-  darkMode: ['class', '[data-theme="dark"]'],
+  // Dark mode disabled (toggle removed)
+  darkMode: false,
   content: [
     './pages/**/*.{js,jsx,ts,tsx}',
     './src/**/*.{js,jsx,ts,tsx}',

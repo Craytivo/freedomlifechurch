@@ -42,15 +42,7 @@ export default function Document() {
     description: 'Weekly Sunday church service at Freedom Life Church Edmonton.'
   };
 
-  // Inline script to set theme before paint
-  const setThemeScript = `(() => {
-    try {
-      const stored = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = stored || (prefersDark ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
-    } catch(_) {}
-  })();`;
+  // Theme script removed: site now uses default light theme without client-side toggling
 
   return (
     <Html lang="en">
@@ -69,8 +61,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
   <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#eba73e" />
-        {/* Set initial theme ASAP to avoid flash */}
-        <script dangerouslySetInnerHTML={{ __html: setThemeScript }} />
+  {/* Theme toggle removed */}
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

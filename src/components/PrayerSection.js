@@ -47,7 +47,8 @@ export default function PrayerSection() {
               </span>
               <div className="flex-1">
                 <h3 id="prayer-gathering" className="font-semibold text-primary-900 text-sm sm:text-base">Prayer Gathering</h3>
-                <p className="text-xs sm:text-sm text-neutral-600">Fridays · 7:00 AM & 7:00 PM · Sanctuary</p>
+                <p className="text-xs sm:text-sm text-neutral-600">Wednesdays · 7:00 PM · Sanctuary</p>
+                <p className="text-xs sm:text-sm text-neutral-600">Saturdays · 10:00 AM · Sanctuary</p>
                 <p className="mt-1 text-xs sm:text-sm text-neutral-600">Join us as we agree in prayer for our church and city.</p>
               </div>
             </div>

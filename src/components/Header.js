@@ -7,7 +7,7 @@ import SidePanel from './SidePanel';
 import GiveLink from './GiveLink';
 import UserAvatar from './UserAvatar';
 import Logo from './Logo';
-import ThemeToggle from './ThemeToggle';
+// Theme toggle removed per request
 
 const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
   const router = useRouter();
@@ -275,7 +275,6 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           <div className="hidden md:flex items-center space-x-8">
             <NavigationMenu items={navigation} className="group/nav" activePath={router.pathname} />
             <GiveLink />
-            <ThemeToggle />
             <UserAvatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
           </div>
           </div>
@@ -295,7 +294,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
               <span>A growing community pursuing presence, transformation & mission.</span>
             </p>
             <p ref={timesRef} className="text-xs font-normal text-neutral-500 whitespace-nowrap tracking-tight">
-              Sundays 12:00 PM MST <span className="mx-1 text-neutral-300">•</span> Saturday Prayer 10:00 AM MST
+              Sundays 12:00 PM MST <span className="mx-1 text-neutral-300">•</span> Prayer: Wednesdays 7:00 PM & Saturdays 10:00 AM MST
             </p>
           </div>
         </div>
