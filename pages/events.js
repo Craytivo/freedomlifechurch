@@ -4,34 +4,10 @@ import Head from 'next/head';
 import Heading from '../src/components/Heading';
 import Link from 'next/link';
 import { loadEventsFromICS } from '../src/lib/icsEvents';
+import { classifyEventFrom, normalizeEvent } from '../src/lib/eventsUtil';
 
 // Build relevant filters dynamically from event data
-function classifyEvent(e) {
-  const tags = new Set();
-  const title = (e.title || '').toLowerCase();
-  const blurb = (e.blurb || '').toLowerCase();
-  const text = `${title} ${blurb}`;
-
-  if (/\b(sunday\s+service|service)\b/.test(text)) tags.add('Services');
-  if (/\bprayer\b/.test(text)) tags.add('Prayer');
-  if (/(small\s*group|\bgroups?\b|bible)/.test(text)) tags.add('Groups');
-  if (/(women|women's|ladies)/.test(text)) tags.add('Women');
-  if (/(men|men's)/.test(text)) tags.add('Men');
-  if (/(child|children|kids|youth|vbs|vacation\s*bible)/.test(text)) tags.add('Kids & Youth');
-  if (tags.size === 0) tags.add('Special');
-
-  try {
-    const d = new Date(e.date);
-    if (!isNaN(d)) {
-      const dayName = d.toLocaleString(undefined, { weekday: 'long' });
-      tags.add(dayName);
-    }
-  } catch (err) {
-    // ignore parse errors; tags remain as derived from text
-  }
-
-  return Array.from(tags);
-}
+const classifyEvent = classifyEventFrom;
 
 function classNames(...a) { return a.filter(Boolean).join(' '); }
 
@@ -70,7 +46,7 @@ export default function EventsPage({ initialEvents }) {
   const GOOGLE_CAL_LINK = 'https://calendar.google.com/calendar/u/0/r?cid=8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb@group.calendar.google.com';
 
   // Use client-fetched events if available; otherwise fall back to SSG-provided events
-  const events = clientEvents ?? initialEvents;
+  const events = (clientEvents ?? initialEvents).map(normalizeEvent);
 
   // Client-side hydrate: fetch from API to ensure live site matches local even if SSG missed events
   React.useEffect(() => {
@@ -212,20 +188,6 @@ export default function EventsPage({ initialEvents }) {
       .slice(0, 3);
   }, [events]);
 
-  // Temporary client-side time fixes for "Altar Experience" sessions while calendar feed is being corrected.
-  const fixAltarTime = (e) => {
-    const title = (e.title || '').toLowerCase();
-    if (!title.includes('altar experience')) return e;
-    // Friday 7 PM, Saturday 7 PM, Sunday Oct 26 12 PM (noon)
-    try {
-      const d = new Date(e.date);
-      const dow = d.getDay(); // 0=Sun,5=Fri,6=Sat
-      if (dow === 5) return { ...e, time: '7:00 PM' };
-      if (dow === 6) return { ...e, time: '7:00 PM' };
-      if (dow === 0) return { ...e, time: '12:00 PM' };
-    } catch {}
-    return e;
-  };
 
   const categoryIcon = (name) => {
     const cls = 'w-4 h-4';
@@ -414,7 +376,7 @@ export default function EventsPage({ initialEvents }) {
                     <div className="text-sm text-neutral-500">No events on this day.</div>
                   ) : (
                     <ul className="space-y-3">
-                      {dayEvents.map(ev0 => { const e = fixAltarTime(ev0); return (
+                      {dayEvents.map(e => (
                         <li key={e.id}>
                           <Link href={`/events/${e.id}`} className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
                             <span className={`mt-1 inline-flex w-2 h-2 rounded-full ${eventBgColor(e)}`} />
@@ -424,7 +386,7 @@ export default function EventsPage({ initialEvents }) {
                             </div>
                           </Link>
                         </li>
-                      );})}
+                      ))}
                     </ul>
                   )}
                 </div>
@@ -463,7 +425,7 @@ export default function EventsPage({ initialEvents }) {
                       </a>
                     </div>
                   </div>
-                ) : visibleList.map(ev0 => { const e = fixAltarTime(ev0); return (
+                ) : visibleList.map(e => (
                   <Link key={e.id} href={`/events/${e.id}`} className="group card card-hover p-4 md:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -487,7 +449,7 @@ export default function EventsPage({ initialEvents }) {
                       </div>
                     </div>
                   </Link>
-                );})}
+                ))}
               </div>
               {/* Map view removed as requested */}
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { findEventById, listEventIds } from '../../src/lib/icsEvents';
+import { normalizeEvent } from '../../src/lib/eventsUtil';
 
 export async function getStaticPaths() {
   const ids = await listEventIds();
@@ -10,7 +11,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const event = await findEventById(params.id) || null;
+  const eventRaw = await findEventById(params.id) || null;
+  const event = eventRaw ? normalizeEvent(eventRaw) : null;
   return { props: { event } };
 }
 
