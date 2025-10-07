@@ -5,15 +5,19 @@ import { findEventById, listEventIds } from '../../src/lib/icsEvents';
 import { normalizeEvent } from '../../src/lib/eventsUtil';
 
 export async function getStaticPaths() {
-  const ids = await listEventIds();
-  const paths = ids.map(id => ({ params: { id } }));
-  return { paths, fallback: false };
+  // Reduce build load: defer page generation to first request
+  // If you want to pre-render a handful, you can add them to paths.
+  return { paths: [], fallback: 'blocking' };
 }
 
 export async function getStaticProps({ params }) {
-  const eventRaw = await findEventById(params.id) || null;
-  const event = eventRaw ? normalizeEvent(eventRaw) : null;
-  return { props: { event } };
+  try {
+    const event = await findEventById(params.id);
+    if (!event) return { notFound: true, revalidate: 60 };
+    return { props: { event }, revalidate: 300 };
+  } catch (e) {
+    return { notFound: true, revalidate: 60 };
+  }
 }
 
 export default function EventDetail({ event }) {

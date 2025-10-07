@@ -1,18 +1,9 @@
 /* global Map Set */
-import fs from 'fs';
-import path from 'path';
 
 // Default site timezone (Mountain Time)
 const DEFAULT_TZ = process.env.DEFAULT_TZ || 'America/Edmonton';
 
-// Absolute path to the ICS file in the repo
-const ICS_FILE = path.join(
-  process.cwd(),
-  'src',
-  'assets',
-  'calender',
-  'Freedom Life Church Events_8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb@group.calendar.google.com.ics'
-);
+// Local file fallback removed to keep serverless builds small and portable
 
 function unfoldLines(text) {
   // RFC5545: lines can be folded by inserting CRLF followed by a single linear white space character (space or tab)
@@ -209,8 +200,9 @@ function expandRecurring(master, overrides) {
 
   const now = new Date();
   // Include an even more generous window so SSG and runtime cover a broad range
-  const windowStart = new Date(now.getFullYear(), now.getMonth() - 18, 1);
-  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 30, 0); // ~30 months ahead
+  // Keep window reasonable for SSG memory (Netlify): ~12 months back, 18 months forward
+  const windowStart = new Date(now.getFullYear(), now.getMonth() - 12, 1);
+  const windowEnd = new Date(now.getFullYear(), now.getMonth() + 18, 0);
 
   const out = [];
 
@@ -389,12 +381,8 @@ async function loadRawICS({ fresh } = {}) {
       console.error('Failed to fetch ICS URL:', u, e);
     }
   }
-  try {
-    return fs.readFileSync(ICS_FILE, 'utf8');
-  } catch (e) {
-    console.error('Failed to read local ICS file:', ICS_FILE, e);
-    return '';
-  }
+  // No local fallback; return empty if remote fetch fails
+  return '';
 }
 
 export async function loadEventsFromICS() {

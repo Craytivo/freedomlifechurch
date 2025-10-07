@@ -533,14 +533,14 @@ export async function getStaticProps() {
     const buildFetchedAt = new Date().toISOString();
     // If SSG was able to load events, ship with ISR
     if (Array.isArray(initialEvents) && initialEvents.length > 0) {
-      return { props: { initialEvents, buildFetchedAt }, revalidate: 60 * 5 };
+      return { props: { initialEvents, buildFetchedAt }, revalidate: 60 * 2 };
     }
   } catch (e) {
     // Log and fall back to client hydration
     console.warn('getStaticProps: ICS fetch failed at build time', e);
   }
   // As a fallback, return empty and let client hydrate below.
-  return { props: { initialEvents: [], buildFetchedAt: null }, revalidate: 60 * 5 };
+  return { props: { initialEvents: [], buildFetchedAt: null }, revalidate: 60 * 2 };
 }
 
 // Extra safety: server-side runtime fallback for platforms blocking ICS at build
