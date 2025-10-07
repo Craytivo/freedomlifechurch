@@ -8,7 +8,11 @@ const buildChurchCenterEventUrl = (id) => `https://flcedmonton.churchcenter.com/
 
 export default function AltarExperiencePage() {
   const registerUrl = buildChurchCenterEventUrl(CHURCHCENTER_EVENT_ID);
-  const now = new Date();
+  const [now, setNow] = React.useState(new Date());
+  React.useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(id);
+  }, []);
   const startDate = '2025-10-24T18:00:00-06:00';
   const endDate = '2025-10-26T23:59:59-06:00';
 
@@ -39,7 +43,7 @@ export default function AltarExperiencePage() {
 
           {/* Content as 2-column on desktop: left copy, right event card */}
           <div className="relative h-full w-full px-0 sm:px-4 lg:px-8">
-            <div className="relative z-10 mx-auto h-full flex items-end sm:items-center py-8 sm:py-10 md:py-12 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
+            <div className="relative z-10 mx-auto h-full flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
               <div className="grid grid-cols-1 md:grid-cols-7 gap-6 sm:gap-8 md:gap-10 w-full items-start">
                 {/* Left: Copy and actions */}
                 <div className="md:col-span-4 max-w-3xl">
@@ -110,27 +114,22 @@ export default function AltarExperiencePage() {
                         </div>
                       </div>
 
-                      {/* Chips row */}
+                      {/* Chips row with live countdown */}
                       <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                         {(() => {
                           const start = startDate ? new Date(startDate) : null;
                           const end = endDate ? new Date(endDate) : null;
                           const items = [];
                           if (start && now < start) {
-                            const DAY_MS = 24 * 60 * 60 * 1000;
-                            const iso = startDate;
-                            const m = iso.match(/([+-])(\d{2}):?(\d{2})$/);
-                            const sign = m ? (m[1] === '-' ? -1 : 1) : -1;
-                            const hh = m ? parseInt(m[2], 10) : 6;
-                            const mm = m ? parseInt(m[3], 10) : 0;
-                            const eventOffsetMs = sign * (hh * 60 + mm) * 60 * 1000;
-
-                            const startMs = start.getTime();
-                            const nowMs = now.getTime();
-                            const startDayIdx = Math.floor((startMs + eventOffsetMs) / DAY_MS);
-                            const nowDayIdx = Math.floor((nowMs + eventOffsetMs) / DAY_MS);
-                            const diffDays = Math.max(0, startDayIdx - nowDayIdx);
-                            const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
+                            let diff = start.getTime() - now.getTime();
+                            if (diff < 0) diff = 0;
+                            const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+                            diff -= days * 24 * 60 * 60 * 1000;
+                            const hours = Math.floor(diff / (60 * 60 * 1000));
+                            diff -= hours * 60 * 60 * 1000;
+                            const minutes = Math.floor(diff / (60 * 1000));
+                            const pad = (n) => String(n).padStart(2, '0');
+                            const label = `${days}d ${pad(hours)}h ${pad(minutes)}m`;
                             items.push(
                               <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
                                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
@@ -166,11 +165,20 @@ export default function AltarExperiencePage() {
 
       {/* Details */}
       <section id="details" className="relative py-8 sm:py-10 md:py-12">
+        {/* Ambient flourishes */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
+          background: [
+            'radial-gradient(circle at 10% 20%, rgba(235,167,62,0.06), rgba(235,167,62,0) 55%)',
+            'radial-gradient(circle at 90% 10%, rgba(235,167,62,0.05), rgba(235,167,62,0) 55%)'
+          ].join(', ')
+        }} />
         <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '78rem' }}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 items-start">
             {/* Quick facts */}
-            <div className="card p-5 self-start">
-              <h2 className="text-lg font-semibold text-primary-900">Event Info</h2>
+            <div className="card p-5 self-start relative overflow-hidden">
+              <span className="kicker text-amber-700/80">At a glance</span>
+              <h2 className="mt-1 text-lg font-semibold text-primary-900">Event Info</h2>
+              <span className="absolute -left-1 top-6 bottom-6 w-1 bg-gradient-to-b from-amber-300/60 via-amber-300/20 to-transparent rounded-full" />
               <dl className="mt-3 space-y-2 text-sm text-neutral-700">
                 <div className="flex gap-2">
                   <dt className="w-28 text-neutral-500">Dates</dt>
@@ -210,8 +218,11 @@ export default function AltarExperiencePage() {
 
             {/* Details */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="card p-5">
-                <h2 className="text-lg font-semibold text-primary-900">Details</h2>
+              <div className="card p-5 relative overflow-hidden">
+                <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-flc-500/10 blur-2xl" aria-hidden="true" />
+                <div className="absolute -left-12 bottom-0 w-48 h-48 rounded-full bg-amber-300/10 blur-2xl" aria-hidden="true" />
+                <span className="kicker text-amber-700/80">What to expect</span>
+                <h2 className="mt-1 text-lg font-semibold text-primary-900">Details</h2>
                 <div className="mt-3 text-sm leading-relaxed text-neutral-700 space-y-3">
                   <p><strong>Freedom Life Church</strong> presents: <strong>The Altar Experience Conference 2025</strong></p>
                   <p><strong>Theme:</strong> <em>The Original Mandate</em></p>
