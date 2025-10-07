@@ -15,6 +15,67 @@ export default function AltarExperiencePage() {
   }, []);
   const startDate = '2025-10-24T18:00:00-06:00';
   const endDate = '2025-10-26T23:59:59-06:00';
+  const locationAddress = 'Freedom Life Church · 14970 114 Ave NW, Edmonton, AB';
+
+  // Helpers: calendar links (overall event)
+  const toGCalDate = (iso) => {
+    const d = new Date(iso);
+    const yyyy = d.getUTCFullYear();
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const hh = String(d.getUTCHours()).padStart(2, '0');
+    const mi = String(d.getUTCMinutes()).padStart(2, '0');
+    const ss = String(d.getUTCSeconds()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}T${hh}${mi}${ss}Z`;
+  };
+  const gcalHref = React.useMemo(() => {
+    const text = encodeURIComponent('Altar Experience Conference 2025');
+    const details = encodeURIComponent('Encounter Jesus, experience revival, and be restored in His presence.');
+    const loc = encodeURIComponent(locationAddress);
+    const dates = `${toGCalDate(startDate)}/${toGCalDate(endDate)}`;
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${loc}`;
+  }, [startDate, endDate]);
+  const icsContent = React.useMemo(() => {
+    const uid = 'altar-experience-2025@freedomlifechurch.ca';
+    const dtStamp = toGCalDate(new Date().toISOString());
+    const dtStart = toGCalDate(startDate);
+    const dtEnd = toGCalDate(endDate);
+    return [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Freedom Life Church//Altar Experience 2025//EN',
+      'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${dtStamp}`,
+      `DTSTART:${dtStart}`,
+      `DTEND:${dtEnd}`,
+      'SUMMARY:Altar Experience Conference 2025',
+      'DESCRIPTION:Encounter Jesus, experience revival, and be restored in His presence.',
+      `LOCATION:${locationAddress.replace(/,/g, '\\,')}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+  }, [startDate, endDate, locationAddress]);
+  const icsHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+
+  // Sticky mobile CTA (visible when scrolled beyond hero top)
+  const [showSticky, setShowSticky] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setShowSticky(window.scrollY > 220);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Share links
+  const [pageUrl, setPageUrl] = React.useState('https://www.freedomlifechurch.ca/altar-experience');
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') setPageUrl(window.location.href);
+  }, []);
+  const fbShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+  const xShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent('Join me at Altar Experience 2025')}&url=${encodeURIComponent(pageUrl)}`;
+  const mailShare = `mailto:?subject=${encodeURIComponent('Join me at Altar Experience 2025')}&body=${encodeURIComponent('Let’s go to Altar Experience 2025: ' + pageUrl)}`;
 
   return (
     <>
@@ -25,6 +86,42 @@ export default function AltarExperiencePage() {
         <meta property="og:description" content="Encounter Jesus, experience revival, and be restored in His presence. Oct 24–26 in Edmonton." />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://www.freedomlifechurch.ca/altar-experience" />
+        {/* JSON-LD: Event with subEvent sessions */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Event',
+            name: 'Altar Experience Conference 2025',
+            startDate,
+            endDate,
+            eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+            eventStatus: 'https://schema.org/EventScheduled',
+            location: {
+              '@type': 'Place',
+              name: 'Freedom Life Church',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: '14970 114 Ave NW',
+                addressLocality: 'Edmonton',
+                addressRegion: 'AB',
+                postalCode: 'T5M4G4',
+                addressCountry: 'CA'
+              }
+            },
+            offers: {
+              '@type': 'Offer',
+              price: 0,
+              priceCurrency: 'CAD',
+              availability: 'https://schema.org/InStock'
+            },
+            subEvent: [
+              { '@type': 'Event', name: 'Friday Session', startDate: '2025-10-24T19:00:00-06:00', endDate: '2025-10-24T21:00:00-06:00' },
+              { '@type': 'Event', name: 'Saturday Session', startDate: '2025-10-25T12:00:00-06:00', endDate: '2025-10-25T14:00:00-06:00' },
+              { '@type': 'Event', name: 'Sunday Session', startDate: '2025-10-26T12:00:00-06:00', endDate: '2025-10-26T14:00:00-06:00' }
+            ]
+          }) }}
+        />
       </Head>
 
       {/* Creative Hero with event image */}
@@ -71,6 +168,18 @@ export default function AltarExperiencePage() {
                       View Details
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                     </a>
+                    {/* Add-to-calendar */}
+                    <div className="flex items-center gap-2 mt-2">
+                      <a href={gcalHref} target="_blank" rel="noopener noreferrer" className="text-2xs sm:text-xs px-3 py-1.5 rounded-full border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600">Google</a>
+                      <a href={icsHref} download="altar-experience-2025.ics" className="text-2xs sm:text-xs px-3 py-1.5 rounded-full border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600">Apple/ICS</a>
+                    </div>
+                  </div>
+                  {/* Share strip */}
+                  <div className="mt-3 flex items-center gap-3 text-2xs sm:text-xs text-neutral-600">
+                    <span className="kicker text-neutral-500">Share</span>
+                    <a href={fbShare} target="_blank" rel="noopener noreferrer" className="underline hover:text-flc-600">Facebook</a>
+                    <a href={xShare} target="_blank" rel="noopener noreferrer" className="underline hover:text-flc-600">X</a>
+                    <a href={mailShare} className="underline hover:text-flc-600">Email</a>
                   </div>
                 </div>
 
@@ -307,6 +416,19 @@ export default function AltarExperiencePage() {
           </div>
         </div>
       </section>
+
+      {/* Sticky mobile CTA */}
+      <div className={`md:hidden fixed inset-x-0 bottom-0 z-40 transition-transform duration-300 ${showSticky ? 'translate-y-0' : 'translate-y-full'}`}>
+        <div className="mx-auto max-w-screen-xl px-4 pb-4">
+          <div className="rounded-xl shadow-lg border border-neutral-200 bg-white p-3 flex items-center justify-between gap-3">
+            <div className="text-xs font-medium text-neutral-700">Join us Oct 24–26</div>
+            <div className="flex items-center gap-2">
+              <a href="#details" className="px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 text-xs">Details</a>
+              <a href={registerUrl} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-md bg-flc-500 text-white text-xs">Register</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
