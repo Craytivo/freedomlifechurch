@@ -328,14 +328,15 @@ function makeId(summary, dateKey, uid) {
   return `${base}-${datePart}${uidHash ? '-' + uidHash : ''}`;
 }
 
-async function loadRawICS() {
+async function loadRawICS({ fresh } = {}) {
   const url = process.env.CALENDAR_ICS_URL;
   // Default public Google Calendar ICS URL fallback (keeps live working even if env var is missing)
   const DEFAULT_ICS_URL = 'https://calendar.google.com/calendar/ical/8e73fa46e8c3ad6c7a7411573ace4e8ab8c2edf600abc7c72cc3dc82cf38a9eb%40group.calendar.google.com/public/basic.ics';
   const candidates = [url, DEFAULT_ICS_URL].filter(Boolean);
   for (const u of candidates) {
     try {
-      const res = await fetch(u, { headers: { 'cache-control': 'no-cache' } });
+      const bust = fresh ? (u.includes('?') ? `&_=${Date.now()}` : `?_=${Date.now()}`) : '';
+      const res = await fetch(u + bust, { headers: { 'cache-control': 'no-cache' } });
       if (!res.ok) throw new Error(`Fetch failed ${res.status}`);
       const txt = await res.text();
       if (txt && txt.trim()) return txt;
@@ -353,6 +354,12 @@ async function loadRawICS() {
 
 export async function loadEventsFromICS() {
   const raw = await loadRawICS();
+  if (!raw) return [];
+  return parseICSEvents(raw).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+}
+
+export async function loadEventsFromICSFresh() {
+  const raw = await loadRawICS({ fresh: true });
   if (!raw) return [];
   return parseICSEvents(raw).sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 }
