@@ -45,6 +45,13 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        {/* Fonts for standardized typography */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
+          rel="stylesheet"
+        />
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="preconnect" href="https://www.youtube.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
