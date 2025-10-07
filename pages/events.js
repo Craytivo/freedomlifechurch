@@ -204,6 +204,15 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
 
   const visibleList = filtered.filter(e => e.date.slice(0,7) === monthKeyStr);
   const dayEvents = selectedDate ? byDate.get(selectedDate.toLocaleDateString('en-CA')) || [] : [];
+  // Legend: categories present in the currently visible month
+  const visibleTags = useMemo(() => {
+    const set = new Set();
+    for (const e of visibleList) {
+      const tags = tagIndex.get(e.id) || [];
+      for (const t of tags) if (colorPriority.includes(t)) set.add(t);
+    }
+    return Array.from(set);
+  }, [visibleList, tagIndex]);
 
   // Simple upcoming highlights (top 3)
   const upcoming = useMemo(() => {
@@ -363,7 +372,8 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                   {days.map((d,i) => {
                     const inMonth = d.getMonth() === start.getMonth();
                     const key = d.toLocaleDateString('en-CA');
-                    const has = (byDate.get(key) || []).length > 0;
+                    const list = byDate.get(key) || [];
+                    const has = list.length > 0;
                     const selected = selectedDate && key === selectedDate.toLocaleDateString('en-CA');
                     const isToday = (new Date()).toLocaleDateString('en-CA') === key;
                     const dow = d.getDay();
@@ -374,7 +384,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                         type="button"
                         onClick={() => setSelectedDate(new Date(d))}
                         className={classNames(
-                          'relative min-h-[108px] rounded-md px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40 hover:bg-neutral-50',
+                          'group relative min-h-[108px] rounded-md px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40 hover:bg-neutral-50',
                           inMonth ? (isWeekend ? 'bg-neutral-50' : 'bg-white') : 'bg-white',
                           !inMonth && 'opacity-45',
                           selected && 'ring-2 ring-flc-500/50',
@@ -387,14 +397,24 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                           isToday ? 'text-flc-700' : 'text-neutral-500'
                         )}>{d.getDate()}</div>
                         {has && <div className="absolute bottom-2 left-2 flex gap-1.5">
-                          {(byDate.get(key) || []).slice(0,4).map((ev, idx) => {
+                          {list.slice(0,4).map((ev, idx) => {
                             const isSpecial = ((tagIndex.get(ev.id) || []).includes('Special'));
                             return (
                               <span key={idx} className={`w-2 h-2 rounded-full ${isSpecial ? 'bg-red-600' : eventBgColor(ev)}`} title={ev.title} />
                             );
                           })}
-                          {(byDate.get(key) || []).length > 4 && <span className="text-[10px] text-neutral-400">+{(byDate.get(key) || []).length - 4}</span>}
+                          {list.length > 4 && <span className="text-[10px] text-neutral-400">+{list.length - 4}</span>}
                         </div>}
+                        {/* Tooltip with titles (desktop only) */}
+                        {has && (
+                          <div className="pointer-events-none hidden md:block group-hover:block group-focus:block absolute top-1 left-2 transform -translate-y-full z-20 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-md px-2 py-1 text-[11px] text-neutral-700 max-w-[220px]">
+                            <div className="font-semibold text-neutral-800 mb-0.5">{list.length} event{list.length === 1 ? '' : 's'}</div>
+                            <ul className="space-y-0.5">
+                              {list.slice(0,6).map(ev => (<li key={ev.id} className="truncate">• {ev.title}</li>))}
+                              {list.length > 6 && (<li className="text-neutral-500">+{list.length - 6} more…</li>)}
+                            </ul>
+                          </div>
+                        )}
                       </button>
                     );
                   })}
@@ -405,7 +425,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">Legend</div>
                   <div className="flex flex-wrap items-center gap-2.5 text-[12px]">
                     {colorPriority
-                      .filter(name => filters.includes(name))
+                      .filter(name => visibleTags.includes(name))
                       .map(name => (
                         <div key={`legend-${name}`} className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-white">
                           <span className={`inline-block w-2.5 h-2.5 rounded-full ${tagBgColors[name] || 'bg-neutral-400'}`} />
