@@ -24,7 +24,7 @@ export default function PrayerSection() {
 
         <div className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <a
-            href="https://flcedmonton.churchcenter.com/people/forms/12345"
+            href="https://freedomlifechurch.netlify.app/prayer"
             target="_blank"
             rel="noopener noreferrer"
             className="block rounded-xl border border-neutral-200 bg-white p-4 sm:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors"

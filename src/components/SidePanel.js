@@ -42,6 +42,15 @@ const SidePanel = ({ isOpen, onClose }) => {
             </svg>
           )
         },
+        {
+          name: 'Altar Experience',
+          href: '/altar-experience',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 1.567-3 3.5S10.343 15 12 15s3-1.567 3-3.5S13.657 8 12 8zm0 0V4m0 11v5m8-8h-5m-6 0H4" />
+            </svg>
+          )
+        },
         { 
           name: 'Visit FLC', 
           href: '/visit', 
