@@ -8,6 +8,9 @@ const buildChurchCenterEventUrl = (id) => `https://flcedmonton.churchcenter.com/
 
 export default function AltarExperiencePage() {
   const registerUrl = buildChurchCenterEventUrl(CHURCHCENTER_EVENT_ID);
+  const now = new Date();
+  const startDate = '2025-10-24T18:00:00-06:00';
+  const endDate = '2025-10-26T23:59:59-06:00';
 
   return (
     <>
@@ -22,32 +25,7 @@ export default function AltarExperiencePage() {
 
       {/* Creative Hero with event image */}
       <section className="relative w-full overflow-hidden">
-        <div className="relative h-[38vh] min-h-[320px] sm:min-h-[380px] md:min-h-[460px]">
-          {/* Image layer (confined to right side to avoid overlapping text) */}
-          <div className="absolute inset-y-0 right-0 w-[62%] sm:w-[58%] md:w-[54%] lg:w-[50%]">
-            {/* Blurred atmospheric logo for depth */}
-            <div className="absolute inset-0 scale-[0.9] sm:scale-[0.85] md:scale-[0.8]">
-              <Image
-                src={altarExperienceLogo}
-                alt="Altar Experience blurred background"
-                fill
-                priority
-                className="object-contain opacity-[0.12] blur-[14px]"
-              />
-            </div>
-            {/* Main logo, reduced ~25% vs full container */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-[68%] sm:w-[62%] md:w-[58%] lg:w-[52%] aspect-[4/3]">
-                <Image
-                  src={altarExperienceLogo}
-                  alt="Altar Experience"
-                  fill
-                  priority
-                  className="object-contain opacity-90"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="relative h-[38vh] min-h-[360px] sm:min-h-[420px] md:min-h-[480px]">
           {/* Subtle vignette + glow across the whole hero */}
           <div className="absolute inset-0" style={{
             background: [
@@ -59,34 +37,126 @@ export default function AltarExperiencePage() {
           {/* Overlay gradient from hero system */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 overlay-gradient grain opacity-40" />
 
-          {/* Content */}
+          {/* Content as 2-column on desktop: left copy, right event card */}
           <div className="relative h-full w-full px-0 sm:px-4 lg:px-8">
             <div className="relative z-10 mx-auto h-full flex items-end sm:items-center py-8 sm:py-10 md:py-12 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
-              <div className="max-w-3xl">
-                <span className="eyebrow">Conference</span>
-                <h1 className="mt-2 font-heading font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 leading-[1.05] text-[clamp(2rem,6vw,3.5rem)]">
-                  Altar Experience Conference 2025
-                </h1>
-                <p className="mt-2 max-w-2xl text-base sm:text-lg md:text-xl text-neutral-700 font-medium leading-relaxed">
-                  Theme: The Original Mandate · Oct 24–26 · Edmonton
-                </p>
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <a
-                    href={registerUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition"
-                  >
-                    Register Now
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  </a>
-                  <a
-                    href="#details"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium"
-                  >
-                    View Details
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                  </a>
+              <div className="grid grid-cols-1 md:grid-cols-7 gap-6 sm:gap-8 md:gap-10 w-full items-start">
+                {/* Left: Copy and actions */}
+                <div className="md:col-span-4 max-w-3xl">
+                  <span className="eyebrow">Conference</span>
+                  <h1 className="mt-2 font-heading font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 leading-[1.05] text-[clamp(2rem,6vw,3.5rem)]">
+                    Altar Experience Conference 2025
+                  </h1>
+                  <p className="mt-2 max-w-2xl text-base sm:text-lg md:text-xl text-neutral-700 font-medium leading-relaxed">
+                    Theme: The Original Mandate · Oct 24–26 · Edmonton
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    <a
+                      href={registerUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-flc-500 hover:bg-flc-600 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition"
+                    >
+                      Register Now
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                    <a
+                      href="#details"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-sm font-medium"
+                    >
+                      View Details
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right: Event info card (replicated style from hero slide) */}
+                <div className="md:col-span-3 order-first md:order-none">
+                  <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60 bg-white/80 backdrop-blur">
+                    <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-amber-50 to-neutral-100" />
+                    <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 0%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0) 60%)' }} />
+                    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+                      <Image
+                        src={altarExperienceLogo}
+                        alt="Altar Experience watermark"
+                        fill
+                        className="flame-watermark select-none opacity-15 mix-blend-multiply object-contain"
+                        style={{ transform: 'translate(-50%, -50%) scale(2.4)', top: '50%', left: '50%', position: 'absolute', filter: 'blur(0.5px)' }}
+                        draggable={false}
+                        priority={false}
+                      />
+                    </div>
+                    <div className="relative w-full max-w-xs sm:max-w-md mx-auto flex flex-col items-center text-center">
+                      {/* Date chip */}
+                      <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
+                        <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-2xs sm:text-xs font-semibold text-amber-700 shadow-sm">
+                          <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                          <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
+                          <span className="xs:hidden">Oct 24–26</span>
+                        </div>
+                      </div>
+
+                      {/* Logo */}
+                      <div className="relative -mt-0.5 sm:-mt-1 -mb-0.5 sm:-mb-1 select-none pointer-events-none">
+                        <div className="relative w-32 sm:w-40 md:w-56 h-16 sm:h-20 md:h-28 drop-shadow-md">
+                          <Image
+                            src={altarExperienceLogo}
+                            alt="Altar Experience Conference Logo"
+                            fill
+                            sizes="(max-width:640px) 128px, (max-width:768px) 160px, 224px"
+                            className="object-contain"
+                            priority
+                          />
+                        </div>
+                      </div>
+
+                      {/* Chips row */}
+                      <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+                        {(() => {
+                          const start = startDate ? new Date(startDate) : null;
+                          const end = endDate ? new Date(endDate) : null;
+                          const items = [];
+                          if (start && now < start) {
+                            const DAY_MS = 24 * 60 * 60 * 1000;
+                            const iso = startDate;
+                            const m = iso.match(/([+-])(\d{2}):?(\d{2})$/);
+                            const sign = m ? (m[1] === '-' ? -1 : 1) : -1;
+                            const hh = m ? parseInt(m[2], 10) : 6;
+                            const mm = m ? parseInt(m[3], 10) : 0;
+                            const eventOffsetMs = sign * (hh * 60 + mm) * 60 * 1000;
+
+                            const startMs = start.getTime();
+                            const nowMs = now.getTime();
+                            const startDayIdx = Math.floor((startMs + eventOffsetMs) / DAY_MS);
+                            const nowDayIdx = Math.floor((nowMs + eventOffsetMs) / DAY_MS);
+                            const diffDays = Math.max(0, startDayIdx - nowDayIdx);
+                            const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
+                            items.push(
+                              <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
+                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
+                                {label}
+                              </span>
+                            );
+                          }
+                          if (end && now <= end) {
+                            items.push(
+                              <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-2xs sm:text-xs text-neutral-700">
+                                <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
+                                3 days · Fri–Sun
+                              </span>
+                            );
+                          }
+                          return items;
+                        })()}
+                      </div>
+
+                      <p className="text-2xs sm:text-xs md:text-sm text-neutral-700 leading-snug mt-1.5 sm:mt-2">
+                        Bring family & friends. Expect transformation in God's presence.
+                      </p>
+                    </div>
+                    <div className="pointer-events-none absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-amber-400/20 blur-2xl" aria-hidden="true" />
+                    <div className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-flc-500/20 blur-2xl" aria-hidden="true" />
+                  </div>
                 </div>
               </div>
             </div>
