@@ -212,6 +212,21 @@ export default function EventsPage({ initialEvents }) {
       .slice(0, 3);
   }, [events]);
 
+  // Temporary client-side time fixes for "Altar Experience" sessions while calendar feed is being corrected.
+  const fixAltarTime = (e) => {
+    const title = (e.title || '').toLowerCase();
+    if (!title.includes('altar experience')) return e;
+    // Friday 7 PM, Saturday 7 PM, Sunday Oct 26 12 PM (noon)
+    try {
+      const d = new Date(e.date);
+      const dow = d.getDay(); // 0=Sun,5=Fri,6=Sat
+      if (dow === 5) return { ...e, time: '7:00 PM' };
+      if (dow === 6) return { ...e, time: '7:00 PM' };
+      if (dow === 0) return { ...e, time: '12:00 PM' };
+    } catch {}
+    return e;
+  };
+
   const categoryIcon = (name) => {
     const cls = 'w-4 h-4';
     switch ((name || '').toLowerCase()) {
@@ -329,7 +344,7 @@ export default function EventsPage({ initialEvents }) {
           {/* Calendar + List */}
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Calendar - Hidden on mobile */}
-            <div className="hidden lg:block lg:col-span-5">
+            <div className="hidden lg:block lg:col-span-6 xl:col-span-7">
               <div className="card">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
                   <button onClick={goPrev} aria-label="Previous month" className="p-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600">
@@ -357,18 +372,21 @@ export default function EventsPage({ initialEvents }) {
                         type="button"
                         onClick={() => setSelectedDate(new Date(d))}
                         className={classNames(
-                          'relative min-h-[72px] bg-white px-2 py-1 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40',
+                          'relative min-h-[108px] bg-white px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40',
                           !inMonth && 'opacity-45',
                           selected && 'ring-2 ring-flc-500/50'
                         )}
                         aria-pressed={selected}
                       >
                         <div className="text-[11px] font-semibold text-neutral-500">{d.getDate()}</div>
-                        {has && <div className="absolute bottom-1 left-2 flex gap-1">
-                          {(byDate.get(key) || []).slice(0,3).map((ev, idx) => (
-                            <span key={idx} className={`w-1.5 h-1.5 rounded-full ${eventBgColor(ev)}`} />
-                          ))}
-                          {(byDate.get(key) || []).length > 3 && <span className="text-[10px] text-neutral-400">+{(byDate.get(key) || []).length - 3}</span>}
+                        {has && <div className="absolute bottom-2 left-2 flex gap-1.5">
+                          {(byDate.get(key) || []).slice(0,4).map((ev, idx) => {
+                            const isSpecial = ((tagIndex.get(ev.id) || []).includes('Special'));
+                            return (
+                              <span key={idx} className={`w-2 h-2 rounded-full ${isSpecial ? 'bg-red-600' : eventBgColor(ev)}`} title={ev.title} />
+                            );
+                          })}
+                          {(byDate.get(key) || []).length > 4 && <span className="text-[10px] text-neutral-400">+{(byDate.get(key) || []).length - 4}</span>}
                         </div>}
                       </button>
                     );
@@ -396,7 +414,7 @@ export default function EventsPage({ initialEvents }) {
                     <div className="text-sm text-neutral-500">No events on this day.</div>
                   ) : (
                     <ul className="space-y-3">
-                      {dayEvents.map(e => (
+                      {dayEvents.map(ev0 => { const e = fixAltarTime(ev0); return (
                         <li key={e.id}>
                           <Link href={`/events/${e.id}`} className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
                             <span className={`mt-1 inline-flex w-2 h-2 rounded-full ${eventBgColor(e)}`} />
@@ -406,7 +424,7 @@ export default function EventsPage({ initialEvents }) {
                             </div>
                           </Link>
                         </li>
-                      ))}
+                      );})}
                     </ul>
                   )}
                 </div>
@@ -414,7 +432,7 @@ export default function EventsPage({ initialEvents }) {
             </div>
 
             {/* List - Full width on mobile, right column on desktop */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-6 xl:col-span-5">
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {visibleList.length === 0 ? (
                   <div className="col-span-full text-neutral-500 text-sm space-y-3">
@@ -445,7 +463,7 @@ export default function EventsPage({ initialEvents }) {
                       </a>
                     </div>
                   </div>
-                ) : visibleList.map(e => (
+                ) : visibleList.map(ev0 => { const e = fixAltarTime(ev0); return (
                   <Link key={e.id} href={`/events/${e.id}`} className="group card card-hover p-4 md:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
@@ -469,7 +487,7 @@ export default function EventsPage({ initialEvents }) {
                       </div>
                     </div>
                   </Link>
-                ))}
+                );})}
               </div>
               {/* Map view removed as requested */}
             </div>

@@ -77,11 +77,13 @@ function parseICSEvents(text) {
       }
     } else {
       // Expect YYYYMMDDTHHmm(SS)? maybe Z or with TZ param; treat as local if no Z
-      const m = dtstartRaw.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?/);
+      const m = dtstartRaw.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
       if (m) {
         const y = m[1], mo = m[2], d = m[3], hh = m[4], mm = m[5], ss = m[6] || '00';
-        // Interpret as local time (simple, avoids TZ complexity in SSG)
-        startDate = new Date(`${y}-${mo}-${d}T${hh}:${mm}:${ss}`);
+        const hasZ = Boolean(m[7]);
+        const iso = `${y}-${mo}-${d}T${hh}:${mm}:${ss}`;
+        // If timestamp ends with Z, interpret as UTC; otherwise treat as local time
+        startDate = new Date(hasZ ? `${iso}Z` : iso);
       }
     }
     if (!startDate) continue; // skip if missing
@@ -126,8 +128,12 @@ function parseICSTimestamp(val) {
   // Supports YYYYMMDD or YYYYMMDDTHHmmSS(Z?)
   const dOnly = val.match(/^(\d{4})(\d{2})(\d{2})$/);
   if (dOnly) return new Date(`${dOnly[1]}-${dOnly[2]}-${dOnly[3]}T00:00:00`);
-  const dt = val.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?Z?$/);
-  if (dt) return new Date(`${dt[1]}-${dt[2]}-${dt[3]}T${dt[4]}:${dt[5]}:${dt[6] || '00'}`);
+  const dt = val.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
+  if (dt) {
+    const iso = `${dt[1]}-${dt[2]}-${dt[3]}T${dt[4]}:${dt[5]}:${dt[6] || '00'}`;
+    const hasZ = Boolean(dt[7]);
+    return new Date(hasZ ? `${iso}Z` : iso);
+  }
   return null;
 }
 
