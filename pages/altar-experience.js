@@ -23,30 +23,45 @@ export default function AltarExperiencePage() {
       {/* Creative Hero with event image */}
       <section className="relative w-full overflow-hidden">
         <div className="relative h-[38vh] min-h-[320px] sm:min-h-[380px] md:min-h-[460px]">
-          {/* Image layer */}
-          <div className="absolute inset-0">
-            <Image
-              src={altarExperienceLogo}
-              alt="Altar Experience"
-              fill
-              priority
-              className="object-contain opacity-90"
-            />
-            {/* Subtle vignette + glow */}
-            <div className="absolute inset-0" style={{
-              background: [
-                'radial-gradient(120% 80% at 20% -10%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0.08) 35%, rgba(0,0,0,0) 65%)',
-                'radial-gradient(120% 80% at 80% 110%, rgba(235,167,62,0.16) 0%, rgba(235,167,62,0.06) 35%, rgba(0,0,0,0) 65%)',
-                'linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.06) 55%, rgba(0,0,0,0.14) 100%)'
-              ].join(', ')
-            }} />
+          {/* Image layer (confined to right side to avoid overlapping text) */}
+          <div className="absolute inset-y-0 right-0 w-[62%] sm:w-[58%] md:w-[54%] lg:w-[50%]">
+            {/* Blurred atmospheric logo for depth */}
+            <div className="absolute inset-0 scale-[0.9] sm:scale-[0.85] md:scale-[0.8]">
+              <Image
+                src={altarExperienceLogo}
+                alt="Altar Experience blurred background"
+                fill
+                priority
+                className="object-contain opacity-[0.12] blur-[14px]"
+              />
+            </div>
+            {/* Main logo, reduced ~25% vs full container */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-[68%] sm:w-[62%] md:w-[58%] lg:w-[52%] aspect-[4/3]">
+                <Image
+                  src={altarExperienceLogo}
+                  alt="Altar Experience"
+                  fill
+                  priority
+                  className="object-contain opacity-90"
+                />
+              </div>
+            </div>
           </div>
+          {/* Subtle vignette + glow across the whole hero */}
+          <div className="absolute inset-0" style={{
+            background: [
+              'radial-gradient(120% 80% at 20% -10%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0.08) 35%, rgba(0,0,0,0) 65%)',
+              'radial-gradient(120% 80% at 80% 110%, rgba(235,167,62,0.16) 0%, rgba(235,167,62,0.06) 35%, rgba(0,0,0,0) 65%)',
+              'linear-gradient(180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.06) 55%, rgba(0,0,0,0.14) 100%)'
+            ].join(', ')
+          }} />
           {/* Overlay gradient from hero system */}
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 overlay-gradient grain opacity-40" />
 
           {/* Content */}
           <div className="relative h-full w-full px-0 sm:px-4 lg:px-8">
-            <div className="mx-auto h-full flex items-end sm:items-center py-8 sm:py-10 md:py-12 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
+            <div className="relative z-10 mx-auto h-full flex items-end sm:items-center py-8 sm:py-10 md:py-12 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
               <div className="max-w-3xl">
                 <span className="eyebrow">Conference</span>
                 <h1 className="mt-2 font-heading font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 leading-[1.05] text-[clamp(2rem,6vw,3.5rem)]">
