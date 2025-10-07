@@ -33,6 +33,29 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
   const [clientEvents, setClientEvents] = useState(null);
   const [loadingLive, setLoadingLive] = useState(false);
   const [fetchedAt, setFetchedAt] = useState(buildFetchedAt || null);
+  const [nowTick, setNowTick] = useState(() => Date.now());
+
+  // Live-update the freshness label every 30 seconds when we have a timestamp
+  React.useEffect(() => {
+    if (!fetchedAt) return;
+    const id = setInterval(() => setNowTick(Date.now()), 30 * 1000);
+    return () => clearInterval(id);
+  }, [fetchedAt]);
+
+  const timeAgo = React.useMemo(() => {
+    if (!fetchedAt) return null;
+    const then = new Date(fetchedAt).getTime();
+    const now = nowTick;
+    const diff = Math.max(0, Math.floor((now - then) / 1000));
+    if (diff < 10) return 'just now';
+    if (diff < 60) return `${diff} seconds ago`;
+    const mins = Math.floor(diff / 60);
+    if (mins < 60) return `${mins} minute${mins === 1 ? '' : 's'} ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs} hour${hrs === 1 ? '' : 's'} ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days} day${days === 1 ? '' : 's'} ago`;
+  }, [fetchedAt, nowTick]);
   const [cursor, setCursor] = useState(() => {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), 1);
@@ -269,7 +292,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
           {/* Feed freshness */}
           <div className="-mt-3 mb-6 text-[12px] text-neutral-500">
             {fetchedAt ? (
-              <span>Updated from Google Calendar: {new Date(fetchedAt).toLocaleString()}</span>
+              <span title={new Date(fetchedAt).toLocaleString()}>Updated from Google Calendar: {timeAgo}</span>
             ) : (
               <span>Updated from Google Calendar: at build time</span>
             )}
