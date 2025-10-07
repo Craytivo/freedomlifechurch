@@ -25,7 +25,7 @@ export default function AltarExperiencePage() {
 
       {/* Creative Hero with event image */}
       <section className="relative w-full overflow-hidden">
-        <div className="relative h-[38vh] min-h-[360px] sm:min-h-[420px] md:min-h-[480px]">
+  <div className="relative min-h-[420px] sm:min-h-[460px] md:min-h-[520px]">
           {/* Subtle vignette + glow across the whole hero */}
           <div className="absolute inset-0" style={{
             background: [
@@ -71,8 +71,8 @@ export default function AltarExperiencePage() {
                 </div>
 
                 {/* Right: Event info card (replicated style from hero slide) */}
-                <div className="md:col-span-3 order-first md:order-none">
-                  <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60 bg-white/80 backdrop-blur">
+                <div className="md:col-span-3 md:order-none mt-6 md:mt-0">
+                  <div className="rounded-xl sm:rounded-2xl shadow-lg overflow-hidden relative flex justify-center px-2 sm:px-2.5 md:px-3 pt-1 sm:pt-1.5 pb-3 sm:pb-3.5 md:pt-2 md:pb-5 border border-flc-200/60 bg-white/80 backdrop-blur md:scale-125 lg:scale-150 origin-center">
                     <div className="absolute inset-0 bg-gradient-to-br from-flc-50 via-amber-50 to-neutral-100" />
                     <div className="absolute inset-0" style={{ background: 'radial-gradient(90% 70% at 50% 0%, rgba(235,167,62,0.22) 0%, rgba(235,167,62,0) 60%)' }} />
                     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -86,7 +86,7 @@ export default function AltarExperiencePage() {
                         priority={false}
                       />
                     </div>
-                    <div className="relative w-full max-w-xs sm:max-w-md mx-auto flex flex-col items-center text-center">
+                    <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto flex flex-col items-center text-center">
                       {/* Date chip */}
                       <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
                         <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-2xs sm:text-xs font-semibold text-amber-700 shadow-sm">
@@ -98,12 +98,12 @@ export default function AltarExperiencePage() {
 
                       {/* Logo */}
                       <div className="relative -mt-0.5 sm:-mt-1 -mb-0.5 sm:-mb-1 select-none pointer-events-none">
-                        <div className="relative w-32 sm:w-40 md:w-56 h-16 sm:h-20 md:h-28 drop-shadow-md">
+                        <div className="relative w-32 sm:w-44 md:w-80 h-16 sm:h-22 md:h-40 drop-shadow-md">
                           <Image
                             src={altarExperienceLogo}
                             alt="Altar Experience Conference Logo"
                             fill
-                            sizes="(max-width:640px) 128px, (max-width:768px) 160px, 224px"
+                            sizes="(max-width:640px) 160px, (max-width:768px) 192px, 320px"
                             className="object-contain"
                             priority
                           />
