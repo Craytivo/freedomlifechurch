@@ -108,10 +108,10 @@ const PlanVisitSection = () => {
               />
               <div className="grid sm:grid-cols-2 gap-5 mb-10">
                 {quickFacts.map(f => (
-                  <div key={f.label} className="p-4 rounded-lg border border-neutral-200 bg-neutral-50/60 hover:bg-white transition-colors">
+                  <div key={f.label} className="p-4 card card-hover">
                     <div className="flex items-center gap-2 mb-1">
                       {f.icon}
-                      <p className="text-[11px] uppercase tracking-wide text-neutral-500 font-semibold">{f.label}</p>
+                      <p className="text-xs uppercase tracking-wide text-neutral-500 font-semibold">{f.label}</p>
                     </div>
                     <p className="text-sm text-neutral-800 font-medium leading-snug">{f.value}</p>
                   </div>
@@ -144,14 +144,14 @@ const PlanVisitSection = () => {
                         // fallback: select text? (skipped for brevity)
                       }
                     }}
-                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-neutral-300 bg-white text-[12px] font-medium text-neutral-700 hover:border-flc-500 hover:text-flc-600 focus:outline-none focus:ring-2 focus:ring-flc-500/30 transition-colors"
+                    className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-neutral-300 bg-white text-sm font-medium text-neutral-700 hover:border-flc-500 hover:text-flc-600 focus:outline-none focus:ring-2 focus:ring-flc-500/30 transition-colors"
                   >
                     {copied ? 'Copied!' : 'Copy Address'}
                   </button>
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`}
                     target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[12px] font-medium text-flc-600 hover:text-flc-700"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-flc-600 hover:text-flc-700"
                   >
                     View Larger Map
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -163,7 +163,7 @@ const PlanVisitSection = () => {
                       {!mapLoaded && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
                           <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map" />
-                          <span className="text-[12px]">Loading map…</span>
+                          <span className="text-sm">Loading map…</span>
                         </div>
                       )}
                       <iframe
@@ -179,12 +179,12 @@ const PlanVisitSection = () => {
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
                       <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Preparing map" />
-                      <span className="text-[12px]">Preparing map…</span>
+                      <span className="text-sm">Preparing map…</span>
                     </div>
                   )}
                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/10 via-transparent to-white/25" aria-hidden="true" />
                 </div>
-                <p className="mt-3 text-[13px] text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
+                <p className="mt-3 text-sm text-neutral-600 leading-relaxed max-w-md">{ADDRESS}</p>
                 {/* Google Maps embed includes built-in attribution */}
               </div>
               <div className="flex flex-wrap gap-4 mb-6">
@@ -195,7 +195,7 @@ const PlanVisitSection = () => {
                   </a>
                 ))}
               </div>
-              <div className="text-[13px] text-neutral-500">
+              <div className="text-sm text-neutral-500">
                 Prefer to just show up? That's perfect too—come say hi at the Connect area after service.
               </div>
               <div className="mt-4 flex flex-wrap gap-3">
@@ -213,7 +213,7 @@ const PlanVisitSection = () => {
             {/* Right: Simple RSVP Form */}
             <div className="lg:col-span-5 relative">
               <div className="absolute -inset-4 bg-gradient-to-br from-flc-500/5 via-transparent to-transparent rounded-2xl pointer-events-none" aria-hidden="true" />
-              <form onSubmit={handleSubmit} className="relative p-6 rounded-2xl border border-neutral-200 bg-white shadow-sm">
+              <form onSubmit={handleSubmit} className="relative p-6 card">
                 <div className="mb-5">
                   <h3 className="font-heading text-xl font-semibold text-primary-900 mb-1">Let Us Know You're Coming</h3>
                   <p className="text-sm text-neutral-600 leading-relaxed">We'll send you a short confirmation and have someone ready to welcome you.</p>
@@ -256,9 +256,9 @@ const PlanVisitSection = () => {
                   {!submitted && <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>}
                 </button>
                 {submitted && (
-                  <p className="mt-3 text-center text-[13px] text-flc-600 font-medium">We'll be in touch soon. See you Sunday!</p>
+                  <p className="mt-3 text-center text-sm text-flc-600 font-medium">We'll be in touch soon. See you Sunday!</p>
                 )}
-                <div className="mt-5 text-[11px] text-neutral-400 leading-relaxed">
+                <div className="mt-5 text-xs text-neutral-400 leading-relaxed">
                   This form does not store data yet. Replace with your integration (Church Center, custom API, or email automation) later.
                 </div>
               </form>

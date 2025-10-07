@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useRouter } from 'next/router';
 import SearchBar from './SearchBar';
 import NavigationMenu from './NavigationMenu';
 import MobileMenuButton from './MobileMenuButton';
@@ -8,6 +9,7 @@ import UserAvatar from './UserAvatar';
 import Logo from './Logo';
 
 const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
+  const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const navigation = [
@@ -192,8 +194,8 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
 
   return (
     <header
-      className="bg-white shadow-sm border-b border-neutral-100 sticky top-0 z-40 backdrop-blur-sm"
-      style={{ backgroundColor: 'rgba(255,255,255,0.92)' }}
+      className="bg-white/90 sticky top-0 z-40 backdrop-blur-md header-edge"
+      style={{ backgroundColor: 'rgba(255,255,255,0.88)' }}
     >
   <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
         <div className="flex flex-col">
@@ -207,7 +209,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           {isLive && (
             <a
               href="#livestream"
-              className="hidden md:flex items-center gap-1 text-[11px] font-semibold text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500"
+              className="hidden md:flex items-center gap-1 text-xs font-semibold text-red-600 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-red-500"
               aria-label="Live service is on. Watch livestream."
             >
               <span className="relative inline-flex w-2.5 h-2.5">
@@ -238,7 +240,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
                   )}
                   {Object.entries(groupedResults).map(([section, items]) => (
                     <div key={section} className="px-3 pb-2">
-                      <div className="pt-2 pb-1 px-1 text-[10px] font-semibold uppercase tracking-wide text-neutral-500">{section}</div>
+                      <div className="pt-2 pb-1 px-1 text-2xs font-semibold uppercase tracking-wide text-neutral-500">{section}</div>
                       <ul className="space-y-1">
                         {items.map(item => {
                           const globalIndex = flatResults.indexOf(item);
@@ -255,7 +257,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
                                 onClick={() => { setSearchQuery(''); setActiveIndex(-1); }}
                               >
                                 <span className="block truncate">{item.name}</span>
-                                {item.desc && <span className={`block text-[11px] ${isActive ? 'text-white/85' : 'text-neutral-500'} truncate`}>{item.desc}</span>}
+                                {item.desc && <span className={`block text-xs ${isActive ? 'text-white/85' : 'text-neutral-500'} truncate`}>{item.desc}</span>}
                               </a>
                             </li>
                           );
@@ -268,7 +270,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <NavigationMenu items={navigation} />
+            <NavigationMenu items={navigation} className="group/nav" activePath={router.pathname} />
             <GiveLink />
             <UserAvatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
           </div>
@@ -280,7 +282,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           >
             <p
               ref={taglineRef}
-              className={`flex items-center gap-1 font-normal italic transition-opacity duration-500 ${fade ? 'opacity-0' : 'opacity-100'} text-[11px] md:text-[12px] tracking-tight text-neutral-500`}
+              className={`flex items-center gap-1 font-normal italic transition-opacity duration-500 ${fade ? 'opacity-0' : 'opacity-100'} text-xs md:text-sm tracking-tight text-neutral-500`}
             >
               <span
                 aria-hidden="true"
@@ -288,7 +290,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
               />
               <span>A growing community pursuing presence, transformation & mission.</span>
             </p>
-            <p ref={timesRef} className="text-[11px] font-normal text-neutral-500 whitespace-nowrap tracking-tight">
+            <p ref={timesRef} className="text-xs font-normal text-neutral-500 whitespace-nowrap tracking-tight">
               Sundays 12:00 PM MST <span className="mx-1 text-neutral-300">•</span> Saturday Prayer 10:00 AM MST
             </p>
           </div>

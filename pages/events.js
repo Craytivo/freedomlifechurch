@@ -310,7 +310,7 @@ export default function EventsPage({ initialEvents }) {
           {upcoming.length > 0 && (
             <div className="mb-8 grid md:grid-cols-3 gap-4">
               {upcoming.map((e) => (
-                <Link key={`hi-${e.id}`} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-sm p-4 hover:border-flc-500/40 hover:shadow-sm transition-colors">
+                <Link key={`hi-${e.id}`} href={`/events/${e.id}`} className="group card card-hover p-4">
                   <div className="flex items-start gap-3">
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-flc-500/10 text-flc-700">
                       {categoryIcon(e.category)}
@@ -330,7 +330,7 @@ export default function EventsPage({ initialEvents }) {
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             {/* Calendar - Hidden on mobile */}
             <div className="hidden lg:block lg:col-span-5">
-              <div className="rounded-xl border border-neutral-200 bg-white shadow-sm">
+              <div className="card">
                 <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
                   <button onClick={goPrev} aria-label="Previous month" className="p-2 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600">
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -390,7 +390,7 @@ export default function EventsPage({ initialEvents }) {
 
               {/* Day details */}
               {selectedDate && (
-                <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-4">
+                <div className="mt-4 card p-4">
                   <div className="text-sm font-semibold text-primary-900 mb-2">{selectedDate.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}</div>
                   {(dayEvents.length === 0) ? (
                     <div className="text-sm text-neutral-500">No events on this day.</div>
@@ -446,7 +446,7 @@ export default function EventsPage({ initialEvents }) {
                     </div>
                   </div>
                 ) : visibleList.map(e => (
-                  <Link key={e.id} href={`/events/${e.id}`} className="group rounded-2xl border border-neutral-200 bg-white p-4 md:p-5 hover:border-flc-500/40 hover:shadow-sm transition-colors">
+                  <Link key={e.id} href={`/events/${e.id}`} className="group card card-hover p-4 md:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide font-semibold">

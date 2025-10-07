@@ -69,5 +69,18 @@ html {
 /* Reusable component-level typography helpers */
 @layer components {
   .prose-lead { @apply text-neutral-700 text-lg md:text-xl leading-relaxed; }
-  .eyebrow { @apply inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider; }
+  .eyebrow { @apply inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-xs font-semibold uppercase tracking-wider; }
+  .meta { @apply text-xs text-neutral-500 tracking-wide; }
+  .kicker { @apply text-xs uppercase tracking-[0.12em] font-semibold text-neutral-500; }
+  .card { @apply rounded-2xl border border-neutral-200 bg-white/90 backdrop-blur-[2px] ring-1 ring-black/5 shadow-sm; }
+  .card-hover { @apply transition-all duration-200 hover:-translate-y-px hover:shadow-lg hover:ring-black/10; }
+  .header-edge { @apply relative; }
+  .header-edge::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px; height: 1px;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 20%, rgba(0,0,0,0.06) 80%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+  }
 }
+

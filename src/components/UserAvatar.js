@@ -27,7 +27,7 @@ const UserAvatar = ({ onClick, imageUrl, name }) => {
       aria-label={name ? `${name} menu` : 'User menu'}
     >
       <span
-        className="relative inline-flex w-9 h-9 rounded-full overflow-hidden select-none text-[11px] font-medium tracking-wide uppercase items-center justify-center text-neutral-700 bg-neutral-200 border border-neutral-300 group-hover:border-neutral-400 transition-colors"
+  className="relative inline-flex w-9 h-9 rounded-full overflow-hidden select-none text-xs font-medium tracking-wide uppercase items-center justify-center text-neutral-700 bg-neutral-200 border border-neutral-300 group-hover:border-neutral-400 transition-colors"
       >
         {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element

@@ -106,7 +106,7 @@ const Card = ({ item, spanClass = '' }) => (
         </div>
       </div>
       
-      <div className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.12em] text-neutral-500 mb-3 sm:mb-4 mt-4">{item.title}</div>
+  <div className="text-2xs sm:text-xs font-bold uppercase tracking-[0.12em] text-neutral-500 mb-3 sm:mb-4 mt-4">{item.title}</div>
       
       <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-primary-900 leading-tight mb-auto">
         <span className="bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 bg-clip-text text-transparent group-hover:from-primary-800 group-hover:via-primary-700 group-hover:to-flc-600 transition-all duration-300">
@@ -144,7 +144,7 @@ const WaysToGetInvolved = () => {
         <div className="px-0 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
         <div className="px-4 sm:px-0">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2 rounded-full bg-gradient-to-r from-flc-500/10 via-flc-500/5 to-amber-500/10 border border-flc-500/20 text-flc-700 text-2xs sm:text-xs font-bold uppercase tracking-[0.15em] shadow-sm backdrop-blur-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
               For every age & season
             </div>

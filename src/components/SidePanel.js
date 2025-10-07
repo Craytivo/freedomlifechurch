@@ -403,12 +403,12 @@ const SidePanel = ({ isOpen, onClose }) => {
 
           {/* Contact and Social */}
           <div className="pt-2 pb-6 border-t border-neutral-200">
-            <address className="not-italic text-[13px] leading-5 text-neutral-600">
+            <address className="not-italic text-sm leading-5 text-neutral-600">
               14970 114 Ave NW
               <br />
               Edmonton, AB T5M 4G4
             </address>
-            <div className="mt-2 text-[13px] text-neutral-600">780-729-0399</div>
+            <div className="mt-2 text-sm text-neutral-600">780-729-0399</div>
             <div className="mt-4 flex items-center gap-3">
               <a
                 href="https://www.youtube.com/@FLCEdmonton"
@@ -444,7 +444,7 @@ const SidePanel = ({ isOpen, onClose }) => {
                 </svg>
               </a>
             </div>
-            <div className="mt-4 text-[12px] text-neutral-400">© {new Date().getFullYear()} Freedom Life Church. All Rights Reserved.</div>
+            <div className="mt-4 text-xs text-neutral-400">© {new Date().getFullYear()} Freedom Life Church. All Rights Reserved.</div>
           </div>
         </nav>
       </div>

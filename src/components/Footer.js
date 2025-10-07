@@ -19,9 +19,9 @@ const Footer = () => {
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" style={{ maxWidth: '88rem' }}>
         {/* Top CTA strip */}
-        <div className="mb-10 md:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 md:p-5 rounded-xl border border-neutral-200 bg-white">
+  <div className="mb-10 md:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 md:p-5 card card-hover">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wide">Join us Sunday</span>
+            <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-flc-500/10 text-flc-700 text-xs font-semibold uppercase tracking-wide">Join us Sunday</span>
             <span className="text-sm text-neutral-700">12:00 PM · 14970 114 Ave NW, Edmonton</span>
           </div>
           <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ const Footer = () => {
               </div>
               <div>
                 <p className="font-heading text-lg font-bold text-primary-900 leading-tight">Freedom Life Church</p>
-                <p className="text-[12px] text-neutral-500">Edmonton, Alberta</p>
+                <p className="text-xs text-neutral-500">Edmonton, Alberta</p>
               </div>
             </div>
             <p className="text-neutral-600 text-sm leading-relaxed max-w-sm">
@@ -106,7 +106,7 @@ const Footer = () => {
         </div>
 
         {/* Social & Copyright */}
-        <div className="mt-10 pt-8 border-t border-neutral-200">
+  <div className="mt-10 pt-8 border-t border-neutral-200/80">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Socials */}
             <div className="flex items-center gap-3">

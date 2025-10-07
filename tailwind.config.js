@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        '2xs': ['0.625rem', { lineHeight: '0.875rem', letterSpacing: '0.02em' }],
+      },
       fontFamily: {
         // Primary font families inspired by modern church websites
         'sans': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

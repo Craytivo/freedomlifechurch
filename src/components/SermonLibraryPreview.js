@@ -90,7 +90,7 @@ const SermonLibraryPreview = () => {
         <div className="px-4 sm:px-0">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
             <div>
-              <div className="inline-flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Stay encouraged</div>
+              <div className="eyebrow">Stay encouraged</div>
               <h2 className="mt-2 sm:mt-3 font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 mb-2 sm:mb-3 drop-shadow-md leading-[1.1]">Recent Messages</h2>
               <p className="text-neutral-600 text-base sm:text-lg md:text-xl max-w-xl leading-relaxed font-medium tracking-wide">Catch up on the latest teaching and explore past messages to keep growing mid‑week.</p>
             </div>
@@ -109,7 +109,7 @@ const SermonLibraryPreview = () => {
           <div className="grid lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 xl:gap-14 items-start">
             {/* Featured */}
             <div className="lg:col-span-6">
-              <div className="group relative rounded-2xl shadow-sm border border-neutral-200 overflow-hidden bg-white">
+              <div className="group relative card overflow-hidden">
                 <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                   <Image
                     src={`https://img.youtube.com/vi/${featured.id}/hqdefault.jpg`}
@@ -119,6 +119,8 @@ const SermonLibraryPreview = () => {
                     className="object-cover group-hover:brightness-105 transition-all duration-300"
                     priority
                   />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/5 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-overlay" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27160%27 height=%27160%27 viewBox=%270 0 160 160%27%3E%3Cfilter id=%27n%27 x%3D%270%27 y%3D%270%27 width%3D%27100%25%27 height%3D%27100%25%27%3E%3CfeTurbulence type%3D%27fractalNoise%27 baseFrequency%3D%270.9%27 numOctaves%3D%273%27 stitchTiles%3D%27stitch%27/%3E%3CfeColorMatrix type%3D%27saturate%27 values%3D%270%27/%3E%3CfeComponentTransfer%3E%3CfeFuncA type%3D%27linear%27 slope%3D%270.05%27/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width%3D%27160%27 height%3D%27160%27 filter%3D%27url(%23n)%27/%3E%3C/svg%3E')" }} />
                   <button
                     onClick={() => setModalVideo(featured.id)}
                     className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors"
@@ -130,7 +132,7 @@ const SermonLibraryPreview = () => {
                   </button>
                 </div>
                 <div className="p-5 sm:p-6">
-                  <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wide text-flc-600 mb-2">
+                  <div className="flex items-center gap-2 text-2xs sm:text-xs font-semibold uppercase tracking-wide text-flc-600 mb-2">
                     <span>Latest</span>
                     <span className="w-1 h-1 rounded-full bg-neutral-300" />
                     <time dateTime={featured.published} className="text-neutral-500 font-medium normal-case tracking-normal">{formatDate(featured.published)}</time>
@@ -170,7 +172,7 @@ const SermonLibraryPreview = () => {
                     href={`https://www.youtube.com/watch?v=${s.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-neutral-200 bg-white hover:border-flc-500/40 hover:shadow-sm transition-colors"
+                    className="group flex gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl card card-hover"
                   >
                     <div className="relative w-28 sm:w-32 lg:w-40 flex-none">
                       <div className="relative w-full rounded-lg overflow-hidden bg-neutral-100" style={{ paddingBottom: '56.25%' }}>
@@ -190,15 +192,15 @@ const SermonLibraryPreview = () => {
                       </div>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide text-flc-600 mb-1">
+                      <div className="flex items-center gap-2 text-2xs font-semibold uppercase tracking-wide text-flc-600 mb-1">
                         <span>Recent</span>
                         <span className="w-1 h-1 rounded-full bg-neutral-300" />
                         <time dateTime={s.published} className="text-neutral-500 font-medium normal-case tracking-normal">{formatDate(s.published)}</time>
                       </div>
-                      <h4 className="font-heading text-sm sm:text-[15px] md:text-base font-semibold text-primary-900 mb-1 leading-snug line-clamp-2">
+                      <h4 className="font-heading text-sm sm:text-base md:text-base font-semibold text-primary-900 mb-1 leading-snug line-clamp-2">
                         {s.title}
                       </h4>
-                      <p className="text-neutral-600 text-[11px] sm:text-[12px] md:text-[13px] leading-snug line-clamp-2 max-w-prose">{s.description}</p>
+                      <p className="text-neutral-600 text-xs sm:text-sm md:text-sm leading-snug line-clamp-2 max-w-prose">{s.description}</p>
                     </div>
                   </a>
                 ))}

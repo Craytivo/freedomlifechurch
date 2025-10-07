@@ -61,7 +61,7 @@ const StorePage = () => {
             <Heading as="h3" className="mb-8">What We're Stocking</Heading>
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="p-6 card card-hover transition-all duration-300">
                 <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center mb-4">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -71,7 +71,7 @@ const StorePage = () => {
                 <p className="text-neutral-600 text-sm">T-shirts, hoodies, and accessories with inspiring designs</p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="p-6 card card-hover transition-all duration-300">
                 <div className="w-12 h-12 bg-orange-500/10 text-orange-600 rounded-xl flex items-center justify-center mb-4">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
@@ -81,7 +81,7 @@ const StorePage = () => {
                 <p className="text-neutral-600 text-sm">Christian literature, devotionals, and study materials</p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="p-6 card card-hover transition-all duration-300">
                 <div className="w-12 h-12 bg-amber-500/10 text-amber-600 rounded-xl flex items-center justify-center mb-4">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A2.704 2.704 0 003 15.546V6.454c0-.351.062-.693.18-1.019a2.703 2.703 0 013.821-1.821.708.708 0 01.129.136.702.702 0 01.136.129c.273.4.273.96 0 1.36a.708.708 0 01-.136.129A.702.702 0 017 5.5a.702.702 0 01-.13-.137A2.703 2.703 0 003.546 6.75"/>
@@ -91,7 +91,7 @@ const StorePage = () => {
                 <p className="text-neutral-600 text-sm">Worship albums, sermon series, and digital downloads</p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="p-6 card card-hover transition-all duration-300">
                 <div className="w-12 h-12 bg-orange-500/10 text-orange-600 rounded-xl flex items-center justify-center mb-4">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>

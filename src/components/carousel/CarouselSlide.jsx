@@ -43,7 +43,7 @@ const CarouselSlide = ({
             <div className="w-1.5 h-1.5 bg-flc-500 rounded-full animate-pulse" />
             {slide.badge}
           </span>
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-500 font-medium">Slide {i + 1} of {total}</span>
+          <span className="text-2xs sm:text-xs uppercase tracking-wider text-neutral-500 font-medium">Slide {i + 1} of {total}</span>
         </div>
         <div className="flex-none flex md:hidden items-center gap-2 ml-1" aria-hidden={total <= 1}>
           <button
@@ -71,7 +71,7 @@ const CarouselSlide = ({
         <h2 className="font-heading font-black text-transparent bg-clip-text bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700 tracking-tight leading-[1.05] text-[clamp(1.75rem,7vw,3.5rem)] sm:text-[clamp(2rem,4.5vw,3.5rem)] drop-shadow-sm">
           {slide.title}
         </h2>
-        <p className="font-heading text-flc-600 mt-3 text-[11px] sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase drop-shadow-sm">
+  <p className="font-heading text-flc-600 mt-3 text-xs sm:text-sm md:text-base font-bold tracking-[0.18em] sm:tracking-[0.2em] uppercase drop-shadow-sm">
           {slide.subtitle}
         </p>
       </div>
@@ -92,7 +92,7 @@ const CarouselSlide = ({
                   </li>
                 ))}
               </ul>
-              <div className="text-xs sm:text-[13px] leading-relaxed text-neutral-600">
+              <div className="text-xs sm:text-sm leading-relaxed text-neutral-600">
                 <strong className="font-semibold text-neutral-800">Why come?</strong> Step away from routine, rekindle your first love, receive fresh impartation, and return strengthened for the mandate ahead.
               </div>
             </div>
@@ -100,15 +100,15 @@ const CarouselSlide = ({
           {slide.id === 'sermon' && (
             <div className="mb-5 sm:mb-6 max-w-xl">
               <div className="p-2.5 sm:p-3 rounded-lg bg-neutral-50 border border-neutral-200 flex items-start gap-2.5 sm:gap-3">
-                <span className="inline-flex w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-[10px] sm:text-[11px] font-semibold">NEW</span>
+                <span className="inline-flex w-5 h-5 sm:w-6 sm:h-6 rounded-md bg-flc-500/10 text-flc-600 items-center justify-center text-2xs sm:text-xs font-semibold">NEW</span>
                 <div className="space-y-1 sm:space-y-1.5">
-                  <p className="text-xs sm:text-[13px] leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing midweek.</p>
-                  <p className="text-[11px] sm:text-[12px] leading-relaxed text-neutral-500">Watch live Sundays at 12:00 PM (MST), or on‑demand anytime.</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-neutral-600">Catch the most recent message and explore previous series to keep growing midweek.</p>
+                  <p className="text-xs sm:text-sm leading-relaxed text-neutral-500">Watch live Sundays at 12:00 PM (MST), or on‑demand anytime.</p>
                 </div>
               </div>
               <div className="mt-3 sm:mt-4 rounded-lg border border-neutral-200 bg-neutral-50/80 p-3 sm:p-4">
-                <p className="text-[11px] sm:text-[12px] text-neutral-500 uppercase font-semibold tracking-wide mb-2">Highlights</p>
-                <ul className="grid grid-cols-1 gap-2 text-xs sm:text-[13px] text-neutral-700">
+                <p className="text-xs sm:text-sm text-neutral-500 uppercase font-semibold tracking-wide mb-2">Highlights</p>
+                <ul className="grid grid-cols-1 gap-2 text-xs sm:text-sm text-neutral-700">
                   <li className="flex items-start gap-2">
                     <span className="mt-1 w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
                     <span>Biblical teaching that forms strong disciples.</span>
@@ -128,10 +128,10 @@ const CarouselSlide = ({
           {slide.id === 'prayer-focus' && (
             <div className="mb-5 sm:mb-6 max-w-xl">
               <div className="rounded-lg border border-neutral-200 bg-neutral-50/80 p-3 sm:p-4 md:p-5">
-                <p className="text-xs sm:text-[13px] text-neutral-600 leading-relaxed mb-2.5 sm:mb-3">
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-2.5 sm:mb-3">
                   Focus your agreement on these themes—set a reminder, gather with someone, and lean into listening prayer.
                 </p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-[11px] sm:text-[12px] md:text-[13px]">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-sm">
                   {slide.focuses?.map(f => (
                     <li key={f} className="flex items-center gap-2 px-2 py-1 rounded-md bg-white border border-neutral-200 shadow-xs">
                       <span className="w-1.5 h-1.5 rounded-full bg-flc-500" aria-hidden="true" />
@@ -140,11 +140,11 @@ const CarouselSlide = ({
                   ))}
                 </ul>
                 <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-3 items-start sm:items-center">
-                  <SmartLink href="#prayer-gathering" className="text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1">
+                  <SmartLink href="#prayer-gathering" className="text-2xs sm:text-xs font-semibold tracking-wide uppercase text-flc-600 hover:text-flc-700 inline-flex items-center gap-1">
                     Weekly Prayer Gatherings
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                   </SmartLink>
-                  <span className="text-[10px] sm:text-[11px] text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
+                  <span className="text-2xs sm:text-xs text-neutral-400">Fridays · 7:00 AM & 7:00 PM</span>
                 </div>
               </div>
             </div>
@@ -206,7 +206,7 @@ const CarouselSlide = ({
                   if (!showDates) return null;
                   return (
                     <div className="absolute right-1.5 top-1.5 sm:right-2.5 sm:top-2.5 md:right-3 md:top-3">
-                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-[10px] sm:text-[11px] font-semibold text-amber-700 shadow-sm">
+                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-full bg-white/80 backdrop-blur border border-amber-200 text-2xs sm:text-xs font-semibold text-amber-700 shadow-sm">
                         <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                         <span className="hidden xs:inline">Oct 24–26 · Edmonton</span>
                         <span className="xs:hidden">Oct 24–26</span>
@@ -227,7 +227,7 @@ const CarouselSlide = ({
                   </div>
                 </div>
                 <h3 className="font-heading text-base sm:text-lg md:text-2xl font-bold leading-snug text-primary-900 mt-0.5 sm:mt-1">
-                  <span className="block text-[8px] sm:text-[9px] md:text-[11px] font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
+                  <span className="block text-2xs md:text-xs font-semibold tracking-[0.08em] text-flc-600 uppercase mb-0.5">
                     Encounter · Revival · Restoration
                   </span>
                   <span className="text-primary-900">The Original Mandate</span>
@@ -255,7 +255,7 @@ const CarouselSlide = ({
 
                     const label = diffDays === 0 ? 'Starts Today' : `${diffDays} day${diffDays === 1 ? '' : 's'} to go`;
                     items.push(
-                      <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-[10px] sm:text-[11px] font-semibold">
+                      <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
                         <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
                         {label}
                       </span>
@@ -263,7 +263,7 @@ const CarouselSlide = ({
                   }
                   if (end && now <= end) {
                     items.push(
-                      <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-[10px] sm:text-[11px] text-neutral-700">
+                      <span key="facts" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/80 backdrop-blur border border-neutral-200 text-2xs sm:text-xs text-neutral-700">
                         <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 12.414a4 4 0 10-1.414 1.414l4.243 4.243"/></svg>
                         3 days · Fri–Sun
                       </span>
@@ -274,7 +274,7 @@ const CarouselSlide = ({
                     <div className="mt-1.5 sm:mt-2 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">{items}</div>
                   );
                 })()}
-                <p className="text-[9px] sm:text-[10px] md:text-sm text-neutral-700 leading-snug mt-1.5 sm:mt-2">
+                <p className="text-2xs sm:text-xs md:text-sm text-neutral-700 leading-snug mt-1.5 sm:mt-2">
                   Bring family & friends. Expect transformation in God's presence.
                 </p>
               </div>
@@ -285,12 +285,12 @@ const CarouselSlide = ({
             <div className="rounded-xl shadow-lg overflow-hidden relative border border-neutral-200 bg-gradient-to-br from-flc-50 via-neutral-50 to-white">
               <div className="relative p-5 md:p-6 lg:p-7">
                 <div className="inline-flex items-center gap-2 mb-2">
-                  <span className="px-2.5 py-1 rounded-full bg-flc-500/10 text-flc-600 text-[11px] font-semibold uppercase tracking-wide">Prayer</span>
+                  <span className="eyebrow">Prayer</span>
                 </div>
                 <h3 className="font-heading text-lg md:text-2xl font-bold leading-snug text-primary-900">
                   Ways to pray this week
                 </h3>
-                <p className="text-[13px] md:text-sm text-neutral-600 mt-2">
+                <p className="text-sm md:text-sm text-neutral-600 mt-2">
                   Set a simple rhythm and agree with the prayer focuses.
                 </p>
                 <ul className="mt-4 space-y-2 text-sm text-neutral-700">
@@ -307,7 +307,7 @@ const CarouselSlide = ({
                     <span>Write a short testimony when you see breakthrough.</span>
                   </li>
                 </ul>
-                <div className="mt-5 p-3 rounded-lg bg-flc-500/10 border border-flc-200 text-[13px] text-flc-700">
+                <div className="mt-5 p-3 rounded-lg bg-flc-500/10 border border-flc-200 text-sm text-flc-700">
                   “Pray without ceasing.” — 1 Thess. 5:17
                 </div>
               </div>
