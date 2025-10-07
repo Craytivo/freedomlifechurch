@@ -384,7 +384,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                         type="button"
                         onClick={() => setSelectedDate(new Date(d))}
                         className={classNames(
-                          'group relative min-h-[108px] rounded-md px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40 hover:bg-neutral-50',
+                          'relative min-h-[108px] rounded-md px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40 hover:bg-neutral-50',
                           inMonth ? (isWeekend ? 'bg-neutral-50' : 'bg-white') : 'bg-white',
                           !inMonth && 'opacity-45',
                           selected && 'ring-2 ring-flc-500/50',
@@ -405,23 +405,14 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                           })}
                           {list.length > 4 && <span className="text-[10px] text-neutral-400">+{list.length - 4}</span>}
                         </div>}
-                        {/* Tooltip with titles (desktop only) */}
-                        {has && (
-                          <div className="pointer-events-none hidden md:block group-hover:block group-focus:block absolute top-1 left-2 transform -translate-y-full z-20 bg-white/95 backdrop-blur-sm border border-neutral-200 shadow-lg rounded-md px-2 py-1 text-[11px] text-neutral-700 max-w-[220px]">
-                            <div className="font-semibold text-neutral-800 mb-0.5">{list.length} event{list.length === 1 ? '' : 's'}</div>
-                            <ul className="space-y-0.5">
-                              {list.slice(0,6).map(ev => (<li key={ev.id} className="truncate">• {ev.title}</li>))}
-                              {list.length > 6 && (<li className="text-neutral-500">+{list.length - 6} more…</li>)}
-                            </ul>
-                          </div>
-                        )}
+                        {/* Tooltips removed per request */}
                       </button>
                     );
                   })}
                 </div>
 
                 {/* Legend */}
-                <div className="mt-4 border-t border-neutral-200 pt-3">
+                <div className="mt-4 border-t border-neutral-200 pt-3 px-4">
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">Legend</div>
                   <div className="flex flex-wrap items-center gap-2.5 text-[12px]">
                     {colorPriority
