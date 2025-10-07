@@ -2,6 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 
+// Default site timezone (Mountain Time)
+const DEFAULT_TZ = process.env.DEFAULT_TZ || 'America/Edmonton';
+
 // Absolute path to the ICS file in the repo
 const ICS_FILE = path.join(
   process.cwd(),
@@ -185,18 +188,14 @@ function parseICSTimestamp(val, tzid) {
 
 function toDateKey(d) {
   if (!d || isNaN(d.getTime())) return null;
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, '0');
-  const dd = String(d.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
+  const fmt = new Intl.DateTimeFormat('en-CA', { timeZone: DEFAULT_TZ, year: 'numeric', month: '2-digit', day: '2-digit' });
+  const parts = Object.fromEntries(fmt.formatToParts(d).map(p => [p.type, p.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
 function formatTime(d) {
-  const hours = d.getHours();
-  const minutes = d.getMinutes();
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const h12 = hours % 12 || 12;
-  return `${h12}:${String(minutes).padStart(2, '0')} ${ampm}`;
+  const fmt = new Intl.DateTimeFormat(undefined, { timeZone: DEFAULT_TZ, hour: 'numeric', minute: '2-digit', hour12: true });
+  return fmt.format(d);
 }
 
 const BYDAY_MAP = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
