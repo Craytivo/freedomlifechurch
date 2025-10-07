@@ -39,6 +39,32 @@ function parseProperties(block) {
   return obj;
 }
 
+function parseParamPairs(paramsArr = []) {
+  const out = {};
+  for (const p of paramsArr) {
+    const [k, v] = String(p).split('=');
+    if (k) out[k.toUpperCase()] = v;
+  }
+  return out;
+}
+
+function makeDateInTimeZone(y, mo, d, hh, mm, ss, timeZone) {
+  // Compute a UTC timestamp that, when displayed in the given timeZone, shows the desired local components.
+  const baseUTC = Date.UTC(y, mo - 1, d, hh, mm, ss || 0);
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+  });
+  const parts = Object.fromEntries(fmt.formatToParts(new Date(baseUTC)).map(p => [p.type, p.value]));
+  const tzY = Number(parts.year), tzMo = Number(parts.month), tzD = Number(parts.day);
+  const tzH = Number(parts.hour), tzM = Number(parts.minute), tzS = Number(parts.second);
+  const displayedUTC = Date.UTC(tzY, tzMo - 1, tzD, tzH, tzM, tzS);
+  const intendedUTC = Date.UTC(y, mo - 1, d, hh, mm, ss || 0);
+  const fixed = baseUTC + (intendedUTC - displayedUTC);
+  return new Date(fixed);
+}
+
 function parseICSEvents(text) {
   const unfolded = unfoldLines(text);
   const veventBlocks = unfolded
@@ -66,6 +92,7 @@ function parseICSEvents(text) {
     // DTSTART may be in several formats
     const dtstartItem = Array.isArray(props['DTSTART']) ? props['DTSTART'][0] : props['DTSTART'];
     const dtstartRaw = dtstartItem?.value || '';
+    const dtstartParamPairs = parseParamPairs(dtstartItem?.params);
     const dtstartParams = dtstartItem?.params?.join(';') || '';
     let isAllDay = /VALUE=DATE/i.test(dtstartParams) || /^(\d{8})$/.test(dtstartRaw);
     let startDate;
@@ -82,8 +109,13 @@ function parseICSEvents(text) {
         const y = m[1], mo = m[2], d = m[3], hh = m[4], mm = m[5], ss = m[6] || '00';
         const hasZ = Boolean(m[7]);
         const iso = `${y}-${mo}-${d}T${hh}:${mm}:${ss}`;
-        // If timestamp ends with Z, interpret as UTC; otherwise treat as local time
-        startDate = new Date(hasZ ? `${iso}Z` : iso);
+        const tzid = dtstartParamPairs['TZID'];
+        if (tzid) {
+          startDate = makeDateInTimeZone(Number(y), Number(mo), Number(d), Number(hh), Number(mm), Number(ss), tzid);
+        } else {
+          // If timestamp ends with Z, interpret as UTC; otherwise treat as local time
+          startDate = new Date(hasZ ? `${iso}Z` : iso);
+        }
       }
     }
     if (!startDate) continue; // skip if missing
@@ -93,15 +125,20 @@ function parseICSEvents(text) {
     const exdateKeys = new Set();
     for (const ex of exdatesRaw) {
       const values = ex.value.split(',');
+      const exParamPairs = parseParamPairs(ex.params);
+      const tzid = exParamPairs['TZID'];
       for (const v of values) {
-        const dk = toDateKey(parseICSTimestamp(v));
+        const dk = toDateKey(parseICSTimestamp(v, tzid));
         if (dk) exdateKeys.add(dk);
       }
     }
 
     const rrule = pick('RRULE');
-    const recurrenceIdRaw = pick('RECURRENCE-ID');
-    const recurrenceId = recurrenceIdRaw ? toDateKey(parseICSTimestamp(recurrenceIdRaw)) : null;
+    const recurrenceIdItem = Array.isArray(props['RECURRENCE-ID']) ? props['RECURRENCE-ID'][0] : props['RECURRENCE-ID'];
+    const recurrenceIdRaw = recurrenceIdItem?.value || '';
+    const recurrenceParamPairs = parseParamPairs(recurrenceIdItem?.params);
+    const recurrenceTzid = recurrenceParamPairs['TZID'];
+    const recurrenceId = recurrenceIdRaw ? toDateKey(parseICSTimestamp(recurrenceIdRaw, recurrenceTzid)) : null;
 
     const base = {
       uid,
@@ -124,14 +161,23 @@ function parseICSEvents(text) {
   return expandRecurring(master, overrides);
 }
 
-function parseICSTimestamp(val) {
+function parseICSTimestamp(val, tzid) {
   // Supports YYYYMMDD or YYYYMMDDTHHmmSS(Z?)
   const dOnly = val.match(/^(\d{4})(\d{2})(\d{2})$/);
   if (dOnly) return new Date(`${dOnly[1]}-${dOnly[2]}-${dOnly[3]}T00:00:00`);
   const dt = val.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})?(Z)?$/);
   if (dt) {
-    const iso = `${dt[1]}-${dt[2]}-${dt[3]}T${dt[4]}:${dt[5]}:${dt[6] || '00'}`;
+    const y = Number(dt[1]);
+    const mo = Number(dt[2]);
+    const d = Number(dt[3]);
+    const hh = Number(dt[4]);
+    const mm = Number(dt[5]);
+    const ss = Number(dt[6] || '00');
     const hasZ = Boolean(dt[7]);
+    if (tzid && !hasZ) {
+      return makeDateInTimeZone(y, mo, d, hh, mm, ss, tzid);
+    }
+    const iso = `${String(y).padStart(4,'0')}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`;
     return new Date(hasZ ? `${iso}Z` : iso);
   }
   return null;
