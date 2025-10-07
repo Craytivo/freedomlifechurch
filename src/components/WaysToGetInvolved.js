@@ -7,7 +7,8 @@ const items = [
     key: 'groups',
     title: 'Groups',
     blurb: 'Find community and grow in faith together.',
-    href: '#groups',
+    href: 'https://freedomlifechurch.netlify.app/groups',
+    external: true,
     color: 'text-blue-600',
     bgMark: 'bg-blue-500/10',
     icon: (
@@ -20,7 +21,8 @@ const items = [
     key: 'nextgen',
     title: 'Kids & Youth',
     blurb: 'A safe, fun space to grow in Jesus.',
-    href: '#nextgen',
+    href: 'https://freedomlifechurch.netlify.app/groups/children',
+    external: true,
     color: 'text-purple-600',
     bgMark: 'bg-purple-500/10',
     icon: (
@@ -33,7 +35,8 @@ const items = [
     key: 'serve',
     title: 'Serve / Volunteer',
     blurb: 'Use your gifts to build the church.',
-    href: '#volunteer',
+    href: 'https://freedomlifechurch.netlify.app/groups/volunteer',
+    external: true,
     color: 'text-green-600',
     bgMark: 'bg-green-500/10',
     icon: (
@@ -46,7 +49,8 @@ const items = [
     key: 'prayer',
     title: 'Prayer Requests',
     blurb: 'We would love to pray with you.',
-    href: '#prayer',
+    href: 'https://freedomlifechurch.netlify.app/prayer',
+    external: true,
     color: 'text-cyan-600',
     bgMark: 'bg-cyan-500/10',
     icon: (
@@ -59,7 +63,8 @@ const items = [
     key: 'baptism',
     title: 'Baptism',
     blurb: 'Take your next step in following Jesus.',
-    href: '#baptism',
+    href: 'https://freedomlifechurch.netlify.app/baptism',
+    external: true,
     color: 'text-orange-600',
     bgMark: 'bg-orange-500/10',
     icon: (
