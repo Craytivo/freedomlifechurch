@@ -257,9 +257,6 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
       </Head>
 
       <section className="relative py-12 md:py-16 bg-white">
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{
-          background: 'radial-gradient(circle at 12% 8%, rgba(235,167,62,0.06), rgba(235,167,62,0) 55%)'
-        }} />
         <div className="relative mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '88rem' }}>
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 md:mb-8">
@@ -363,8 +360,8 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                 </div>
                 <div className="grid grid-cols-7 gap-px bg-neutral-200">
                   {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => (
-                    <div key={d} className="bg-neutral-50 text-[11px] font-semibold uppercase tracking-wide text-neutral-600 py-2 text-center">
-                      <span className="inline-block px-2 py-1 rounded-md bg-white border border-neutral-200 shadow-sm">{d}</span>
+                    <div key={d} className="bg-neutral-50 text-[11px] font-medium uppercase tracking-wide text-neutral-600 py-2 text-center">
+                      {d}
                     </div>
                   ))}
                 </div>
@@ -393,7 +390,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                         aria-pressed={selected}
                       >
                         <div className={classNames(
-                          'inline-flex items-center justify-center text-[11px] font-semibold',
+                          'inline-flex items-center justify-center text-[11px] font-medium',
                           isToday ? 'text-flc-700' : 'text-neutral-500'
                         )}>{d.getDate()}</div>
                         {has && <div className="absolute bottom-2 left-2 flex gap-1.5">
@@ -412,7 +409,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                 </div>
 
                 {/* Legend */}
-                <div className="mt-4 border-t border-neutral-200 pt-3 px-4">
+                <div className="mt-4 border-t border-neutral-200 pt-3 pb-4 px-4">
                   <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">Legend</div>
                   <div className="flex flex-wrap items-center gap-2.5 text-[12px]">
                     {colorPriority
@@ -420,7 +417,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                       .map(name => (
                         <div key={`legend-${name}`} className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-white">
                           <span className={`inline-block w-2.5 h-2.5 rounded-full ${tagBgColors[name] || 'bg-neutral-400'}`} />
-                          <span className="capitalize text-neutral-700">{name}</span>
+                          <span className="capitalize text-neutral-600">{name}</span>
                         </div>
                       ))}
                     <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600">
