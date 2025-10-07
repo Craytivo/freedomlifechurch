@@ -28,8 +28,8 @@ export default function AltarExperiencePage() {
       </Head>
 
       {/* Creative Hero with event image */}
-      <section className="relative w-full overflow-hidden">
-  <div className="relative min-h-[420px] sm:min-h-[460px] md:min-h-[520px]">
+    <section className="relative w-full overflow-hidden">
+  <div className="relative min-h-[500px] sm:min-h-[560px] md:min-h-[640px] flex items-center">
           {/* Subtle vignette + glow across the whole hero */}
           <div className="absolute inset-0" style={{
             background: [
@@ -43,7 +43,7 @@ export default function AltarExperiencePage() {
 
           {/* Content as 2-column on desktop: left copy, right event card */}
           <div className="relative h-full w-full px-0 sm:px-4 lg:px-8">
-            <div className="relative z-10 mx-auto h-full flex items-center py-10 sm:py-14 md:py-16 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
+            <div className="relative z-10 mx-auto h-full flex items-center py-12 sm:py-16 md:py-20 px-4 sm:px-0" style={{ maxWidth: '88rem' }}>
               <div className="grid grid-cols-1 md:grid-cols-7 gap-6 sm:gap-8 md:gap-10 w-full items-start">
                 {/* Left: Copy and actions */}
                 <div className="md:col-span-4 max-w-3xl">
@@ -128,12 +128,21 @@ export default function AltarExperiencePage() {
                             const hours = Math.floor(diff / (60 * 60 * 1000));
                             diff -= hours * 60 * 60 * 1000;
                             const minutes = Math.floor(diff / (60 * 1000));
+                            diff -= minutes * 60 * 1000;
+                            const seconds = Math.floor(diff / 1000);
                             const pad = (n) => String(n).padStart(2, '0');
-                            const label = `${days}d ${pad(hours)}h ${pad(minutes)}m`;
+                            const label = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+                            // Desktop/tablet: full countdown with seconds
                             items.push(
-                              <span key="countdown" className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
+                              <span key="countdown" className="hidden md:inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-amber-500/15 text-amber-800 border border-amber-300 text-2xs sm:text-xs font-semibold">
                                 <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3"/></svg>
                                 {label}
+                              </span>
+                            );
+                            // Mobile fallback: simple starts label
+                            items.push(
+                              <span key="countdown-mobile" className="md:hidden inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 border border-amber-300/80 text-2xs font-semibold">
+                                Starts Oct 24
                               </span>
                             );
                           }
