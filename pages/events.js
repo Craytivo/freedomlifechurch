@@ -354,7 +354,9 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                 </div>
                 <div className="grid grid-cols-7 gap-px bg-neutral-200">
                   {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => (
-                    <div key={d} className="bg-neutral-50 text-[11px] font-semibold uppercase tracking-wide text-neutral-500 py-2 text-center">{d}</div>
+                    <div key={d} className="bg-neutral-50 text-[11px] font-semibold uppercase tracking-wide text-neutral-600 py-2 text-center">
+                      <span className="inline-block px-2 py-1 rounded-md bg-white border border-neutral-200 shadow-sm">{d}</span>
+                    </div>
                   ))}
                 </div>
                 <div className="grid grid-cols-7 gap-px bg-neutral-200">
@@ -363,19 +365,27 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                     const key = d.toLocaleDateString('en-CA');
                     const has = (byDate.get(key) || []).length > 0;
                     const selected = selectedDate && key === selectedDate.toLocaleDateString('en-CA');
+                    const isToday = (new Date()).toLocaleDateString('en-CA') === key;
+                    const dow = d.getDay();
+                    const isWeekend = dow === 0 || dow === 6;
                     return (
                       <button
                         key={i}
                         type="button"
                         onClick={() => setSelectedDate(new Date(d))}
                         className={classNames(
-                          'relative min-h-[108px] bg-white px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40',
+                          'relative min-h-[108px] rounded-md px-2.5 py-2 text-left focus:outline-none focus:ring-2 focus:ring-flc-500/40 hover:bg-neutral-50',
+                          inMonth ? (isWeekend ? 'bg-neutral-50' : 'bg-white') : 'bg-white',
                           !inMonth && 'opacity-45',
-                          selected && 'ring-2 ring-flc-500/50'
+                          selected && 'ring-2 ring-flc-500/50',
+                          isToday && 'outline outline-2 outline-flc-500/20'
                         )}
                         aria-pressed={selected}
                       >
-                        <div className="text-[11px] font-semibold text-neutral-500">{d.getDate()}</div>
+                        <div className={classNames(
+                          'inline-flex items-center justify-center text-[11px] font-semibold',
+                          isToday ? 'text-flc-700' : 'text-neutral-500'
+                        )}>{d.getDate()}</div>
                         {has && <div className="absolute bottom-2 left-2 flex gap-1.5">
                           {(byDate.get(key) || []).slice(0,4).map((ev, idx) => {
                             const isSpecial = ((tagIndex.get(ev.id) || []).includes('Special'));
@@ -391,15 +401,26 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                 </div>
 
                 {/* Legend */}
-                <div className="mt-3 flex flex-wrap items-center gap-3 text-[12px] text-neutral-600">
-                  {colorPriority
-                    .filter(name => filters.includes(name))
-                    .map(name => (
-                      <div key={`legend-${name}`} className="inline-flex items-center gap-1.5">
-                        <span className={`inline-block w-2 h-2 rounded-full ${tagBgColors[name] || 'bg-neutral-400'}`} />
-                        <span className="capitalize">{name}</span>
-                      </div>
-                    ))}
+                <div className="mt-4 border-t border-neutral-200 pt-3">
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-500">Legend</div>
+                  <div className="flex flex-wrap items-center gap-2.5 text-[12px]">
+                    {colorPriority
+                      .filter(name => filters.includes(name))
+                      .map(name => (
+                        <div key={`legend-${name}`} className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-white">
+                          <span className={`inline-block w-2.5 h-2.5 rounded-full ${tagBgColors[name] || 'bg-neutral-400'}`} />
+                          <span className="capitalize text-neutral-700">{name}</span>
+                        </div>
+                      ))}
+                    <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600">
+                      <span className="inline-block w-2.5 h-2.5 rounded-full bg-neutral-300" />
+                      <span>Weekend</span>
+                    </div>
+                    <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-neutral-200 bg-neutral-50 text-neutral-600">
+                      <span className="inline-block w-2.5 h-2.5 rounded-full outline outline-2 outline-flc-500/40" />
+                      <span>Today</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
