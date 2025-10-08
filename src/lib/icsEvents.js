@@ -79,8 +79,10 @@ function parseICSEvents(text) {
     };
     const uid = pick('UID') || '';
     const summary = pick('SUMMARY') || '';
-    const categories = pick('CATEGORIES') || '';
-    const location = pick('LOCATION') || '';
+  const categories = pick('CATEGORIES') || '';
+  // Unescape ICS escapes in LOCATION (Google Calendar escapes commas)
+  let location = pick('LOCATION') || '';
+  location = location.replace(/\\n/g, ' ').replace(/\\,/g, ',').replace(/\s+/g, ' ').trim();
     // Description from Google Calendar may contain HTML tags; normalize to plain text
     let description = (pick('DESCRIPTION') || '');
     // Unescape common ICS escapes
@@ -201,6 +203,25 @@ function formatTime(d) {
 
 const BYDAY_MAP = { SU:0, MO:1, TU:2, WE:3, TH:4, FR:5, SA:6 };
 
+function normalizeLocationFields(raw) {
+  const cleaned = (raw || '').replace(/\s+/g, ' ').trim();
+  if (!cleaned) return { locName: '', address: '' };
+  // Split at first comma into name and remaining address
+  const idx = cleaned.indexOf(',');
+  let name = cleaned;
+  let addr = '';
+  if (idx !== -1) {
+    name = cleaned.slice(0, idx).trim();
+    addr = cleaned.slice(idx + 1).trim();
+  }
+  // Stay on brand: if name mentions Freedom Life Church, use canonical
+  const lower = name.toLowerCase();
+  if (lower.includes('freedom life church')) {
+    name = 'Freedom Life Church';
+  }
+  return { locName: name, address: addr || cleaned };
+}
+
 function expandRecurring(master, overrides) {
   const overrideMap = new Map();
   for (const ov of overrides) {
@@ -217,10 +238,9 @@ function expandRecurring(master, overrides) {
   const out = [];
 
   for (const ev of master) {
-    const cat = ev.categories ? ev.categories.split(',')[0].trim() : 'Church-wide';
-    const locName = ev.location?.includes('Freedom Life Church') ? 'Freedom Life Church' : (ev.location || '');
-    const address = ev.location || '';
-    const baseInfo = { cat, locName, address };
+  const cat = ev.categories ? ev.categories.split(',')[0].trim() : 'Church-wide';
+  const { locName, address } = normalizeLocationFields(ev.location || '');
+  const baseInfo = { cat, locName, address };
 
     if (!ev.rrule) {
       const dateKey = toDateKey(ev.startDate);
