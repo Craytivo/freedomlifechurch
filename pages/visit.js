@@ -503,142 +503,76 @@ export default function VisitPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* Plan & FAQ combined section */}
       <section className="relative py-16 md:py-20 bg-neutral-50">
         <div className="w-full px-0 sm:px-6 lg:px-8">
-          <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
-            <div className="text-center mb-12">
-              <Heading as="h2" size="md" align="center" gradient className="mb-4">Common Questions</Heading>
-              <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                We've answered the questions we hear most from first-time visitors
-              </p>
+          <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '88rem' }}>
+            <div className="mb-8 text-center">
+              <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">Plan & FAQs</span>
+              <Heading as="h2" size="md" align="center" className="mt-2">Plan Your Visit & Common Questions</Heading>
+              <p className="mt-2 text-neutral-700 max-w-2xl mx-auto">Everything you need for a smooth first Sunday—RSVP and quick answers, together.</p>
             </div>
-            <div className="max-w-4xl mx-auto">
-              <Accordion tone="white" items={commonQuestions.map(q => ({ title: q.question, content: q.answer }))} />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* RSVP Section */}
-      <section className="relative py-16 md:py-20 bg-white">
-        <div className="w-full px-0 sm:px-6 lg:px-8">
-          <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              <div className="lg:col-span-6 lg:col-start-4" id="rsvp">
-                <div className="sticky top-8">
-                  <div className="relative p-8 rounded-2xl border border-neutral-200 bg-white shadow-sm">
-                    <div className="absolute -inset-4 bg-gradient-to-br from-flc-500/5 via-transparent to-transparent rounded-3xl pointer-events-none" aria-hidden="true" />
-                    
-                    <div className="relative">
-                      <div className="mb-6">
-                        <h3 className="font-heading text-2xl font-bold text-primary-900 mb-2">Let Us Know You're Coming</h3>
-                        <p className="text-neutral-600 leading-relaxed">We'll send you a confirmation and have someone ready to welcome you and your family.</p>
+            <div className="relative rounded-2xl border border-neutral-200 bg-white shadow-sm overflow-hidden">
+              <span aria-hidden="true" className="pointer-events-none absolute -top-10 -right-10 w-56 h-56 rounded-full bg-flc-500/10 blur-3xl" />
+              <div className="relative grid lg:grid-cols-12 gap-0">
+                {/* Left: FAQ */}
+                <div className="lg:col-span-7 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-neutral-200">
+                  <h3 className="font-heading text-lg font-bold text-primary-900 mb-3">Common Questions</h3>
+                  <div className="max-w-2xl">
+                    <Accordion tone="white" items={commonQuestions.map(q => ({ title: q.question, content: q.answer }))} />
+                  </div>
+                </div>
+                {/* Right: RSVP */}
+                <div className="lg:col-span-5 p-6 md:p-8" id="rsvp">
+                  <div className="relative">
+                    <h3 className="font-heading text-xl font-bold text-primary-900 mb-2">Let Us Know You're Coming</h3>
+                    <p className="text-neutral-600 leading-relaxed mb-4">We'll send you a confirmation and have someone ready to welcome you and your family.</p>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-semibold text-neutral-700 mb-2">Your Name *</label>
+                        <input name="name" value={form.name} onChange={updateForm} required className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" placeholder="First and last name" />
                       </div>
-                      
-                      <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                          <label className="block text-sm font-semibold text-neutral-700 mb-2">Your Name *</label>
-                          <input 
-                            name="name" 
-                            value={form.name} 
-                            onChange={updateForm} 
-                            required 
-                            className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" 
-                            placeholder="First and last name"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-semibold text-neutral-700 mb-2">Email Address *</label>
-                          <input 
-                            type="email" 
-                            name="email" 
-                            value={form.email} 
-                            onChange={updateForm} 
-                            required 
-                            className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" 
-                            placeholder="your@email.com"
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-semibold text-neutral-700 mb-2">Sunday You're Visiting *</label>
-                          <select
-                            name="date"
-                            value={form.date}
-                            onChange={updateForm}
-                            required
-                            className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors"
-                          >
-                            <option value="" disabled>Select a Sunday</option>
-                            {upcomingSundays.map(d => (
-                              <option key={d.value} value={d.value}>{d.label}</option>
-                            ))}
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-semibold text-neutral-700 mb-2">Party Size (optional)</label>
-                          <input 
-                            type="number" 
-                            name="party"
-                            value={form.party}
-                            onChange={updateForm}
-                            min="1" 
-                            max="15" 
-                            placeholder="How many people?"
-                            className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" 
-                          />
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-semibold text-neutral-700 mb-2">Anything we should know? (optional)</label>
-                          <textarea 
-                            name="notes"
-                            value={form.notes}
-                            onChange={updateForm}
-                            rows="3" 
-                            placeholder="Ages of kids, accessibility needs, allergies, etc."
-                            className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" 
-                          />
-                        </div>
-                        
-                        <button 
-                          type="submit" 
-                          className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition-colors"
-                        >
-                          {submitted ? 'Thank You!' : 'Submit & Get Connected'}
-                          {!submitted && (
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                            </svg>
-                          )}
-                        </button>
-                        
-                        {submitted && (
-                          <div className="text-center p-4 rounded-lg bg-green-50 border border-green-200">
-                            <p className="text-green-700 font-medium">We'll be in touch soon. See you Sunday!</p>
-                          </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-neutral-700 mb-2">Email Address *</label>
+                        <input type="email" name="email" value={form.email} onChange={updateForm} required className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" placeholder="your@email.com" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-neutral-700 mb-2">Sunday You're Visiting *</label>
+                        <select name="date" value={form.date} onChange={updateForm} required className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors">
+                          <option value="" disabled>Select a Sunday</option>
+                          {upcomingSundays.map(d => (
+                            <option key={d.value} value={d.value}>{d.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-neutral-700 mb-2">Party Size (optional)</label>
+                        <input type="number" name="party" value={form.party} onChange={updateForm} min="1" max="15" placeholder="How many people?" className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-neutral-700 mb-2">Anything we should know? (optional)</label>
+                        <textarea name="notes" value={form.notes} onChange={updateForm} rows="3" placeholder="Ages of kids, accessibility needs, allergies, etc." className="w-full rounded-lg border border-neutral-300 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/20 px-4 py-3 bg-neutral-50 focus:bg-white transition-colors" />
+                      </div>
+                      <button type="submit" className="w-full inline-flex items-center justify-center gap-2 py-4 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold text-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition-colors">
+                        {submitted ? 'Thank You!' : 'Submit & Get Connected'}
+                        {!submitted && (
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                         )}
-                      </form>
-                      
-                      <div className="mt-6 pt-6 border-t border-neutral-200">
-                        <p className="text-xs text-neutral-400 leading-relaxed text-center">
-                          Prefer to just show up? That's perfect too! Come say hi at our Connect area after service.
-                        </p>
-                        <p className="mt-2 text-xs text-center">
-                          <a
-                            href={buildMapsLinks().directions}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-flc-600 font-medium"
-                          >
-                            Get Directions
-                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                          </a>
-                        </p>
-                      </div>
+                      </button>
+                      {submitted && (
+                        <div className="text-center p-4 rounded-lg bg-green-50 border border-green-200">
+                          <p className="text-green-700 font-medium">We'll be in touch soon. See you Sunday!</p>
+                        </div>
+                      )}
+                    </form>
+                    <div className="mt-6 pt-6 border-t border-neutral-200">
+                      <p className="text-xs text-neutral-400 leading-relaxed text-center">Prefer to just show up? That's perfect too! Come say hi at our Connect area after service.</p>
+                      <p className="mt-2 text-xs text-center">
+                        <a href={buildMapsLinks().directions} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-flc-600 font-medium">
+                          Get Directions
+                          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                      </p>
                     </div>
                   </div>
                 </div>
