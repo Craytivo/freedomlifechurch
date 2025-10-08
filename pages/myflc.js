@@ -4,8 +4,8 @@ import Heading from '../src/components/Heading';
 
 // Simple local storage helpers (will be swapped for API-backed storage later)
 const LS_KEYS = {
-  notes: 'myflc_notes',
-  prayers: 'myflc_prayers',
+  notes: 'myadmin_notes',
+  prayers: 'myadmin_prayers',
 };
 
 const loadLocal = (key) => {
@@ -124,14 +124,15 @@ export default function MyFLCPage() {
         </div>
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">MyFLC</div>
-            <Heading as="h1" size="md" className="mt-3">Your Notes & Prayers</Heading>
-            <p className="mt-2 text-neutral-600 max-w-2xl">Capture sermon notes and prayer requests. This saves to your device for now. We’ll add sign‑in and syncing next.</p>
-            {!isAuthenticated && (
-              <div className="mt-4 p-3 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-sm">
-                You’re not signed in. Items are stored only on this device. We’ll add secure account syncing in the next step.
-              </div>
-            )}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">MyAdmin</div>
+            <Heading as="h1" size="md" className="mt-3">Church Leadership Portal</Heading>
+            <p className="mt-2 text-neutral-600 max-w-2xl">A secure space for church leaders to organize, coordinate, and access resources. Sign in to manage events, groups, and communications.</p>
+            <div className="mt-4">
+              <a href="/admin/login" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold">
+                Admin Login
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 17v-6m0 0V7m0 4a4 4 0 100-8 4 4 0 000 8zm6 4v2a2 2 0 01-2 2H8a2 2 0 01-2-2v-2"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>

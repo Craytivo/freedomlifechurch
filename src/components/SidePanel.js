@@ -399,21 +399,19 @@ const SidePanel = ({ isOpen, onClose }) => {
             )}
           </div>
 
-          {/* MyFLC card */}
+          {/* MyAdmin card */}
           <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-            <h3 className="text-base font-semibold text-neutral-900">MyFLC</h3>
+            <h3 className="text-base font-semibold text-neutral-900">MyAdmin</h3>
             <p className="mt-1 text-sm text-neutral-600">
-              Looking to view your group details or giving history? MyFLC is our church’s portal for attenders and leaders.
+              Leadership portal for church staff and team leads to organize, coordinate, and access resources securely.
             </p>
             <Link
-              href="/myflc"
+              href="/admin/login"
               onClick={onClose}
-              className="mt-3 inline-flex items-center gap-2 rounded-full bg-neutral-200 px-4 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-300 transition-colors"
+              className="mt-3 inline-flex items-center gap-2 rounded-full bg-flc-500 px-4 py-2 text-sm font-medium text-white hover:bg-flc-600 transition-colors"
             >
-              Access MyFLC
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l10-10M17 7H7m10 0v10" />
-              </svg>
+              Admin Login
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 16v-4m0-4h.01" /></svg>
             </Link>
           </div>
 

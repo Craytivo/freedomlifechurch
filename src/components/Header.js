@@ -275,6 +275,12 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
           <div className="hidden md:flex items-center space-x-8">
             <NavigationMenu items={navigation} className="group/nav" activePath={router.pathname} />
             <GiveLink />
+            <a href="/admin/login" className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-flc-500/10 text-flc-700 hover:bg-flc-500 hover:text-white transition-colors" title="Admin Login">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 16v-4m0-4h.01" />
+              </svg>
+            </a>
             <UserAvatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
           </div>
           </div>
