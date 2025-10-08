@@ -30,8 +30,14 @@ export default function MyApp({ Component, pageProps }) {
     const shouldSkip = (url) => typeof url === 'string' && url.includes('#');
     const toTop = () => {
       try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-        setTimeout(() => window.scrollTo(0, 0), 0);
+        const html = document.documentElement;
+        const prev = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          html.style.scrollBehavior = prev || '';
+        }, 0);
       } catch {}
     };
     const handleRouteChangeStart = (url, { shallow }) => {

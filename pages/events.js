@@ -360,7 +360,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
           {upcoming.length > 0 && (
             <div className="mb-8 grid md:grid-cols-3 gap-4">
               {upcoming.map((e) => (
-                <Link key={`hi-${e.id}`} href={`/events/${e.id}`} className="group card card-hover p-4">
+                <Link key={`hi-${e.id}`} href={`/events/${e.id}`} scroll className="group card card-hover p-4">
                   <div className="flex items-start gap-3">
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-flc-500/10 text-flc-700">
                       {categoryIcon(e.category)}
@@ -474,7 +474,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                     <ul className="space-y-3">
                       {dayEvents.map(e => (
                         <li key={e.id}>
-                          <Link href={`/events/${e.id}`} className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
+                          <Link href={`/events/${e.id}`} scroll className="flex items-start gap-3 group rounded-md px-1 py-0.5 -mx-1 hover:bg-neutral-50">
                             <span className={`mt-1 inline-flex w-2 h-2 rounded-full ${eventBgColor(e)}`} />
                             <div>
                               <div className="text-sm font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</div>
@@ -522,7 +522,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                     </div>
                   </div>
                 ) : visibleList.map(e => (
-                  <Link key={e.id} href={`/events/${e.id}`} className="group card card-hover p-4 md:p-5">
+                  <Link key={e.id} href={`/events/${e.id}`} scroll className="group card card-hover p-4 md:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <div className="flex items-center gap-2 text-[11px] uppercase tracking-wide font-semibold">

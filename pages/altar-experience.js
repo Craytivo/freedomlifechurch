@@ -428,7 +428,7 @@ export default function AltarExperiencePage() {
                           <p className="text-sm font-semibold text-primary-900 mt-0.5">{friendly}</p>
                           <p className="text-sm text-neutral-600">{ev ? ev.time : (d.date === '2025-10-24' ? '7:00 PM' : '12:00 PM')}</p>
                           {ev ? (
-                            <Link href={`/events/${ev.id}`} className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-flc-600 hover:text-flc-700">
+                            <Link href={`/events/${ev.id}`} scroll className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-flc-600 hover:text-flc-700">
                               View details
                               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
                             </Link>
