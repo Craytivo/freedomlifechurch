@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import SEO from '../src/components/seo/SEO';
 import Heading from '../src/components/Heading';
 import CTAButton from '../src/components/CTAButton';
+import Link from 'next/link';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -134,6 +135,7 @@ export default function VisitPage() {
   const [isSundayMT, setIsSundayMT] = useState(false);
   const [isLiveMT, setIsLiveMT] = useState(false);
   const [serviceLabel, setServiceLabel] = useState('Next service Sunday · 12:00 PM');
+  const [nextEvent, setNextEvent] = useState(null);
   const mapRef = useRef(null);
 
   // Build a list of upcoming Sundays (next 12)
@@ -153,6 +155,25 @@ export default function VisitPage() {
       out.push({ value, label });
     }
     return out;
+  }, []);
+
+  // Fetch next upcoming event for hero chip
+  useEffect(() => {
+    let abort = false;
+    (async () => {
+      try {
+        const resp = await fetch('/api/events', { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const events = Array.isArray(data.events) ? data.events : [];
+        const todayKey = new Date().toLocaleDateString('en-CA');
+        const upcoming = events
+          .filter(e => e && e.date >= todayKey)
+          .sort((a,b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+        if (!abort) setNextEvent(upcoming[0] || null);
+      } catch {}
+    })();
+    return () => { abort = true; };
   }, []);
 
   // Lazy load map when in viewport
@@ -312,12 +333,15 @@ export default function VisitPage() {
                 <div className="mt-6 text-sm text-neutral-600">
                   Sundays at <span className="font-semibold text-neutral-800">12:00 PM (MST)</span>
                 </div>
-                <div className="mt-3">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-neutral-200 text-neutral-800 text-[12px] font-semibold shadow-sm">
-                    <svg className="w-3.5 h-3.5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z"/></svg>
-                    {serviceLabel}
-                  </span>
-                </div>
+                {nextEvent && (
+                  <div className="mt-3">
+                    <Link href={`/events/${nextEvent.id}`} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-neutral-200 text-neutral-800 text-[12px] font-semibold shadow-sm hover:text-flc-600">
+                      <svg className="w-3.5 h-3.5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10"/></svg>
+                      Next: {nextEvent.title} · {new Date(nextEvent.date).toLocaleDateString(undefined,{ month:'short', day:'numeric'})}
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </Link>
+                  </div>
+                )}
               </div>
 
               {/* Right: map card */}
@@ -515,15 +539,8 @@ export default function VisitPage() {
             <div className="relative rounded-2xl border border-neutral-200 bg-white shadow-sm overflow-hidden">
               <span aria-hidden="true" className="pointer-events-none absolute -top-10 -right-10 w-56 h-56 rounded-full bg-flc-500/10 blur-3xl" />
               <div className="relative grid lg:grid-cols-12 gap-0">
-                {/* Left: FAQ */}
-                <div className="lg:col-span-7 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-neutral-200">
-                  <h3 className="font-heading text-lg font-bold text-primary-900 mb-3">Common Questions</h3>
-                  <div className="max-w-2xl">
-                    <Accordion tone="white" items={commonQuestions.map(q => ({ title: q.question, content: q.answer }))} />
-                  </div>
-                </div>
-                {/* Right: RSVP */}
-                <div className="lg:col-span-5 p-6 md:p-8" id="rsvp">
+                {/* Left: RSVP */}
+                <div className="lg:col-span-5 p-6 md:p-8 lg:border-r border-neutral-200" id="rsvp">
                   <div className="relative">
                     <h3 className="font-heading text-xl font-bold text-primary-900 mb-2">Let Us Know You're Coming</h3>
                     <p className="text-neutral-600 leading-relaxed mb-4">We'll send you a confirmation and have someone ready to welcome you and your family.</p>
@@ -574,6 +591,13 @@ export default function VisitPage() {
                         </a>
                       </p>
                     </div>
+                  </div>
+                </div>
+                {/* Right: FAQ */}
+                <div className="lg:col-span-7 p-6 md:p-8">
+                  <h3 className="font-heading text-lg font-bold text-primary-900 mb-3">Common Questions</h3>
+                  <div className="max-w-2xl">
+                    <Accordion tone="white" items={commonQuestions.map(q => ({ title: q.question, content: q.answer }))} />
                   </div>
                 </div>
               </div>
