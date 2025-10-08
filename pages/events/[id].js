@@ -21,13 +21,43 @@ export async function getStaticProps({ params }) {
 }
 
 export default function EventDetail({ event }) {
-  // Force scroll to top on mount using layout effect to reduce flash
+  // Harden scroll-to-top on mount
   React.useLayoutEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-        // Double-tap to counter history restoration
-        setTimeout(() => window.scrollTo(0, 0), 0);
+        // Temporarily disable smooth-scroll
+        const html = document.documentElement;
+        const prevScrollBehavior = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        html.scrollTop = 0;
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.body.scrollTop = 0;
+          html.scrollTop = 0;
+          html.style.scrollBehavior = prevScrollBehavior || '';
+        }, 0);
+      } catch {}
+    }
+  }, []);
+
+  // Fallback: run scroll reset in a normal effect to catch late restoration
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const html = document.documentElement;
+        const prevScrollBehavior = html.style.scrollBehavior;
+        html.style.scrollBehavior = 'auto';
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        html.scrollTop = 0;
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          document.body.scrollTop = 0;
+          html.scrollTop = 0;
+          html.style.scrollBehavior = prevScrollBehavior || '';
+        }, 0);
       } catch {}
     }
   }, []);
