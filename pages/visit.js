@@ -4,6 +4,7 @@ import Heading from '../src/components/Heading';
 import CTAButton from '../src/components/CTAButton';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Visit page - comprehensive guide for first-time visitors
 // Expanded version of PlanVisitSection with additional helpful information
@@ -225,7 +226,7 @@ export default function VisitPage() {
                     <>
                       {!mapLoaded && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
-                          <div className="w-10 h-10 border-4 border-neutral-300 border-top-flc-500 rounded-full animate-spin" aria-label="Loading map" />
+                          <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map" />
                           <span className="text-sm">Loading map…</span>
                         </div>
                       )}
@@ -285,29 +286,57 @@ export default function VisitPage() {
         </div>
       </section>
 
-      {/* What to Expect */}
+  {/* What to Expect */}
       <section className="relative py-16 md:py-20 bg-white">
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
             <div className="text-center mb-12">
               <Heading as="h2" size="md" align="center" gradient className="mb-4">What to Expect</Heading>
               <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-                Here's what a typical Sunday looks like at Freedom Life Church
+                A warm welcome, Christ-centered worship, and teaching from the Bible—simple and meaningful.
               </p>
+              <div className="mt-3">
+                <Link href="/about" className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-700 hover:text-flc-600">
+                  Learn more about our beliefs and values
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </Link>
+              </div>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-5 sm:gap-6">
               {whatToExpect.map((item, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="flex-none w-12 h-12 rounded-xl bg-flc-500/10 text-flc-600 flex items-center justify-center">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-xl font-bold text-primary-900 mb-2">{item.title}</h3>
-                    <p className="text-neutral-600 leading-relaxed">{item.description}</p>
+                <div key={index} className="card card-hover p-5 md:p-6">
+                  <div className="flex gap-4">
+                    <div className="flex-none w-12 h-12 rounded-xl bg-flc-500/10 text-flc-600 flex items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-heading text-xl font-bold text-primary-900 mb-1.5">{item.title}</h3>
+                      <p className="text-neutral-700 leading-relaxed text-[15px]">{item.description}</p>
+                    </div>
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* About callout */}
+            <div className="mt-8">
+              <div className="card card-hover relative overflow-hidden p-5 md:p-6">
+                <span aria-hidden="true" className="pointer-events-none absolute -top-8 -right-8 w-36 h-36 rounded-full bg-amber-500 opacity-10 blur-[42px]" />
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div>
+                    <p className="eyebrow">About Freedom Life Church</p>
+                    <h3 className="font-heading text-lg md:text-xl font-semibold text-primary-900 mt-1">Who we are and what we believe</h3>
+                    <p className="mt-1.5 text-neutral-700 max-w-2xl">Explore our mission, values, and the heart behind everything we do on Sundays and throughout the week.</p>
+                  </div>
+                  <div className="flex flex-none">
+                    <Link href="/about" className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-neutral-300 text-neutral-800 hover:border-flc-500 hover:text-flc-600 text-sm font-semibold">
+                      Visit About
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
