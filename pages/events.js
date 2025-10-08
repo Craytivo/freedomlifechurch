@@ -533,7 +533,6 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
                           </span>
                         </div>
                         <h3 className="mt-1 font-heading text-lg font-semibold text-primary-900 group-hover:text-flc-600">{e.title}</h3>
-                        <p className="mt-1 text-sm text-neutral-600 leading-relaxed">{e.blurb}</p>
                       </div>
                       <div className="shrink-0 text-right">
                         <div className="inline-flex flex-col items-center justify-center px-2.5 py-1.5 rounded-md bg-neutral-50 border border-neutral-200 text-neutral-700">
