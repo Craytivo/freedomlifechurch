@@ -21,6 +21,17 @@ export async function getStaticProps({ params }) {
 }
 
 export default function EventDetail({ event }) {
+  // Force scroll to top on mount (mobile browsers sometimes preserve scroll)
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        // Double-tap to counter history restoration
+        setTimeout(() => window.scrollTo(0, 0), 0);
+      } catch {}
+    }
+  }, []);
+
   if (!event) return null;
   const dateObj = new Date(event.date);
   const dateLabel = dateObj.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
