@@ -81,7 +81,17 @@ function parseICSEvents(text) {
     const summary = pick('SUMMARY') || '';
     const categories = pick('CATEGORIES') || '';
     const location = pick('LOCATION') || '';
-    const description = (pick('DESCRIPTION') || '').replace(/\\n/g, ' ').replace(/\\,/g, ',');
+    // Description from Google Calendar may contain HTML tags; normalize to plain text
+    let description = (pick('DESCRIPTION') || '');
+    // Unescape common ICS escapes
+    description = description.replace(/\\n/g, ' ').replace(/\\,/g, ',');
+    // Convert common HTML line breaks/paragraphs to spaces, then strip remaining tags
+    description = description
+      .replace(/<br\s*\/?>(\s*)/gi, ' ')
+      .replace(/<\/?p[^>]*>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
 
     // DTSTART may be in several formats
     const dtstartItem = Array.isArray(props['DTSTART']) ? props['DTSTART'][0] : props['DTSTART'];
