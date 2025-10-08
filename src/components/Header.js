@@ -281,7 +281,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 16v-4m0-4h.01" />
               </svg>
             </a>
-            <UserAvatar onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} />
+            {/* Removed FL avatar/icon from header */}
           </div>
           </div>
           <div
