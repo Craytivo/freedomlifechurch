@@ -9,37 +9,55 @@ const MIN_SECTIONS = [
     id: 'mens',
     name: "Men's",
     color: 'text-blue-600',
-    blurb: 'Brotherhood, discipleship, accountability, and serving shoulder-to-shoulder.'
+    tint: 'bg-blue-50',
+    bg: 'bg-blue-500',
+    dot: 'bg-blue-600',
+    blurb: 'Brotherhood, discipleship, accountability, and serving shoulder-to-shoulder. Build strength and humility together as we follow Jesus in every area of life.'
   },
   {
     id: 'womens',
     name: 'Womens',
     color: 'text-pink-500',
-    blurb: 'Sisterhood, prayer, Bible study, and encouragement in all seasons.'
+    tint: 'bg-pink-50',
+    bg: 'bg-pink-500',
+    dot: 'bg-pink-500',
+    blurb: 'Sisterhood, prayer, Bible study, and encouragement in all seasons. Find a circle of women who champion your faith and your everyday calling.'
   },
   {
     id: 'children',
     name: 'Children',
     color: 'text-emerald-600',
-    blurb: 'Raising the next generation to know Jesus in a safe, fun environment.'
+    tint: 'bg-emerald-50',
+    bg: 'bg-emerald-500',
+    dot: 'bg-emerald-600',
+    blurb: 'Raising the next generation to know Jesus in a safe, fun environment. We partner with families to plant God’s Word and make lasting memories.'
   },
   {
     id: 'volunteer',
     name: 'Volunteer Teams',
     color: 'text-amber-600',
-    blurb: 'Use your gifts—hospitality, kids, tech, music, prayer—to build the Church.'
+    tint: 'bg-amber-50',
+    bg: 'bg-amber-500',
+    dot: 'bg-amber-600',
+    blurb: 'Use your gifts—hospitality, kids, tech, music, prayer—to build the Church. There’s a meaningful place for your strengths and passion to make impact.'
   },
   {
     id: 'outreach',
     name: 'Outreach',
     color: 'text-violet-600',
-    blurb: 'Serving our city together through practical compassion and partnership.'
+    tint: 'bg-violet-50',
+    bg: 'bg-violet-500',
+    dot: 'bg-violet-600',
+    blurb: 'Serving our city together through practical compassion and partnership. Be the hands and feet of Jesus to neighbors, schools, and communities.'
   },
   {
     id: 'music',
     name: 'Music & Production',
     color: 'text-indigo-600',
-    blurb: 'Lead our church in worship—vocals, band, audio, video, lighting.'
+    tint: 'bg-indigo-50',
+    bg: 'bg-indigo-500',
+    dot: 'bg-indigo-600',
+    blurb: 'Lead our church in worship—vocals, band, audio, video, lighting. Grow as a worshipper and serve with excellence in a creative, faith-filled team.'
   }
 ];
 
@@ -74,16 +92,21 @@ export default function GroupsPage({ sections }) {
             <p className="mt-2 text-neutral-700 max-w-2xl">There’s a place for you here. Explore ministries and find a group where you can grow in faith and friendship.</p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="grid lg:grid-cols-2 gap-5 sm:gap-6">
             {sections.map((s) => (
-              <article key={s.id} id={s.id} className="rounded-2xl border border-neutral-200 bg-white p-5 md:p-6">
+              <article key={s.id} id={s.id} className="card card-hover relative overflow-hidden p-5 md:p-6">
+                {/* Faint color blob */}
+                <span aria-hidden="true" className={`pointer-events-none absolute -top-8 -right-8 w-36 h-36 rounded-full ${s.bg || ''} opacity-15 blur-[42px]`} />
                 <div className="flex items-start gap-3">
-                  <svg className={`w-6 h-6 ${s.color}`} viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" fill="currentColor" />
-                  </svg>
+                  <div className="inline-flex items-center">
+                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${s.tint || 'bg-neutral-100'} ${s.color}`}>
+                      <span className={`inline-block w-1.5 h-1.5 rounded-full ${s.dot || 'bg-neutral-400'}`} />
+                      Ministry
+                    </span>
+                  </div>
                   <div className="flex-1 min-w-0">
                     <h2 className="font-heading text-xl md:text-2xl font-bold tracking-tight text-primary-900">{s.name}</h2>
-                    <p className="mt-1 text-sm text-neutral-700 leading-relaxed">{s.blurb}</p>
+                    <p className="mt-1 text-sm sm:text-[15px] text-neutral-700 leading-relaxed">{s.blurb}</p>
                     <ul className="mt-3 grid sm:grid-cols-2 gap-2 text-sm text-neutral-700">
                       {s.points.map((p, i) => (
                         <li key={i} className="flex items-start gap-2">
