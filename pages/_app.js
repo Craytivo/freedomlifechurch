@@ -16,6 +16,11 @@ export default function MyApp({ Component, pageProps }) {
         }
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         setTimeout(() => window.scrollTo(0, 0), 0);
+        const onPop = () => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        };
+        window.addEventListener('popstate', onPop);
+        return () => window.removeEventListener('popstate', onPop);
       } catch {}
     }
   }, []);

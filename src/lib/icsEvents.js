@@ -83,15 +83,29 @@ function parseICSEvents(text) {
   // Unescape ICS escapes in LOCATION (Google Calendar escapes commas)
   let location = pick('LOCATION') || '';
   location = location.replace(/\\n/g, ' ').replace(/\\,/g, ',').replace(/\s+/g, ' ').trim();
-    // Description from Google Calendar may contain HTML tags; normalize to plain text
+    // Description from Google Calendar may contain HTML and ICS escapes; normalize to plain text
     let description = (pick('DESCRIPTION') || '');
     // Unescape common ICS escapes
-    description = description.replace(/\\n/g, ' ').replace(/\\,/g, ',');
+    description = description
+      .replace(/\\n|\\N/g, ' ')
+      .replace(/\\,/g, ',')
+      .replace(/\\;/g, ';')
+      .replace(/\\\\/g, '\\');
     // Convert common HTML line breaks/paragraphs to spaces, then strip remaining tags
     description = description
       .replace(/<br\s*\/?>(\s*)/gi, ' ')
       .replace(/<\/?p[^>]*>/gi, ' ')
       .replace(/<[^>]+>/g, ' ')
+      // Decode common HTML entities (&nbsp; &amp; &quot; &apos; &lt; &gt;)
+      .replace(/&nbsp;/gi, ' ')
+      .replace(/&amp;/gi, '&')
+      .replace(/&quot;/gi, '"')
+      .replace(/&apos;/gi, "'")
+      .replace(/&lt;/gi, '<')
+      .replace(/&gt;/gi, '>')
+      // Decode numeric entities &#...; and &#x...;
+      .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(parseInt(d, 10)))
+      .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)))
       .replace(/\s+/g, ' ')
       .trim();
 
