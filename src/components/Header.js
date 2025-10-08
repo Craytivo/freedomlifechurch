@@ -27,7 +27,7 @@ const Header = ({ isMenuOpen, onToggleMenu, onCloseMenu }) => {
       { name: 'Live Stream', href: '#livestream', desc: 'Watch live' },
       { name: 'Groups', href: '#groups', desc: 'Get in groups to grow your faith' },
   // Serve removed from desktop nav; keep volunteers under Get Involved
-      { name: 'Give', href: 'https://flcedmonton.churchcenter.com/giving', desc: 'Ongoing act of worship', external: true },
+  { name: 'Give', href: 'https://freedomlifechurch.netlify.app/giving', desc: 'Ongoing act of worship', external: true },
       { name: 'Volunteer', href: '#volunteer', desc: 'Join a team at your local campus' },
       { name: 'Events', href: '#events', desc: 'Find events near you' },
       { name: 'Salvation', href: '#salvation', desc: 'Salvation and prayer' },

@@ -77,7 +77,7 @@ const CarouselSlide = ({
       </div>
 
       <div className="md:h-full grid md:grid-cols-7 gap-6 sm:gap-8 md:gap-12 lg:gap-14 items-start">
-        <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20 px-4 sm:px-0 py-2 sm:py-0">
+  <div className="order-2 md:order-1 text-left md:col-span-4 md:pr-6 lg:pr-12 relative z-20 px-4 sm:px-0 py-2 sm:py-0 md:pb-14 lg:pb-16">
           <span aria-hidden="true" className="hidden md:block absolute -left-6 top-4 bottom-6 w-px bg-gradient-to-b from-flc-500/50 via-flc-500/10 to-transparent" />
           <p className="font-body text-neutral-700 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-5 md:mb-6 max-w-3xl">
             {slide.description}

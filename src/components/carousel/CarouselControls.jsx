@@ -2,7 +2,7 @@ import React from 'react';
 
 const CarouselControls = ({ prev, next, total, userPaused, setUserPaused, reduceMotion, showIndicators, indicators }) => {
   return (
-    <div className="relative z-20 flex items-center justify-between mt-6 sm:mt-8 md:mt-10">
+    <div className="relative z-20 flex items-center justify-between mt-6 sm:mt-8 md:mt-12">
       <div className="hidden md:flex gap-3">
         <button onClick={(e)=>{ e.preventDefault(); e.stopPropagation(); prev(); }} aria-label="Previous slide" className="w-10 h-10 rounded-full border border-neutral-300 flex items-center justify-center hover:bg-neutral-100 transition-colors disabled:opacity-40 focus:outline-none focus:ring-2 focus:ring-flc-500" disabled={total<=1}>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>

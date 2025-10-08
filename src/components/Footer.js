@@ -100,7 +100,7 @@ const Footer = () => {
               {/* Ministries page removed; keep core links only */}
               <a href="#events" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Events</a>
               <a href="#prayer" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Prayer Requests</a>
-              <a href="https://flcedmonton.churchcenter.com/giving" target="_blank" rel="noopener noreferrer" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Give</a>
+              <a href="https://freedomlifechurch.netlify.app/giving" target="_blank" rel="noopener noreferrer" className="text-neutral-700 hover:text-flc-600 inline-flex items-center">Give</a>
             </div>
           </div>
         </div>

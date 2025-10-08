@@ -34,6 +34,15 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
   const [loadingLive, setLoadingLive] = useState(false);
   const [fetchedAt, setFetchedAt] = useState(buildFetchedAt || null);
   const [nowTick, setNowTick] = useState(() => Date.now());
+  // Time-limited banner for Altar Experience (hide after Oct 26, 2025)
+  const showAEMessage = React.useMemo(() => {
+    try {
+      const hideAfter = new Date('2025-10-27T00:00:00-06:00');
+      return Date.now() < hideAfter.getTime();
+    } catch {
+      return false;
+    }
+  }, []);
 
   // Live-update the freshness label every 30 seconds when we have a timestamp
   React.useEffect(() => {
@@ -303,6 +312,28 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
               <span>Updated from Google Calendar: at build time</span>
             )}
           </div>
+
+          {/* Altar Experience promo (time-limited) */}
+          {showAEMessage && (
+            <div className="mb-6">
+              <a
+                href="https://freedomlifechurch.netlify.app/altar-experience"
+                className="block rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 hover:bg-amber-100 transition-colors"
+                target="_blank" rel="noopener noreferrer"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="inline-flex items-center justify-center w-6 h-6 rounded-md bg-amber-200 text-amber-800 shrink-0">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 6v6l4 2"/></svg>
+                  </span>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-amber-900">Altar Experience weekend</div>
+                    <div className="text-[13px] text-amber-900/80">Get details, schedule, and how to join in. Tap to learn more.</div>
+                  </div>
+                  <span className="ml-auto text-amber-900/70 text-[12px]">Details →</span>
+                </div>
+              </a>
+            </div>
+          )}
 
           {/* Subscription actions */}
           <div className="mb-6 flex flex-wrap gap-3">

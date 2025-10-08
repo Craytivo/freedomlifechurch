@@ -91,7 +91,7 @@ const SidePanel = ({ isOpen, onClose }) => {
           subItems: [
             {
               name: 'Give',
-              href: 'https://flcedmonton.churchcenter.com/giving',
+              href: 'https://freedomlifechurch.netlify.app/giving',
               external: true,
               description: 'Make a donation through Church Center'
             }
@@ -252,6 +252,9 @@ const SidePanel = ({ isOpen, onClose }) => {
 
   const sidebar = (
     <div className="fixed inset-0 z-[10000]" aria-modal="true" role="dialog">
+      <style jsx global>{`
+        @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+      `}</style>
       {/* Underlay to catch clicks anywhere and close */}
       <div
         className="fixed inset-0 bg-black/50"
@@ -312,6 +315,7 @@ const SidePanel = ({ isOpen, onClose }) => {
                     const active = isActiveRoute(item.href);
                     const isExternal = item.external || item.href.startsWith('http');
                     
+                    const isAltar = item.name === 'Altar Experience';
                     return (
                       <div key={item.name}>
                         {isExternal ? (
@@ -320,12 +324,15 @@ const SidePanel = ({ isOpen, onClose }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={onClose}
-                            className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900`}
+                            className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 ${isAltar ? 'relative' : ''}`}
                           >
                             <span className={`mr-3 text-neutral-400 group-hover:text-neutral-500`}>
                               {item.icon}
                             </span>
-                            {item.name}
+                            <span className={`${isAltar ? 'relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 animate-[shimmer_2.2s_linear_infinite] [background-size:200%_100%]' : ''}`}>{item.name}</span>
+                            {isAltar && (
+                              <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-md shadow-[0_0_0_2px_rgba(245,158,11,0.25)]" />
+                            )}
                           </a>
                         ) : (
                           <Link
@@ -334,13 +341,16 @@ const SidePanel = ({ isOpen, onClose }) => {
                             className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                               active
                                 ? 'bg-amber-50 text-amber-900 border-l-4 border-amber-600 font-semibold'
-                                : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+                                : `text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 ${isAltar ? 'relative' : ''}`
                             }`}
                           >
                             <span className={`mr-3 ${active ? 'text-amber-600' : 'text-neutral-400 group-hover:text-neutral-500'}`}>
                               {item.icon}
                             </span>
-                            {item.name}
+                            <span className={`${isAltar ? 'relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 animate-[shimmer_2.2s_linear_infinite] [background-size:200%_100%]' : ''}`}>{item.name}</span>
+                            {isAltar && !active && (
+                              <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-md shadow-[0_0_0_2px_rgba(245,158,11,0.25)]" />
+                            )}
                           </Link>
                         )}
                         
