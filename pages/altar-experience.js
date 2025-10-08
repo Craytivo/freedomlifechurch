@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import altarExperienceLogo from '../src/assets/logos/output-onlinepngtools.png';
 
@@ -76,6 +77,26 @@ export default function AltarExperiencePage() {
   const fbShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
   const xShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent('Join me at Altar Experience 2025')}&url=${encodeURIComponent(pageUrl)}`;
   const mailShare = `mailto:?subject=${encodeURIComponent('Join me at Altar Experience 2025')}&body=${encodeURIComponent('Let’s go to Altar Experience 2025: ' + pageUrl)}`;
+
+  // Pull Day 1–3 sessions from calendar
+  const [sessionEvents, setSessionEvents] = React.useState([]);
+  React.useEffect(() => {
+    let abort = false;
+    (async () => {
+      try {
+        const resp = await fetch('/api/events', { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const events = Array.isArray(data.events) ? data.events : [];
+        const targetDates = new Set(['2025-10-24', '2025-10-25', '2025-10-26']);
+        const match = (e) =>
+          targetDates.has(e.date) && /altar|experience|conference|session/i.test(`${e.title} ${e.blurb}`);
+        const picked = events.filter(match).sort((a,b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+        if (!abort) setSessionEvents(picked);
+      } catch {}
+    })();
+    return () => { abort = true; };
+  }, []);
 
   return (
     <>
@@ -393,6 +414,58 @@ export default function AltarExperiencePage() {
                     <p className="mt-1 text-neutral-800">Doors 11:30 AM</p>
                     <p className="text-neutral-700">Session 12:00–2:00 PM</p>
                   </div>
+                </div>
+                {/* Sessions from Calendar */}
+                <div className="mt-5">
+                  <h3 className="text-sm font-semibold text-neutral-800">Conference Sessions (from calendar)</h3>
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {[{label:'Day 1', date:'2025-10-24'}, {label:'Day 2', date:'2025-10-25'}, {label:'Day 3', date:'2025-10-26'}].map((d) => {
+                      const ev = sessionEvents.find(e => e.date === d.date);
+                      const friendly = new Date(d.date).toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' });
+                      return (
+                        <div key={d.date} className="rounded-md border border-neutral-200 p-3 bg-white">
+                          <p className="text-neutral-500 text-[11px] font-semibold uppercase tracking-wide">{d.label}</p>
+                          <p className="text-sm font-semibold text-primary-900 mt-0.5">{friendly}</p>
+                          <p className="text-sm text-neutral-600">{ev ? ev.time : (d.date === '2025-10-24' ? '7:00 PM' : '12:00 PM')}</p>
+                          {ev ? (
+                            <Link href={`/events/${ev.id}`} className="mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold text-flc-600 hover:text-flc-700">
+                              View details
+                              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                            </Link>
+                          ) : (
+                            <span className="mt-2 inline-block text-[12px] text-neutral-400">Coming soon</span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* 21 Days of Fasting & Prayer */}
+              <div className="card p-5">
+                <span className="kicker text-amber-700/80">Consecration</span>
+                <h2 className="mt-1 text-lg font-semibold text-primary-900">21 Days of Fasting & Prayer</h2>
+                <p className="mt-1 text-sm text-neutral-700"><strong>October 6 – October 26</strong></p>
+                <div className="mt-2 text-sm leading-relaxed text-neutral-700 space-y-3">
+                  <p>Freedom Life Church is entering into 21 days of fasting and prayer—not only to prepare for The Altar Experience Conference, but because we believe God is calling us into a season of holy consecration.</p>
+                  <p><strong>Daniel Fast</strong>: We encourage a Daniel fast (fruits, vegetables, whole foods) or a thoughtful alternative as led by the Holy Spirit.</p>
+                  <p>This is more than skipping meals. It’s a sacred time to:</p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>Seek God with undivided hearts</li>
+                    <li>Walk in renewal and holiness</li>
+                    <li>Intercede for our families, leaders, and city</li>
+                    <li>Prepare for a fresh move of God at The Altar Experience</li>
+                  </ul>
+                  <div>
+                    <p className="font-semibold text-neutral-800">3-Week Spiritual Focus</p>
+                    <ul className="list-disc pl-5 space-y-1 mt-1">
+                      <li>Week 1: Repentance & Renewal</li>
+                      <li>Week 2: Intercession & Provision</li>
+                      <li>Week 3: Mission & Commissioning</li>
+                    </ul>
+                  </div>
+                  <p className="text-neutral-700">We are setting aside distractions, humbling ourselves, and declaring: <em>"Lord, we are Yours. Set us apart for Your purpose."</em></p>
                 </div>
               </div>
 
