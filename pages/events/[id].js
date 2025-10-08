@@ -36,8 +36,18 @@ export default function EventDetail({ event }) {
   const dateObj = new Date(event.date);
   const dateLabel = dateObj.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
   const query = event.address && event.address.trim() ? `${event.locationName}, ${event.address}` : (event.locationName || 'Freedom Life Church, Edmonton');
-  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
   const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+  const [mapLoaded, setMapLoaded] = React.useState(false);
+  const isIOS = () => {
+    if (typeof navigator === 'undefined') return false;
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  };
+  const openHref = isIOS()
+    ? `https://maps.apple.com/?q=${encodeURIComponent(query)}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const directionsHref = isIOS()
+    ? `https://maps.apple.com/?daddr=${encodeURIComponent(query)}`
+    : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
 
   return (
     <>
@@ -77,7 +87,7 @@ export default function EventDetail({ event }) {
                     <div className="mt-1 text-sm font-semibold text-primary-900">{event.locationName || 'TBA'}</div>
                     {event.address && <div className="text-sm text-neutral-600">{event.address}</div>}
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <a href={gmaps} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold">Open in Maps</a>
+                      <a href={openHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold">Open in Maps</a>
                       {event.address && (
                         <button type="button" onClick={() => navigator.clipboard?.writeText(`${event.locationName}, ${event.address}`)} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold">Copy Address</button>
                       )}
@@ -119,7 +129,12 @@ export default function EventDetail({ event }) {
                 {event.address && <div className="text-[13px] text-neutral-500">{event.address}</div>}
                 {/* Small map preview */}
                 <div className="mt-3 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-50">
-                  <div className="relative w-full aspect-[16/10]">
+                  <div className="relative w-full aspect-[16/10]" aria-busy={!mapLoaded} aria-live="polite">
+                    {!mapLoaded && (
+                      <div className="absolute inset-0">
+                        <div className="h-full w-full bg-neutral-200/70 animate-pulse" />
+                      </div>
+                    )}
                     <iframe
                       title={`Map for ${event.locationName || 'event location'}`}
                       className="absolute inset-0 w-full h-full"
@@ -127,11 +142,12 @@ export default function EventDetail({ event }) {
                       style={{ border: 0 }}
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
+                      onLoad={() => setMapLoaded(true)}
                     />
                   </div>
                 </div>
                 <div className="mt-3 flex items-center gap-2">
-                  <a href={gmaps} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-medium">Directions</a>
+                  <a href={directionsHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-medium">Directions</a>
                   {event.address && (
                     <button type="button" onClick={() => navigator.clipboard?.writeText(`${event.locationName}, ${event.address}`)} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-medium">Copy</button>
                   )}
