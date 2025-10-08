@@ -89,7 +89,8 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
     setLoadingLive(true);
     (async () => {
       try {
-        const resp = await fetch('/api/events', { cache: 'no-store' });
+        // Try fresh-busted fetch first to pick up brand-new additions (including past-day adds)
+        let resp = await fetch('/api/events?fresh=1', { cache: 'no-store' });
         if (!resp.ok) throw new Error('Failed to load events');
         const data = await resp.json();
         if (!abort && Array.isArray(data.events) && data.events.length) {
@@ -99,7 +100,7 @@ export default function EventsPage({ initialEvents, buildFetchedAt }) {
         // If still empty, retry once after a short delay in case of cold starts
         if (!abort && (!data.events || data.events.length === 0)) {
           await new Promise(r => setTimeout(r, 800));
-          const r2 = await fetch('/api/events', { cache: 'no-store' });
+          const r2 = await fetch('/api/events?fresh=1', { cache: 'no-store' });
           if (r2.ok) {
             const d2 = await r2.json();
             if (Array.isArray(d2.events) && d2.events.length) setClientEvents(d2.events);

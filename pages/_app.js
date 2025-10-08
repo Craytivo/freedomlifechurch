@@ -11,6 +11,9 @@ export default function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
+        if ('scrollRestoration' in window.history) {
+          window.history.scrollRestoration = 'manual';
+        }
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         setTimeout(() => window.scrollTo(0, 0), 0);
       } catch {}
@@ -19,17 +22,28 @@ export default function MyApp({ Component, pageProps }) {
 
   // Centralized scroll-to-top on route changes (skip hash-only and shallow changes)
   React.useEffect(() => {
-    const handleRouteChangeComplete = (url, { shallow }) => {
-      if (shallow) return;
-      if (typeof url === 'string' && url.includes('#')) return;
+    const shouldSkip = (url) => typeof url === 'string' && url.includes('#');
+    const toTop = () => {
       try {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         setTimeout(() => window.scrollTo(0, 0), 0);
       } catch {}
     };
+    const handleRouteChangeStart = (url, { shallow }) => {
+      if (shallow) return;
+      if (shouldSkip(url)) return;
+      toTop();
+    };
+    const handleRouteChangeComplete = (url, { shallow }) => {
+      if (shallow) return;
+      if (shouldSkip(url)) return;
+      toTop();
+    };
 
+    router.events.on('routeChangeStart', handleRouteChangeStart);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
     return () => {
+      router.events.off('routeChangeStart', handleRouteChangeStart);
       router.events.off('routeChangeComplete', handleRouteChangeComplete);
     };
   }, [router.events]);

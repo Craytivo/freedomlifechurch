@@ -84,7 +84,7 @@ export default function AltarExperiencePage() {
     let abort = false;
     (async () => {
       try {
-        const resp = await fetch('/api/events', { cache: 'no-store' });
+        const resp = await fetch('/api/events?fresh=1', { cache: 'no-store' });
         if (!resp.ok) return;
         const data = await resp.json();
         const events = Array.isArray(data.events) ? data.events : [];

@@ -21,8 +21,8 @@ export async function getStaticProps({ params }) {
 }
 
 export default function EventDetail({ event }) {
-  // Force scroll to top on mount (mobile browsers sometimes preserve scroll)
-  React.useEffect(() => {
+  // Force scroll to top on mount using layout effect to reduce flash
+  React.useLayoutEffect(() => {
     if (typeof window !== 'undefined') {
       try {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
