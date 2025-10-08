@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import Head from 'next/head';
 
@@ -10,44 +8,80 @@ export default function AdminLogin() {
         <title>Admin Login – Freedom Life Church</title>
         <meta name="description" content="Sign in to manage content." />
       </Head>
-      <section className="min-h-screen flex items-center justify-center bg-[#FFF8F0] relative overflow-hidden">
-        {/* Premium abstract background using only brand colors */}
+      <section className="min-h-screen flex items-center justify-center bg-[#0b0b0b] relative overflow-hidden px-4">
+        {/* Background glow with pulse animation */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <svg width="520" height="420" viewBox="0 0 520 420" fill="none" className="absolute left-[-100px] top-[-60px]" style={{zIndex:0}}>
-            <ellipse cx="220" cy="180" rx="140" ry="90" fill="#EBA73E" opacity="0.13" />
-            <ellipse cx="400" cy="320" rx="80" ry="50" fill="#7A4B0E" opacity="0.09" />
-            <ellipse cx="120" cy="340" rx="60" ry="30" fill="#FFF" opacity="0.18" />
-          </svg>
+          <div className="absolute w-[500px] h-[500px] bg-flc-500/20 rounded-full blur-[150px] top-[-150px] left-[-100px] animate-pulse-slow" />
+          <div className="absolute w-[400px] h-[400px] bg-primary-900/40 rounded-full blur-[120px] bottom-[-120px] right-[-80px] animate-pulse-slow" />
         </div>
-        <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 border border-flc-500 relative z-10">
-        <div className="max-w-md w-full bg-gradient-to-br from-black via-white to-flc-500 rounded-3xl shadow-2xl p-10 border-2 border-black relative z-10">
-            {/* Church logo at top of card - use public folder path for Next.js */}
-            <img src="/logos/cropped-FreedomLifeChurch-Logo-web-04.png" alt="Freedom Life Church Logo" className="w-24 h-24 object-contain mb-4 drop-shadow-lg" />
-            <h1 className="text-3xl font-extrabold text-black tracking-tight drop-shadow-sm">Admin Login</h1>
-            <p className="text-base text-flc-500 text-center mt-2 font-medium">Sign in to manage content.</p>
+
+        {/* Glassmorphism Card with fade-up animation */}
+        <div className="relative z-10 max-w-md w-full px-8 py-10 rounded-2xl border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl animate-fadeUp">
+          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img
+              src="/logos/cropped-FreedomLifeChurch-Logo-web-04.png"
+              alt="Freedom Life Church Logo"
+              className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-lg"
+            />
           </div>
-          <form className="space-y-6">
+
+          {/* Title */}
+          <h1 className="text-2xl md:text-3xl font-heading font-extrabold text-white text-center drop-shadow-md">
+            Admin Login
+          </h1>
+          <p className="text-sm md:text-base text-flc-400 text-center mt-2 font-medium">
+            Sign in to manage content
+          </p>
+
+          {/* Form */}
+          <form className="space-y-6 mt-8">
             <div>
-              <label className="block text-sm font-semibold text-black mb-1">Username or Email Address</label>
-              <input type="email" className="w-full rounded-full border border-black focus:border-flc-700 focus:ring-2 focus:ring-black/20 px-5 py-3 bg-[#F3F3F3] focus:bg-white text-black font-medium" placeholder="you@church.org" />
+              <label className="block text-sm font-semibold text-brand-white mb-2">
+                Username or Email Address
+              </label>
+              <input
+                type="email"
+                className="w-full rounded-full border border-white/20 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/30 px-5 py-3 bg-white/10 backdrop-blur-md text-white placeholder-neutral-400 font-medium transition"
+                placeholder="you@church.org"
+              />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-black mb-1">Password</label>
-              <input type="password" className="w-full rounded-full border border-black focus:border-flc-700 focus:ring-2 focus:ring-black/20 px-5 py-3 bg-[#F3F3F3] focus:bg-white text-black font-medium" placeholder="••••••••" />
+              <label className="block text-sm font-semibold text-brand-white mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                className="w-full rounded-full border border-white/20 focus:border-flc-500 focus:ring-2 focus:ring-flc-500/30 px-5 py-3 bg-white/10 backdrop-blur-md text-white placeholder-neutral-400 font-medium transition"
+                placeholder="••••••••"
+              />
             </div>
+
+            {/* Options + Button */}
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 text-sm text-black">
-                <input type="checkbox" className="rounded border-black" />
+              <label className="flex items-center gap-2 text-sm text-neutral-300">
+                <input type="checkbox" className="rounded border-neutral-400 bg-transparent" />
                 Remember Me
               </label>
-              <button type="submit" className="px-7 py-2 rounded-full bg-black hover:bg-flc-700 text-white font-bold shadow-lg transition">Log in</button>
+              <button
+                type="submit"
+                className="px-7 py-2 rounded-full bg-flc-500 hover:bg-flc-600 text-black font-bold shadow-lg transition"
+              >
+                Log in
+              </button>
             </div>
           </form>
-          <div className="mt-7 text-center text-sm">
-            <a href="#" className="text-black hover:text-flc-700 hover:underline font-semibold">Lost your password?</a>
+
+          {/* Links */}
+          <div className="mt-6 text-center text-sm">
+            <a href="#" className="text-flc-400 hover:text-flc-500 hover:underline font-semibold">
+              Lost your password?
+            </a>
           </div>
-          <div className="mt-2 text-center text-xs text-black">
-            <a href="/" className="hover:underline">← Back to site</a>
+          <div className="mt-2 text-center text-xs text-neutral-400">
+            <a href="/" className="hover:underline">
+              ← Back to site
+            </a>
           </div>
         </div>
       </section>
