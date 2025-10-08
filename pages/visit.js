@@ -133,6 +133,7 @@ export default function VisitPage() {
   const [distanceKm, setDistanceKm] = useState(null);
   const [isSundayMT, setIsSundayMT] = useState(false);
   const [isLiveMT, setIsLiveMT] = useState(false);
+  const [serviceLabel, setServiceLabel] = useState('Next service Sunday · 12:00 PM');
   const mapRef = useRef(null);
 
   // Build a list of upcoming Sundays (next 12)
@@ -179,21 +180,33 @@ export default function VisitPage() {
     setTimeout(() => setSubmitted(false), 5000);
   };
 
-  // Compute MT Sunday + live window (12:00–13:59 MT)
+  // Compute MT weekday + live window (12:00–13:59 MT) and label for chip
   useEffect(() => {
     const compute = () => {
       try {
         const now = new Date();
         const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(now);
-        const weekday = parts.find(p => p.type === 'weekday')?.value || '';
+        const weekday = (parts.find(p => p.type === 'weekday')?.value || '').toLowerCase();
         const hourPart = parts.find(p => p.type === 'hour');
         const hour = hourPart ? parseInt(hourPart.value, 10) : -1;
-        const sunday = /sunday/i.test(weekday);
+        const sunday = weekday === 'sunday';
+        const saturday = weekday === 'saturday';
         setIsSundayMT(!!sunday);
-        setIsLiveMT(sunday && hour >= 12 && hour < 14);
+        const live = sunday && hour >= 12 && hour < 14;
+        setIsLiveMT(live);
+        if (live) {
+          setServiceLabel('Service happening now');
+        } else if (sunday) {
+          setServiceLabel('Next service today · 12:00 PM');
+        } else if (saturday) {
+          setServiceLabel('Next service tomorrow · 12:00 PM');
+        } else {
+          setServiceLabel('Next service Sunday · 12:00 PM');
+        }
       } catch {
         setIsSundayMT(false);
         setIsLiveMT(false);
+        setServiceLabel('Next service Sunday · 12:00 PM');
       }
     };
     compute();
@@ -299,14 +312,12 @@ export default function VisitPage() {
                 <div className="mt-6 text-sm text-neutral-600">
                   Sundays at <span className="font-semibold text-neutral-800">12:00 PM (MST)</span>
                 </div>
-                {isSundayMT && (
-                  <div className="mt-3">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-neutral-200 text-neutral-800 text-[12px] font-semibold shadow-sm">
-                      <svg className="w-3.5 h-3.5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z"/></svg>
-                      {isLiveMT ? 'Service happening now' : 'Next service today · 12:00 PM'}
-                    </span>
-                  </div>
-                )}
+                <div className="mt-3">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-neutral-200 text-neutral-800 text-[12px] font-semibold shadow-sm">
+                    <svg className="w-3.5 h-3.5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z"/></svg>
+                    {serviceLabel}
+                  </span>
+                </div>
               </div>
 
               {/* Right: map card */}
@@ -509,76 +520,12 @@ export default function VisitPage() {
         </div>
       </section>
 
-      {/* Location & Contact (map moved to hero) */}
+      {/* RSVP Section */}
       <section className="relative py-16 md:py-20 bg-white">
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-              {/* Map & Location Info */}
-              <div className="lg:col-span-7">
-                <Heading as="h2" size="md" gradient className="mb-6">Find Us</Heading>
-                
-                {/* Address & Utilities */}
-                <div className="mb-6">
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <h3 className="font-heading text-lg font-bold text-primary-900">Location</h3>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        try {
-                          await navigator.clipboard.writeText(ADDRESS);
-                          setCopied(true);
-                          setTimeout(() => setCopied(false), 2500);
-                        } catch (e) {
-                          // fallback
-                        }
-                      }}
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-neutral-300 bg-white text-xs font-medium text-neutral-700 hover:border-flc-500 hover:text-flc-600 focus:outline-none focus:ring-2 focus:ring-flc-500/30 transition-colors"
-                    >
-                      {copied ? 'Copied!' : 'Copy Address'}
-                    </button>
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`}
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-medium text-flc-600 hover:text-flc-700"
-                    >
-                      View Larger Map
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                      </svg>
-                    </a>
-                  </div>
-                  <p className="text-lg text-neutral-700 font-medium">{ADDRESS}</p>
-                </div>
-
-                {/* Quick Actions */}
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-flc-500 hover:bg-flc-600 text-white font-semibold focus:outline-none focus:ring-2 focus:ring-flc-500/40 transition-colors"
-                  >
-                    Get Directions
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/>
-                    </svg>
-                  </a>
-                  <a 
-                    href="tel:780-123-4567" 
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 font-semibold transition-colors"
-                  >
-                    Call Us
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              {/* RSVP Form */}
-              <div className="lg:col-span-5" id="rsvp">
+              <div className="lg:col-span-6 lg:col-start-4" id="rsvp">
                 <div className="sticky top-8">
                   <div className="relative p-8 rounded-2xl border border-neutral-200 bg-white shadow-sm">
                     <div className="absolute -inset-4 bg-gradient-to-br from-flc-500/5 via-transparent to-transparent rounded-3xl pointer-events-none" aria-hidden="true" />
