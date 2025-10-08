@@ -11,7 +11,7 @@ const quickFacts = [
   { label: 'Location', value: '14970 114 Ave NW, Edmonton, Alberta T5M 4G4', icon: (
     <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100-6 3 3 0 000 6z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.5-7.5 10.5-7.5 10.5S4.5 18 4.5 10.5A7.5 7.5 0 1119.5 10.5z"/></svg>
   ) },
-  { label: 'Kids Ministry', value: 'Available (Check-In opens 15 min early)', icon: (
+  { label: 'Kids Ministry', value: 'Sundays · 12:30 PM (Check‑in opens 15 min early)', icon: (
     <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M3 7a4 4 0 108 0 4 4 0 00-8 0zm0 0v10a2 2 0 002 2h4a2 2 0 002-2V7"/></svg>
   ) },
   { label: 'Parking', value: 'Free on-site & overflow', icon: (

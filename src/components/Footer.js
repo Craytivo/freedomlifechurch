@@ -67,7 +67,7 @@ const Footer = () => {
               </div>
               <div>
                 <p className="font-semibold text-primary-900">Kids Ministry</p>
-                <p className="text-neutral-600">Available · Check‑in opens 15 min early</p>
+                <p className="text-neutral-600">Sundays · 12:30 PM (Check‑in opens 15 min early)</p>
               </div>
             </div>
           </div>

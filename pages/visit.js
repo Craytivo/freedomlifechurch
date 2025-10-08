@@ -5,7 +5,6 @@ import CTAButton from '../src/components/CTAButton';
 import Link from 'next/link';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
-import Link from 'next/link';
 
 // Visit page - comprehensive guide for first-time visitors
 // Expanded version of PlanVisitSection with additional helpful information
@@ -34,8 +33,8 @@ const quickFacts = [
   },
   { 
     label: 'Kids Ministry', 
-    value: 'Available for all ages', 
-    details: 'Safe, engaging ministry for infants through high school. Check-in opens 15 minutes early',
+    value: 'Sundays · 12:30 PM', 
+    details: 'Safe, engaging ministry for infants through high school. Check-in opens 15 minutes early.',
     icon: (
       <svg className="w-5 h-5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 7a4 4 0 108 0 4 4 0 00-8 0zm0 0v10a2 2 0 002 2h4a2 2 0 002-2V7"/>
