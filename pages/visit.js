@@ -627,6 +627,17 @@ export default function VisitPage() {
                         <p className="text-xs text-neutral-400 leading-relaxed text-center">
                           Prefer to just show up? That's perfect too! Come say hi at our Connect area after service.
                         </p>
+                        <p className="mt-2 text-xs text-center">
+                          <a
+                            href={buildMapsLinks().directions}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-neutral-600 hover:text-flc-600 font-medium"
+                          >
+                            Get Directions
+                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                          </a>
+                        </p>
                       </div>
                     </div>
                   </div>
