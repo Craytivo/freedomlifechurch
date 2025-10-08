@@ -131,6 +131,8 @@ export default function VisitPage() {
   const [mapLoaded, setMapLoaded] = useState(false);
   const [locating, setLocating] = useState(false);
   const [distanceKm, setDistanceKm] = useState(null);
+  const [isSundayMT, setIsSundayMT] = useState(false);
+  const [isLiveMT, setIsLiveMT] = useState(false);
   const mapRef = useRef(null);
 
   // Build a list of upcoming Sundays (next 12)
@@ -176,6 +178,28 @@ export default function VisitPage() {
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
   };
+
+  // Compute MT Sunday + live window (12:00–13:59 MT)
+  useEffect(() => {
+    const compute = () => {
+      try {
+        const now = new Date();
+        const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(now);
+        const weekday = parts.find(p => p.type === 'weekday')?.value || '';
+        const hourPart = parts.find(p => p.type === 'hour');
+        const hour = hourPart ? parseInt(hourPart.value, 10) : -1;
+        const sunday = /sunday/i.test(weekday);
+        setIsSundayMT(!!sunday);
+        setIsLiveMT(sunday && hour >= 12 && hour < 14);
+      } catch {
+        setIsSundayMT(false);
+        setIsLiveMT(false);
+      }
+    };
+    compute();
+    const id = setInterval(compute, 60000);
+    return () => clearInterval(id);
+  }, []);
 
   const isIOS = () => {
     if (typeof navigator === 'undefined') return false;
@@ -275,6 +299,14 @@ export default function VisitPage() {
                 <div className="mt-6 text-sm text-neutral-600">
                   Sundays at <span className="font-semibold text-neutral-800">12:00 PM (MST)</span>
                 </div>
+                {isSundayMT && (
+                  <div className="mt-3">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 backdrop-blur border border-neutral-200 text-neutral-800 text-[12px] font-semibold shadow-sm">
+                      <svg className="w-3.5 h-3.5 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3M12 22a10 10 0 110-20 10 10 0 010 20z"/></svg>
+                      {isLiveMT ? 'Service happening now' : 'Next service today · 12:00 PM'}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Right: map card */}
