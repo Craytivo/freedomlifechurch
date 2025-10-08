@@ -9,20 +9,21 @@ export default function AdminLogin() {
         <meta name="description" content="Sign in to manage content." />
       </Head>
       <section className="min-h-screen flex items-center justify-center bg-[#0b0b0b] relative overflow-hidden px-4">
-        {/* Background glow with pulse animation */}
+        {/* Light background with accent glows */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute w-[500px] h-[500px] bg-flc-500/20 rounded-full blur-[150px] top-[-150px] left-[-100px] animate-pulse-slow" />
-          <div className="absolute w-[400px] h-[400px] bg-primary-900/40 rounded-full blur-[120px] bottom-[-120px] right-[-80px] animate-pulse-slow" />
+          <div className="absolute w-[600px] h-[600px] bg-flc-500/20 rounded-full blur-[180px] top-[-180px] left-[-120px] animate-pulse-slow" />
+          <div className="absolute w-[400px] h-[400px] bg-black/10 rounded-full blur-[120px] bottom-[-120px] right-[-80px] animate-pulse-slow" />
+          <div className="absolute w-full h-full bg-[#F8F6F2] opacity-90" />
         </div>
 
-        {/* Glassmorphism Card with fade-up animation */}
-        <div className="relative z-10 max-w-md w-full px-8 py-10 rounded-2xl border border-white/10 shadow-2xl bg-black/40 backdrop-blur-xl animate-fadeUp">
+  {/* Dark login card with premium styling */}
+  <div className="relative z-10 max-w-md w-full px-8 py-10 rounded-2xl border border-white/10 shadow-2xl bg-black/80 backdrop-blur-xl animate-fadeUp">
           {/* Logo */}
           <div className="flex justify-center mb-6">
             <img
               src="/logos/cropped-FreedomLifeChurch-Logo-web-04.png"
               alt="Freedom Life Church Logo"
-              className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-lg"
+              className="w-32 h-32 md:w-36 md:h-36 object-contain drop-shadow-lg"
             />
           </div>
 
@@ -79,7 +80,7 @@ export default function AdminLogin() {
             </a>
           </div>
           <div className="mt-2 text-center text-xs text-neutral-400">
-            <a href="/" className="hover:underline">
+            <a href="/" className="text-white hover:underline">
               ← Back to site
             </a>
           </div>
