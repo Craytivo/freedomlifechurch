@@ -72,6 +72,15 @@ export default function Document() {
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(weeklyEvent) }}
         />
+        {/* Enforce top-of-page on initial load before hydration */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: `
+            try{ if('scrollRestoration' in history){ history.scrollRestoration = 'manual'; } }catch(e){}
+            try{ window.addEventListener('pageshow', function(){ try{ window.scrollTo(0,0); }catch(e){} }, { once:true }); }catch(e){}
+            try{ document.addEventListener('DOMContentLoaded', function(){ try{ window.scrollTo(0,0); }catch(e){} }, { once:true }); }catch(e){}
+          `}}
+        />
       </Head>
       <body className="min-h-screen">
         <Main />

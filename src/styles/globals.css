@@ -8,6 +8,8 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  /* Prevent scroll anchoring from snapping the viewport unexpectedly */
+  overflow-anchor: none;
 }
 body { font-family: theme('fontFamily.body'); }
 

@@ -268,6 +268,7 @@ function expandRecurring(master, overrides) {
         locationName: baseInfo.locName,
         address: baseInfo.address,
         blurb: ev.description || '',
+        startISO: ev.startDate.toISOString(),
         provides: []
       });
       continue;
@@ -341,6 +342,7 @@ function expandRecurring(master, overrides) {
         locationName: baseInfo.locName,
         address: baseInfo.address,
         blurb: ev.description || '',
+        startISO: ev.startDate.toISOString(),
         provides: []
       });
     }
@@ -387,6 +389,7 @@ function pushOccurrence(out, ev, occurrenceDate, baseInfo, overrideMap) {
     locationName: baseInfo.locName,
     address: baseInfo.address,
     blurb: use.description || '',
+    startISO: occurrenceDate.toISOString(),
     provides: []
   });
 }

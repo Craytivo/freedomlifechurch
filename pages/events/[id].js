@@ -49,6 +49,47 @@ export default function EventDetail({ event }) {
     ? `https://maps.apple.com/?daddr=${encodeURIComponent(query)}`
     : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}`;
 
+  // Add to Calendar helpers
+  const toGCalDate = (iso) => {
+    const d = new Date(iso);
+    const yyyy = d.getUTCFullYear();
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const hh = String(d.getUTCHours()).padStart(2, '0');
+    const mi = String(d.getUTCMinutes()).padStart(2, '0');
+    const ss = String(d.getUTCSeconds()).padStart(2, '0');
+    return `${yyyy}${mm}${dd}T${hh}${mi}${ss}Z`;
+  };
+  const startISO = event.startISO || new Date(`${event.date}T12:00:00`).toISOString();
+  const endISO = new Date(new Date(startISO).getTime() + 90 * 60000).toISOString(); // default 90min duration
+  const gcalHref = React.useMemo(() => {
+    const text = encodeURIComponent(event.title || 'Church Event');
+    const details = encodeURIComponent(event.blurb || '');
+    const loc = encodeURIComponent(query);
+    const dates = `${toGCalDate(startISO)}/${toGCalDate(endISO)}`;
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}&location=${loc}`;
+  }, [event.title, event.blurb, query, startISO, endISO]);
+  const icsContent = React.useMemo(() => {
+    const lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//FLC//Events//EN',
+      'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      `UID:${event.id || 'flc-event'}`,
+      `DTSTAMP:${toGCalDate(new Date().toISOString())}`,
+      `DTSTART:${toGCalDate(startISO)}`,
+      `DTEND:${toGCalDate(endISO)}`,
+      `SUMMARY:${(event.title || '').replace(/,/g, '\\,')}`,
+      `DESCRIPTION:${(event.blurb || '').replace(/,/g, '\\,')}`,
+      `LOCATION:${query.replace(/,/g, '\\,')}`,
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ];
+    return lines.join('\r\n');
+  }, [event.id, event.title, event.blurb, query, startISO, endISO]);
+  const icsHref = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+
   return (
     <>
       <Head>
@@ -91,6 +132,8 @@ export default function EventDetail({ event }) {
                       {event.address && (
                         <button type="button" onClick={() => navigator.clipboard?.writeText(`${event.locationName}, ${event.address}`)} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold">Copy Address</button>
                       )}
+                      <a href={gcalHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-flc-500 text-white text-[12px] font-semibold">Add to Google</a>
+                      <a href={icsHref} download={`${(event.title || 'event').toLowerCase().replace(/\s+/g,'-')}.ics`} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-semibold">Download .ICS</a>
                     </div>
                   </div>
                   <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
