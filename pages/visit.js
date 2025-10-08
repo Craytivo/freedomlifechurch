@@ -121,6 +121,7 @@ const commonQuestions = [
 
 const ADDRESS = '14970 114 Ave NW, Edmonton, Alberta T5M 4G4';
 const GOOGLE_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(ADDRESS)}&output=embed`;
+const FLC_COORDS = { lat: 53.5695, lng: -113.5860 };
 
 export default function VisitPage() {
   const [form, setForm] = useState({ name: '', email: '', date: '', party: '', notes: '' });
@@ -128,6 +129,8 @@ export default function VisitPage() {
   const [copied, setCopied] = useState(false);
   const [mapReady, setMapReady] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [locating, setLocating] = useState(false);
+  const [distanceKm, setDistanceKm] = useState(null);
   const mapRef = useRef(null);
 
   // Build a list of upcoming Sundays (next 12)
@@ -172,6 +175,61 @@ export default function VisitPage() {
     // Placeholder success UI only
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
+  };
+
+  const isIOS = () => {
+    if (typeof navigator === 'undefined') return false;
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  };
+
+  const buildMapsLinks = () => {
+    const encoded = encodeURIComponent(ADDRESS);
+    const destLatLng = `${FLC_COORDS.lat},${FLC_COORDS.lng}`;
+    const googleMaps = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+    const googleDirections = `https://www.google.com/maps/dir/?api=1&destination=${encoded}`; // origin = current location by default
+    const appleMaps = `https://maps.apple.com/?q=${encoded}`;
+    const appleDirections = `https://maps.apple.com/?daddr=${destLatLng}`;
+    const streetView = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${destLatLng}`;
+    const useApple = isIOS();
+    return {
+      open: useApple ? appleMaps : googleMaps,
+      directions: useApple ? appleDirections : googleDirections,
+      streetView
+    };
+  };
+
+  const haversineKm = (a, b) => {
+    const toRad = (x) => (x * Math.PI) / 180;
+    const R = 6371; // km
+    const dLat = toRad(b.lat - a.lat);
+    const dLon = toRad(b.lng - a.lng);
+    const lat1 = toRad(a.lat);
+    const lat2 = toRad(b.lat);
+    const h = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(h)));
+  };
+
+  const locateMe = async () => {
+    if (typeof navigator === 'undefined' || !navigator.geolocation) return;
+    try {
+      setLocating(true);
+      await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const { latitude: lat, longitude: lng } = pos.coords;
+            const km = haversineKm({ lat, lng }, FLC_COORDS);
+            setDistanceKm(Math.round(km));
+            resolve();
+          },
+          (err) => reject(err),
+          { enableHighAccuracy: false, timeout: 8000, maximumAge: 600000 }
+        );
+      });
+    } catch (e) {
+      // ignore permission errors silently
+    } finally {
+      setLocating(false);
+    }
   };
 
   return (
@@ -239,9 +297,69 @@ export default function VisitPage() {
                         referrerPolicy="no-referrer-when-downgrade"
                         onLoad={() => setMapLoaded(true)}
                       />
+                      {/* Address chip (bottom-left) */}
                       <div className="absolute left-3 bottom-3 inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 shadow-sm">
                         <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100-6 3 3 0 000 6z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.5-7.5 10.5-7.5 10.5S4.5 18 4.5 10.5A7.5 7.5 0 1119.5 10.5z"/></svg>
                         <span className="text-xs font-medium text-neutral-700">14970 114 Ave NW</span>
+                      </div>
+
+                      {/* Controls (top-right) */}
+                      <div className="absolute top-3 right-3 flex flex-wrap justify-end gap-2">
+                        <a
+                          href={buildMapsLinks().directions}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-flc-500 text-white text-[12px] font-semibold shadow-sm hover:bg-flc-600"
+                        >
+                          Directions
+                          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                        <a
+                          href={buildMapsLinks().open}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 text-neutral-700 text-[12px] font-semibold hover:text-flc-600"
+                        >
+                          Open in Maps
+                        </a>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              await navigator.clipboard.writeText(ADDRESS);
+                              setCopied(true);
+                              setTimeout(() => setCopied(false), 2500);
+                            } catch (e) {}
+                          }}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 text-neutral-700 text-[12px] font-semibold hover:text-flc-600"
+                          aria-live="polite"
+                        >
+                          {copied ? 'Copied' : 'Copy'}
+                        </button>
+                        <a
+                          href={buildMapsLinks().streetView}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 text-neutral-700 text-[12px] font-semibold hover:text-flc-600"
+                        >
+                          Street View
+                        </a>
+                      </div>
+
+                      {/* Distance (bottom-right) */}
+                      <div className="absolute right-3 bottom-3 inline-flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={locateMe}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 text-neutral-700 text-[12px] font-semibold hover:text-flc-600"
+                        >
+                          {locating ? 'Locating…' : 'Use my location'}
+                        </button>
+                        {distanceKm != null && (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 text-neutral-700 text-[12px] font-semibold">
+                            ≈ {distanceKm} km away
+                          </span>
+                        )}
                       </div>
                     </>
                   ) : (
