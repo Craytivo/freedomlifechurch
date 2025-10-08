@@ -66,8 +66,8 @@ const Footer = () => {
                 <p className="text-neutral-600">14970 114 Ave NW, Edmonton, AB T5M 4G4</p>
               </div>
               <div>
-                <p className="font-semibold text-primary-900">Kids Ministry</p>
-                <p className="text-neutral-600">Sundays · 12:30 PM (Check‑in opens 15 min early)</p>
+                <p className="font-semibold text-primary-900">Children’s Ministry</p>
+                <p className="text-neutral-600">Starts at 12:30 PM</p>
               </div>
             </div>
           </div>
