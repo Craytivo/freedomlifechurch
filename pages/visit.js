@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SEO from '../src/components/seo/SEO';
 import Heading from '../src/components/Heading';
+import CTAButton from '../src/components/CTAButton';
 import Accordion from '../src/components/Accordion';
 import Image from 'next/image';
 
@@ -191,118 +192,64 @@ export default function VisitPage() {
         }}
       />
 
-      {/* Premium Hero Section with Integrated Timeline */}
-      <section className="relative py-16 md:py-24 bg-white overflow-hidden">
-        {/* Multi-layered premium background */}
+      {/* Premium, minimal Hero with integrated map */}
+      <section className="relative py-14 md:py-20 bg-white overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          {/* Subtle gradient layers */}
           <div className="absolute inset-0" style={{
-            background: [
-              'radial-gradient(circle at 15% 25%, rgba(235,167,62,0.08), rgba(235,167,62,0) 65%)',
-              'radial-gradient(circle at 85% 75%, rgba(235,167,62,0.05), rgba(235,167,62,0) 55%)',
-              'radial-gradient(circle at 50% 10%, rgba(235,167,62,0.03), rgba(235,167,62,0) 70%)',
-              'linear-gradient(135deg, rgba(235,167,62,0.02) 0%, rgba(235,167,62,0) 50%)'
-            ].join(', ')
+            background: 'radial-gradient(60% 40% at 20% 10%, rgba(235,167,62,0.06) 0%, rgba(235,167,62,0) 70%)'
           }} />
-          
-          {/* Floating accent elements */}
-          <div className="absolute top-20 left-10 w-24 h-24 bg-flc-500/4 rounded-full blur-xl animate-pulse" />
-          <div className="absolute bottom-20 right-16 w-20 h-20 bg-amber-500/3 rounded-full blur-lg animate-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-1/2 left-1/3 w-12 h-12 bg-flc-600/4 rounded-full blur-md animate-pulse" style={{ animationDelay: '4s' }} />
         </div>
-        
-        {/* Premium glass morphism card overlay */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-80 h-80 bg-gradient-to-br from-white/5 to-transparent rounded-full blur-3xl" />
-        </div>
-        
-        {/* Container */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="mx-auto max-w-6xl">
-            {/* Main hero content */}
-            <div className="text-center max-w-4xl mx-auto mb-12">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-flc-500/10 via-amber-500/8 to-flc-500/10 border border-flc-200/20 backdrop-blur-sm text-flc-700 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
-                <div className="w-1.5 h-1.5 bg-flc-500 rounded-full animate-pulse" />
-                First time here?
-              </div>
-              
-              <Heading as="h1" size="lg" align="center" gradient className="mb-6 drop-shadow-sm">Plan Your Visit</Heading>
-              
-              <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 leading-relaxed font-medium max-w-3xl mx-auto mb-8">
-                We know visiting a church for the first time can feel uncertain. We're here to make your experience welcoming, comfortable, and meaningful.
-              </p>
-              
-              {/* Premium CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
-                <button className="group relative px-6 py-3 bg-gradient-to-r from-flc-600 via-flc-500 to-amber-500 text-white font-semibold rounded-xl shadow-lg shadow-flc-500/20 hover:shadow-xl hover:shadow-flc-500/30 transform hover:-translate-y-0.5 transition-all duration-300 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-flc-700 via-flc-600 to-amber-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <span className="relative z-10">Plan My Visit</span>
-                </button>
-                <button className="group px-6 py-3 bg-white/70 backdrop-blur-sm border border-flc-200/40 text-flc-700 font-semibold rounded-xl shadow-md hover:shadow-lg hover:bg-white/80 hover:border-flc-300/50 transform hover:-translate-y-0.5 transition-all duration-300">
-                  Watch Online
-                </button>
-              </div>
-            </div>
-
-            {/* Integrated Premium Service Timeline */}
-            <div className="max-w-4xl mx-auto">
-              <div className="relative p-6 md:p-8 rounded-2xl bg-gradient-to-br from-white/85 via-white/90 to-white/85 backdrop-blur-lg border border-white/20 shadow-xl shadow-black/5">
-                {/* Timeline header */}
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-flc-500/8 text-flc-700 text-xs font-semibold uppercase tracking-wide mb-3">
-                    Sunday Schedule
-                  </div>
-                  <Heading as="h2" size="md" align="center" gradient className="mb-2">Your Sunday Timeline</Heading>
-                  <p className="text-neutral-600 font-medium">Here's what to expect during your visit</p>
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto" style={{ maxWidth: '88rem' }}>
+            <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-start">
+              {/* Left: copy */}
+              <div className="md:col-span-6">
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-flc-500/10 text-flc-700 text-[11px] font-semibold uppercase tracking-wider">First time here?</span>
+                <Heading as="h1" size="lg" className="mt-3">Plan Your Visit</Heading>
+                <p className="mt-3 text-neutral-700 text-lg md:text-xl leading-relaxed max-w-xl">
+                  We’d love to meet you. Here’s a quick look at when we gather, how to find us, and what to expect when you arrive.
+                </p>
+                <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <CTAButton href="#rsvp">Plan My Visit</CTAButton>
+                  <CTAButton href="/live" variant="secondary">Watch Online</CTAButton>
                 </div>
-
-                {/* Premium timeline grid */}
-                <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
-                  <div className="group relative text-center p-5 rounded-xl bg-gradient-to-br from-flc-500/4 via-amber-500/2 to-flc-500/4 border border-flc-200/20 hover:shadow-lg hover:shadow-flc-500/8 transition-all duration-300 hover:-translate-y-1">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10">
-                      <div className="inline-flex items-center justify-center w-11 h-11 bg-gradient-to-br from-flc-500 to-amber-500 text-white rounded-lg mb-3 shadow-sm">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"/>
-                        </svg>
-                      </div>
-                      <div className="text-2xl font-bold text-flc-600 mb-1">11:45 AM</div>
-                      <div className="text-sm font-semibold text-neutral-700 mb-1 uppercase tracking-wide">Doors Open</div>
-                      <div className="text-xs text-neutral-600 leading-relaxed">Kids check-in • Coffee & connection</div>
-                    </div>
-                  </div>
-
-                  <div className="group relative text-center p-5 rounded-xl bg-gradient-to-br from-primary-900/4 via-primary-800/2 to-primary-700/4 border border-primary-200/20 hover:shadow-lg hover:shadow-primary-500/8 transition-all duration-300 hover:-translate-y-1">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10">
-                      <div className="inline-flex items-center justify-center w-11 h-11 bg-gradient-to-br from-primary-800 to-primary-600 text-white rounded-lg mb-3 shadow-sm">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467L9 15.553Z"/>
-                        </svg>
-                      </div>
-                      <div className="text-2xl font-bold text-primary-800 mb-1">12:00 PM</div>
-                      <div className="text-sm font-semibold text-neutral-700 mb-1 uppercase tracking-wide">Service Starts</div>
-                      <div className="text-xs text-neutral-600 leading-relaxed">Worship music • Biblical teaching • Prayer</div>
-                    </div>
-                  </div>
-
-                  <div className="group relative text-center p-5 rounded-xl bg-gradient-to-br from-emerald-500/4 via-teal-500/2 to-emerald-500/4 border border-emerald-200/20 hover:shadow-lg hover:shadow-emerald-500/8 transition-all duration-300 hover:-translate-y-1">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10">
-                      <div className="inline-flex items-center justify-center w-11 h-11 bg-gradient-to-br from-emerald-500 to-teal-500 text-white rounded-lg mb-3 shadow-sm">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/>
-                        </svg>
-                      </div>
-                      <div className="text-2xl font-bold text-emerald-600 mb-1">2:00 PM</div>
-                      <div className="text-sm font-semibold text-neutral-700 mb-1 uppercase tracking-wide">Service Ends</div>
-                      <div className="text-xs text-neutral-600 leading-relaxed">Connect time • Meet the team • Questions</div>
-                    </div>
-                  </div>
+                <div className="mt-6 text-sm text-neutral-600">
+                  Sundays at <span className="font-semibold text-neutral-800">12:00 PM (MST)</span>
                 </div>
+              </div>
 
-                {/* Timeline connecting line (hidden on mobile) */}
-                <div className="hidden sm:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/3 h-px bg-gradient-to-r from-flc-200/50 via-primary-200/50 to-emerald-200/50 -z-10" />
+              {/* Right: map card */}
+              <div className="md:col-span-6">
+                <div ref={mapRef} className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-50 aspect-[16/10]">
+                  {mapReady ? (
+                    <>
+                      {!mapLoaded && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
+                          <div className="w-10 h-10 border-4 border-neutral-300 border-top-flc-500 rounded-full animate-spin" aria-label="Loading map" />
+                          <span className="text-sm">Loading map…</span>
+                        </div>
+                      )}
+                      <iframe
+                        title={`Map showing location of ${ADDRESS}`}
+                        className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        src={GOOGLE_EMBED_URL}
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        onLoad={() => setMapLoaded(true)}
+                      />
+                      <div className="absolute left-3 bottom-3 inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/90 backdrop-blur border border-neutral-200 shadow-sm">
+                        <svg className="w-4 h-4 text-flc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11a3 3 0 100-6 3 3 0 000 6z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.5-7.5 10.5-7.5 10.5S4.5 18 4.5 10.5A7.5 7.5 0 1119.5 10.5z"/></svg>
+                        <span className="text-xs font-medium text-neutral-700">14970 114 Ave NW</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
+                      <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Preparing map" />
+                      <span className="text-sm">Preparing map…</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -383,7 +330,7 @@ export default function VisitPage() {
         </div>
       </section>
 
-      {/* Location & Contact */}
+      {/* Location & Contact (map moved to hero) */}
       <section className="relative py-16 md:py-20 bg-white">
         <div className="w-full px-0 sm:px-6 lg:px-8">
           <div className="px-4 sm:px-0 mx-auto" style={{ maxWidth: '80rem' }}>
@@ -426,36 +373,6 @@ export default function VisitPage() {
                   <p className="text-lg text-neutral-700 font-medium">{ADDRESS}</p>
                 </div>
 
-                {/* Map */}
-                <div ref={mapRef} className="mb-8">
-                  <div className="relative rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 aspect-[16/9] flex items-center justify-center">
-                    {mapReady ? (
-                      <>
-                        {!mapLoaded && (
-                          <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
-                            <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Loading map" />
-                            <span className="text-sm">Loading map…</span>
-                          </div>
-                        )}
-                        <iframe
-                          title={`Map showing location of ${ADDRESS}`}
-                          className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${mapLoaded ? 'opacity-100' : 'opacity-0'}`}
-                          src={GOOGLE_EMBED_URL}
-                          style={{ border: 0 }}
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          onLoad={() => setMapLoaded(true)}
-                        />
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-neutral-500 gap-3">
-                        <div className="w-10 h-10 border-4 border-neutral-300 border-t-flc-500 rounded-full animate-spin" aria-label="Preparing map" />
-                        <span className="text-sm">Preparing map…</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 {/* Quick Actions */}
                 <div className="flex flex-wrap gap-4">
                   <a
@@ -482,7 +399,7 @@ export default function VisitPage() {
               </div>
 
               {/* RSVP Form */}
-              <div className="lg:col-span-5">
+              <div className="lg:col-span-5" id="rsvp">
                 <div className="sticky top-8">
                   <div className="relative p-8 rounded-2xl border border-neutral-200 bg-white shadow-sm">
                     <div className="absolute -inset-4 bg-gradient-to-br from-flc-500/5 via-transparent to-transparent rounded-3xl pointer-events-none" aria-hidden="true" />
