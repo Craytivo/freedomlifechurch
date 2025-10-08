@@ -35,7 +35,9 @@ export default function EventDetail({ event }) {
   if (!event) return null;
   const dateObj = new Date(event.date);
   const dateLabel = dateObj.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`;
+  const query = event.address && event.address.trim() ? `${event.locationName}, ${event.address}` : (event.locationName || 'Freedom Life Church, Edmonton');
+  const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const embedSrc = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
 
   return (
     <>
@@ -115,6 +117,19 @@ export default function EventDetail({ event }) {
                 <div className="mt-1 text-[13px] text-neutral-700">{dateLabel} · {event.time}</div>
                 {event.locationName && <div className="mt-2 text-[13px] text-neutral-600">{event.locationName}</div>}
                 {event.address && <div className="text-[13px] text-neutral-500">{event.address}</div>}
+                {/* Small map preview */}
+                <div className="mt-3 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-50">
+                  <div className="relative w-full aspect-[16/10]">
+                    <iframe
+                      title={`Map for ${event.locationName || 'event location'}`}
+                      className="absolute inset-0 w-full h-full"
+                      src={embedSrc}
+                      style={{ border: 0 }}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+                </div>
                 <div className="mt-3 flex items-center gap-2">
                   <a href={gmaps} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-neutral-300 text-neutral-700 hover:border-flc-500 hover:text-flc-600 text-[12px] font-medium">Directions</a>
                   {event.address && (
